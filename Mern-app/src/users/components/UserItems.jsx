@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const UserItem = (props) => {
   return (
-    <div className="flex bg-neutral-950 list-none items-center justify-center py-8">
+    <div className="flex bg-neutral-950 list-none items-center justify-center py-8 h-[calc(100vh-8ch)]">
       {/* is it backtrix used for injecting value */}
       <Link
         to={`/${props.name}/places`}
