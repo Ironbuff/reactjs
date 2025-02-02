@@ -1,5 +1,5 @@
 import Form1 from "./components/Form/Form1";
-import Form2 from "./components/Form/Form2";
+import Form2 from "./components/Foem/Form2";
 import { BrowserRouter as Router } from "react-router-dom";
 import React from "react";
 
@@ -12,8 +12,11 @@ function App() {
           <div className="w-1/2 aspect-video bg-[url('./assests/map.png')] bg-cover bg-center rounded-xl">
             {/* content */}
             <div className="w-full h-full relative z-20 p-6">
-              <Form1 />
-              <Form2 />
+              <Form1/>
+              <Form2/>
+
+             
+              
             </div>
           </div>
           {/* Overlay */}

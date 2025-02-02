@@ -3,7 +3,7 @@ import { IoIosPaperPlane } from "react-icons/io";
 import { Link } from 'react-router-dom';
 const Form1 = () => {
   return (
-    <div className='flex flex-col gap-y-3 bg-black/40 w-[75%] rounded-lg'>
+    <div className='flex flex-col gap-y-3 bg-black/40 w-[100%] rounded-lg py-3 justify-end'>
         {/* top heading */}
         <h1 className='text-2xl font-semibold  text-neutral-100 text-center'>
             Get in touch with us

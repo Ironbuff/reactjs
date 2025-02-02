@@ -25,7 +25,7 @@ const Form2 = () => {
     { id: 4, icon: <FaYoutube />, link: "/" },
   ];
   return (
-    <div className="bg-red-600 flex-1 space-y-6 px-5 w-[25%] py-7 h-[50vh] rounded-lg">
+    <div className="bg-red-600 flex-1 space-y-6 px-5 w-[50%] py-7 h-[50vh] rounded-lg">
       <div className="text-neutral-100 flex flex-col mb-4">
         {/* heading */}
         <h1 className="text-2xl font-semibold">Contact Information</h1>
