@@ -11,10 +11,9 @@ function App() {
           {/* Background Image */}
           <div className="w-1/2 aspect-video bg-[url('./assests/map.png')] bg-cover bg-center rounded-xl">
             {/* content */}
-            <div className="w-full h-full relative z-20 p-6">
-              <Form1/>
-              <Form2/>
-
+            <div className="w-full h-full relative z-20 p-6 flex items-center ">
+              <Form1 />
+              <Form2 />
              
               
             </div>

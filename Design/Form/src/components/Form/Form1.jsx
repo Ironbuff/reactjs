@@ -8,8 +8,8 @@ const Form1 = () => {
         <h1 className='text-2xl font-semibold  text-neutral-100 text-center'>
             Get in touch with us
         </h1>
-        <div className='flex flex-col gap-y-4 items-center justify-center'>
-            <form className='flex flex-col gap-y-4'>
+        <div className='flex flex-col gap-y-4 items-center '>
+            <form className='flex flex-col gap-y-4 '>
                 {/* top input section */}
                 <div className='flex flex-row gap-x-3'>
                     <div className='border border-white/80 rounded-lg bg-white'>
