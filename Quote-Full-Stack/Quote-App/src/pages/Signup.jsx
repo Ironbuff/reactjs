@@ -9,6 +9,7 @@ const Signup = () => {
 //   handle Submit function to handle the after submission
    const handleSubmit= async(e)=>{
     e.preventDefault()
+    // help to prevent page reload before submitting
     try{
         // for posting the response to the server we use axios with url 
         const response= await axios.post('http://localhost:5000/api/auth/register',{name,email,password})
