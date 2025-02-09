@@ -1,6 +1,6 @@
 // Importing express, a web framework for Node.js used to create server applications
 import express from 'express'; 
-import User from '../models/User'
+import User from '../models/User.js'
 import bcrypt from 'bcrypt'
 // Creating an instance of the Express Router
 // The router helps in organizing routes (API endpoints) separately
