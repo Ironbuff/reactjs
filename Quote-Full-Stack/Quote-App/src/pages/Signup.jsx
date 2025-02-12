@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios"
+import { Link } from "react-router-dom";
 const Signup = () => {
   // State for all form value
   const [name, SetName] = useState("");
@@ -12,7 +13,7 @@ const Signup = () => {
     // help to prevent page reload before submitting
     try{
         // for posting the response to the server we use axios with url 
-        const response= await axios.post('http://localhost:5000/api/auth/register',{name,email,password})
+        const response= await axios.post('http://localhost:5000/api/auth/login',{email,password})
         console.log(response)
     }
     catch(error){
@@ -71,7 +72,7 @@ const Signup = () => {
               Sign Up
             </button>
             <p className="text-center">
-              Already Have Account <a href="">Login</a>
+              Already Have Account <Link to="/Login">Login In</Link>
             </p>
           </form>
         </div>
