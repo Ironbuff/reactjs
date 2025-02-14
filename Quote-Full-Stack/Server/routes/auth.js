@@ -2,6 +2,7 @@
 import express from 'express'; 
 import User from '../models/User.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 // Creating an instance of the Express Router
 // The router helps in organizing routes (API endpoints) separately
 const router = express.Router();
@@ -26,6 +27,25 @@ router.post('./register', async (res, req) => {
 
     }catch(error){
         return res.status(200).json({success:false, message:"Error in Adding User"})
+    }
+});
+router.post('./login', async (res, req) => {
+    // TODO: Implement the logic for handling user registration
+    try{
+               const { email, password}=req.body;
+               const user= await UserActivation.findOne({email})
+               if(!user){
+                return res.status(401).json({success: false, message:"User Not exist"})
+               }
+               const checkpassword = await bcrypt.compare(password, user.passowrd)
+               if(!checkpassword){
+                return res.status(401).json({ success:false, message:"Wrong Credentials"})
+               }
+               const token = jwt.sign({id: user_id}, "secretkeyofnotapp123@#",{expiresIn:"5h"})
+               return res.status(200).json({success:true, token, user:{name: user.name}, message:"Login Sucessfully"})
+
+    }catch(error){
+        return res.status(200).json({success:false, message:"Error in Login Server"})
     }
 });
 

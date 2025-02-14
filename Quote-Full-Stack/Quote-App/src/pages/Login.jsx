@@ -1,20 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   // State for all form value
  
   const [email, SetEmail] = useState("");
   const [password, SetPassword] = useState("");
-  
+  const navigate = useNavigate()
 //   handle Submit function to handle the after submission
    const handleSubmit= async(e)=>{
     e.preventDefault()
     // help to prevent page reload before submitting
     try{
         // for posting the response to the server we use axios with url 
-        const response= await axios.post('http://localhost:5000/api/auth/register',{name,email,password})
-        console.log(response)
+        const response= await axios.post('http://localhost:5000/api/auth/login',
+        {email,password}
+      );
+        if(response.data.sucess){
+          localStorage.setItem("token", response.data.token)
+          navigate('/login')
+        }
     }
     catch(error){
         //   to display error
