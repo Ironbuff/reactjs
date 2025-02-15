@@ -6,15 +6,17 @@ const Signup = () => {
   const [name, SetName] = useState("");
   const [email, SetEmail] = useState("");
   const [password, SetPassword] = useState("");
-  
+  const navigate = useNavigate()
 //   handle Submit function to handle the after submission
    const handleSubmit= async(e)=>{
     e.preventDefault()
     // help to prevent page reload before submitting
     try{
         // for posting the response to the server we use axios with url 
-        const response= await axios.post('http://localhost:5000/api/auth/login',{email,password})
-        console.log(response)
+        const response= await axios.post('http://localhost:5000/api/auth/register',{name,email,password})
+        if(response.data.sucess){
+          navigate('/login')
+        }
     }
     catch(error){
         //   to display error

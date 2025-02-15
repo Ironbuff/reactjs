@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/ContextProvider";
 const Login = () => {
   // State for all form value
  
   const [email, SetEmail] = useState("");
   const [password, SetPassword] = useState("");
   const navigate = useNavigate()
+  const {login}=useAuth()
 //   handle Submit function to handle the after submission
    const handleSubmit= async(e)=>{
     e.preventDefault()
@@ -17,6 +19,7 @@ const Login = () => {
         {email,password}
       );
         if(response.data.sucess){
+          login(response.data.user)
           localStorage.setItem("token", response.data.token)
           navigate('/login')
         }
