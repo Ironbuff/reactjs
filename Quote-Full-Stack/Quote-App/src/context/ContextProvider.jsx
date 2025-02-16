@@ -1,4 +1,5 @@
 import React, {Children, createContext, useContext, useEffect, useState} from "react";
+import axios from 'axios';
 const authContext = createContext();
 const ContextProvider =({children})=>{
     const [user,setUser]= useState(null);

@@ -3,6 +3,7 @@ import express from 'express';
 import User from '../models/User.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import middleware from '../middleware/middleware.js';
 // Creating an instance of the Express Router
 // The router helps in organizing routes (API endpoints) separately
 const router = express.Router();
@@ -45,9 +46,11 @@ router.post('./login', async (res, req) => {
                return res.status(200).json({success:true, token, user:{name: user.name}, message:"Login Sucessfully"})
 
     }catch(error){
-        return res.status(200).json({success:false, message:"Error in Login Server"})
+        return res.status(200).json({success:false, message:"Error in Login Server"});
     }
 });
-
+router.get('/verify', middleware, async(req,res) =>{
+    return res.status(200).json({success:true, user: req.user})
+})
 // Exporting the router so it can be used in other parts of the application
 export default router;

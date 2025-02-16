@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import authRouter from './routes/auth.js'
 import connectToMongoDB from './db/db.js'
+import quoteRouter from './routes/quote.js'
 // Assigning variable a express fn 
 const app= express()
 
@@ -14,7 +15,7 @@ app.use(express.json())
 // All routes inside 'authRouter' will be prefixed with '/api/auth'
 // this will check the user authenication by directing it to auth.js file 
 app.use('/api/auth',authRouter)
-
+app.use('/api/quote',quoteRouter)
 // here 5000 is the port no and another is the function
 app.listen(5000, ()=>{
   connectToMongoDB()
