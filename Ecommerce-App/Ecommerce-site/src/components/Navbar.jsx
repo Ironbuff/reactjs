@@ -1,5 +1,5 @@
 import React from 'react'
-import { CiSearch } from "react-icons/ci";
+import { IoIosSearch } from "react-icons/io";
 import image from "../assets/Ecommerce-logo.jpg"
 const Navbar = () => {
   return (
@@ -9,13 +9,13 @@ const Navbar = () => {
             <img src={image} className='aspect-video h-24 w-24'></img>
         </div>
         {/* Search Button */}
-        <div className='border border-black w-[25%] flex flex-row justify-between px-7 items-center rounded-4xl '>
+        <div className='border border-black w-[20%] justify-between flex flex-row  px-2 items-center rounded-4xl '>
            <input
            type='text'
            placeholder='Search'
            className='outline-none '
            />
-           <CiSearch />
+           <IoIosSearch /> 
         </div>
     </div>
   )
