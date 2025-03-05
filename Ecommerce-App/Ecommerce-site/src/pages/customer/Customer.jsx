@@ -24,9 +24,9 @@ const Customer = () => {
 
   return (
     <div className="flex flex-col gap-6 p-4 max-w-3xl mx-auto">
-      <h1 className='flex justify-center text-3xl font-bold'>Customer Reviews</h1>
+      <h1 className='flex justify-center text-3xl font-bold text-gray-800'>Customer Reviews</h1>
       {reviews.map((item) => (
-        <div key={item.id} className="flex items-center gap-6 border-b pb-4">
+        <div key={item.id} className="flex flex-row items-center gap-6 border-b pb-4">
           <img
             src={item.img}
             alt={item.name}
