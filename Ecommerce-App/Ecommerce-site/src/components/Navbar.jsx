@@ -6,6 +6,7 @@ const Navbar = () => {
   const NavItem=[
     {id:1, names:"Products",lead:"/products"},
     {id:2, names:"CustomerReview",lead:"/customer"},
+    {id:3,names:"Privacy",lead:"/privacy"}
   ]
   return (
     <div className='flex flex-row px-28 h-[12ch] items-center justify-between bg-white shadow-sm'>
@@ -13,6 +14,7 @@ const Navbar = () => {
         <div className='flex flex-row items-center'>
             <div className='flex flex-row items-center justify-center'>
             <img src={image} className='aspect-square h-32 w-32'></img>
+            {/* Company Name */}
             <p className='text-4xl font-bold text-red-600'>SAJ<span className='text-yellow-500'>ILO</span></p>
             </div>
             <div className='flex flex-row gap-x-3 px-7'>

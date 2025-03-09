@@ -15,7 +15,7 @@ const Footer = () => {
     <div className='flex flex-col md:flex-row items-center justify-between px-10 md:px-28 py-6 bg-neutral-800 text-neutral-300'>
       {/* Logo and Socials */}
       <div className='flex flex-col items-center md:items-start gap-4'>
-        <img src={image} className='w-24 h-24 object-cover' alt='Logo' />
+        <img src={image} className='w-24 h-24 object-cove' alt='Logo' />
         <div className='text-center md:text-left'>
           <h1 className='text-lg font-semibold'>Connect with Us</h1>
           <div className='flex gap-4 mt-2'>
