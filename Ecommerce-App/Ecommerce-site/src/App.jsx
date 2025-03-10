@@ -5,6 +5,7 @@ import Customer from './pages/customer/Customer';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProductPage from './pages/products/Products';
+import Contact from './pages/contact/Contact';
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
             <Customer />
           </>
         } />
+        {/* Route for Contact Page */}
+        <Route path="/contact" element={<Contact/>}/>
       </Routes>
       
       {/* Footer displayed on all pages */}

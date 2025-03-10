@@ -6,7 +6,7 @@ const Navbar = () => {
   const NavItem=[
     {id:1, names:"Products",lead:"/products"},
     {id:2, names:"CustomerReview",lead:"/customer"},
-    {id:3,names:"Privacy",lead:"/privacy"}
+    {id:3,names:"Contact",lead:"/contact"}
   ]
   return (
     <div className='flex flex-row px-28 h-[12ch] items-center justify-between bg-white shadow-sm'>
