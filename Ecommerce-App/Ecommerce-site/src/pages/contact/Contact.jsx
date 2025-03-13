@@ -2,8 +2,14 @@ import React from 'react';
 
 const Contact = () => {
   return (
-    <div className='flex flex-col items-center justify-center h-[60vh] bg-gray-100 p-6'>
-      <form className='flex flex-col items-center bg-white shadow-md p-6 rounded-lg w-full max-w-md'>
+    <div
+     className="flex flex-col items-center justify-center h-[60vh] bg-gray-100 p-6 backdrop-blur-lg"
+      style={{
+          backgroundImage: 'url("https://cdn.pixabay.com/photo/2022/12/01/09/42/night-7628754_1280.jpg")',
+          backgroundSize: "cover",
+        backgroundPosition: "center",
+  }}>
+      <form className='flex flex-col items-center bg-white shadow-md p-6 rounded-lg w-full max-w-md backdrop-blur-lg'>
         {/* User Name */}
         <div className='flex flex-row items-center gap-3 w-full mb-4'>
           <input
