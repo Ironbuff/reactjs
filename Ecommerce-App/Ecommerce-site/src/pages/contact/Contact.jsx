@@ -9,42 +9,43 @@ const Contact = () => {
           backgroundSize: "cover",
         backgroundPosition: "center",
   }}>
-      <form className='flex flex-col items-center bg-white shadow-md p-6 rounded-lg w-full max-w-md backdrop-blur-lg'>
+       {/* Glassy Form */}
+       <form className="flex flex-col items-center bg-white/30 backdrop-blur-lg shadow-lg border border-white/20 p-6 rounded-lg w-full max-w-md">
         {/* User Name */}
-        <div className='flex flex-row items-center gap-3 w-full mb-4'>
+        <div className="flex flex-row items-center gap-3 w-full mb-4">
           <input
-            type='text'
-            placeholder='First Name'
-            className='border border-gray-300 rounded-md px-3 py-2 w-full outline-none focus:border-blue-500'
+            type="text"
+            placeholder="First Name"
+            className="border border-white/30 bg-white/20 text-white rounded-md px-3 py-2 w-full outline-none placeholder-gray-300 focus:ring-2 focus:ring-blue-400"
           />
           <input
-            type='text'
-            placeholder='Last Name'
-            className='border border-gray-300 rounded-md px-3 py-2 w-full outline-none focus:border-blue-500'
+            type="text"
+            placeholder="Last Name"
+            className="border border-white/30 bg-white/20 text-white rounded-md px-3 py-2 w-full outline-none placeholder-gray-300 focus:ring-2 focus:ring-blue-400"
           />
         </div>
-        
+
         {/* Ratings */}
-        <div className='flex flex-row gap-4 w-full mb-4'>
-          <label className='flex items-center gap-2 text-gray-700'>
-            <input type='radio' name='review' className='accent-blue-600' /> Best
+        <div className="flex flex-row gap-4 w-full mb-4 text-white">
+          <label className="flex items-center gap-2">
+            <input type="radio" name="review" className="accent-blue-500 text-white/35" /> Best
           </label>
-          <label className='flex items-center gap-2 text-gray-700'>
-            <input type='radio' name='review' className='accent-red-600' /> Worst
+          <label className="flex items-center gap-2">
+            <input type="radio" name="review" className="accent-red-500" /> Worst
           </label>
         </div>
-        
+
         {/* Message Box */}
-        <div className='w-full mb-4'>
+        <div className="w-full mb-4">
           <textarea
-            placeholder='Message'
-            className='border border-gray-300 rounded-md px-3 py-2 w-full outline-none h-24 resize-none focus:border-blue-500'
+            placeholder="Message"
+            className="border border-white/30 bg-white/20 text-white rounded-md px-3 py-2 w-full outline-none h-24 resize-none placeholder-gray-300 focus:ring-2 focus:ring-blue-400"
           ></textarea>
         </div>
-        
+
         {/* Submit Button */}
         <div>
-          <button className='px-6 py-2 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition duration-300'>
+          <button className="px-6 py-2 rounded-full bg-blue-500 text-white font-semibold hover:bg-blue-600 transition duration-300">
             Submit
           </button>
         </div>

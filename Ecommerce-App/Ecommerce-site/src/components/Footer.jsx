@@ -41,6 +41,9 @@ const Footer = () => {
           <li>
             <Link to='/customer' className='hover:text-white transition duration-300'>Customer Reviews</Link>
           </li>
+          <li>
+            <Link to='/contact' className='hover:text-white transition duration-300'>Contact</Link>
+          </li>
         </ul>
       </div>
     </div>
