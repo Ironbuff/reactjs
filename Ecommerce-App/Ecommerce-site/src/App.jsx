@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProductPage from './pages/products/Products';
 import Contact from './pages/contact/Contact';
+import Laptop from './pages/laptop/Laptop';
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
         } />
         {/* Route for Contact Page */}
         <Route path="/contact" element={<Contact/>}/>
+        {/* Route for Laptop Page */}
+        <Route path='/laptop' element={<Laptop/>}/>
       </Routes>
       
       {/* Footer displayed on all pages */}
