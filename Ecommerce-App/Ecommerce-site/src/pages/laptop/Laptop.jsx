@@ -8,21 +8,21 @@ const Laptop = () => {
             <img src='https://cdn.pixabay.com/photo/2016/03/27/07/12/apple-1282241_1280.jpg' className='object-fit w-full h-120 rounded full'/>
             
         </div>
-        <div className='flex flex-row'>
+        <div className='flex flex-row px-28'>
             <div className='flex flex-col gap-y-7'>
-            <h1 className='text-3xl font-normal '>Laptop</h1>
-            <p>This is one and only item present</p>
-            <button className='px-4 py-2 bg-neutral-800 text-neutral-200 flex items-center  gap-2'>
+            <h1 className='text-3xl font-bold'>Asus Laptop</h1>
+            <p>It contains requirement which includes CPU of i7<br></br> and RAM of 8GB also graphics card of RTX 3070</p>
+            <button className='px-4 py-2 bg-neutral-800 text-neutral-200 flex items-center rounded-full gap-2 w-[80%]'>
             <FaCartShopping />
             Purchase Item
             </button>
-            <button className='px-4 py-2 bg-blue-700 text-neutral-200 flex items-center gap-2'>
+            <button className='px-4 py-2 bg-blue-700 text-neutral-200 flex items-center gap-2 rounded-full w-[80%]'>
             <IoIosAlert />
                 Price: Rs 300
             </button>
-            <div>
-                <p>Category:<span> First Hand Laptop </span></p>
-                <p>Model:<span> Asus Gaming Laptop </span></p>
+            <div className=' flex flex-col gap-y-3'>
+                <p className='text-xl font-bold'>Category:<span className='text-lg font-medium'> First Hand Laptop </span></p>
+                <p className='text-xl font-bold '>Model:<span className='text-lg font-medium'> Asus Gaming Laptop </span></p>
             </div>       
          </div>
             
