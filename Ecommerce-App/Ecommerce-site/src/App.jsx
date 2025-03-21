@@ -7,6 +7,8 @@ import Footer from './components/Footer';
 import ProductPage from './pages/products/Products';
 import Contact from './pages/contact/Contact';
 import Laptop from './pages/laptop/Laptop';
+import Home from './pages/home/Home';
+import Iphone from './pages/iphone/Iphone';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
         <Route path="/contact" element={<Contact/>}/>
         {/* Route for Laptop Page */}
         <Route path='/laptop' element={<Laptop/>}/>
+        <Route path='/home' element={<Home/>}/>
+        <Route path='/iphone' element={<Iphone/>}/>
       </Routes>
       
       {/* Footer displayed on all pages */}
