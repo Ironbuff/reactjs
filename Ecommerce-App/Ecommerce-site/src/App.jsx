@@ -9,6 +9,7 @@ import Contact from './pages/contact/Contact';
 import Laptop from './pages/laptop/Laptop';
 import Home from './pages/home/Home';
 import Iphone from './pages/iphone/Iphone';
+import Android from './pages/android/Android';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path='/laptop' element={<Laptop/>}/>
         <Route path='/home' element={<Home/>}/>
         <Route path='/iphone' element={<Iphone/>}/>
+        <Route path='/android' element={<Android/>}/>
       </Routes>
       
       {/* Footer displayed on all pages */}
