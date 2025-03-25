@@ -1,0 +1,89 @@
+/* global variable */
+*{
+    margin:0px;
+    padding:0px;
+    box-sizing: border-box;
+}
+.flex{
+    display: flex;
+    flex-direction: row;
+    column-gap: 4px;
+}
+.top-box{
+    background-color: rgb(63, 63, 109);
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    padding:28px;
+    justify-content: center;
+    align-items: center;
+
+}
+.box-container{
+    width:50%;
+    background-color: whitesmoke;
+    border-radius: 12%;
+}
+.btn-primary{
+    background-color: rgb(7, 186, 7);
+    border-radius: 12px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top:12px;
+    padding-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: aliceblue;
+}
+.table-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 28px;
+    flex-direction: column;
+    row-gap: 6px;
+}
+.table-head{
+    border-bottom:1px solid black;
+    width: 100%;
+}
+.table-space{
+    display: flex;
+    flex-direction: row;
+    column-gap: 3rem;
+}
+.table-b{
+    border-bottom: solid 1px black;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    row-gap: 12px;
+}
+.space{
+    padding: 12px;
+}
+.btn-blue{
+    background-color: rgb(63, 63, 209);
+    border-radius: 12px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top:12px;
+    padding-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: aliceblue;
+}
+.btn-red{
+    background-color: rgb(201, 31, 31);
+    border-radius: 12px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top:12px;
+    padding-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: aliceblue;
+}
