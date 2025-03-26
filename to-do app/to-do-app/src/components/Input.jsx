@@ -21,7 +21,7 @@ const App = (props) => {
       {/* use to add note on the list */}
       <button className='bg-neutral-900 rounded-full flex items-center justify-center w-8 text-white' 
       onClick={()=>{
-        props.addlist(input) 
+        props.addTolist(input) 
         SetInput("")}}>
         {/* here props.addlist(input)sends input data to addlist function  and SetInput blank is used to make input blank after the value is given to*/}
           +
