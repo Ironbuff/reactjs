@@ -1,27 +1,43 @@
-import jwt from 'jsonwebtoken'
-import User from '../models/User.js'
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
+import dotenv from "dotenv";
 
-const middleware = async (req, res, next) =>{
-    try{
-        const token = req.headers.authorization.split('')[1]
-        if (!token ){
-            return res.status(401).json({success:false,message:"Unauthorized"})
-        }
-        const decoded = jwt.verify(token,"secretkeyofnotapp123@#")
-          
-        if(!decoded) {
-            return res.status(401).json({success:false, message:"wrong token"})
-        }
-        const user= await User.findById({_id: decoded.id})
-        if(!user){
-            return res.status(404).json({success:false, message:"no user"})
-        }
-        const newUser={name:user.name , id: user._id}
-        req.user = newUser
-        next()
+dotenv.config();
+
+const authMiddleware = async (req, res, next) => {
+  try {
+    // Extract token from headers
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ success: false, message: "Unauthorized: No token provided" });
     }
-    catch(error){
-        return res.status(500).json({success:false, message:"Please Login"})
+
+    const token = authHeader.split(" ")[1];
+
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded) {
+      return res.status(401).json({ success: false, message: "Unauthorized: Invalid token" });
     }
-}
-export default middleware
+
+    // Find user
+    const user = await User.findById(decoded.id).select("name _id");
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Attach user info to request object
+    req.user = { id: user._id, name: user.name };
+
+    next();
+  } catch (error) {
+    if (error.name === "JsonWebTokenError") {
+      return res.status(401).json({ success: false, message: "Invalid token" });
+    } else if (error.name === "TokenExpiredError") {
+      return res.status(401).json({ success: false, message: "Token expired" });
+    }
+    return res.status(500).json({ success: false, message: "Authentication error" });
+  }
+};
+
+export default authMiddleware;

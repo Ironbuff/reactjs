@@ -4,16 +4,18 @@ import User from '../models/User.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import middleware from '../middleware/middleware.js';
+
 // Creating an instance of the Express Router
 // The router helps in organizing routes (API endpoints) separately
+
 const router = express.Router();
 
 // Defining a POST route for user registration
 // When a request is sent to '/register', this function will handle it
-router.post('./register', async (res, req) => {
+router.post('/register', async (res, req) => {
     // TODO: Implement the logic for handling user registration
     try{
-               const {name, email, password}=req.body;
+               const {name, email, password} = req.body;
                const user= await UserActivation.findOne({email})
                if(user){
                 return res.status(401).json({success: false, message:"User already exist"})
@@ -30,10 +32,10 @@ router.post('./register', async (res, req) => {
         return res.status(200).json({success:false, message:"Error in Adding User"})
     }
 });
-router.post('./login', async (res, req) => {
+router.post('/login', async (res, req) => {
     // TODO: Implement the logic for handling user registration
     try{
-               const { email, password}=req.body;
+               const { email, password} = req.body;
                const user= await UserActivation.findOne({email})
                if(!user){
                 return res.status(401).json({success: false, message:"User Not exist"})

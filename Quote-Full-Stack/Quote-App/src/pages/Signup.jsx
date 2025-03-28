@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Signup = () => {
   // State for all form value
   const [name, SetName] = useState("");
   const [email, SetEmail] = useState("");
   const [password, SetPassword] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 //   handle Submit function to handle the after submission
    const handleSubmit= async(e)=>{
     e.preventDefault()
