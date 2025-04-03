@@ -67,7 +67,7 @@ const SignIn = () => {
                             type='text'
                             id='username'
                             name='username' // Added name attribute for controlled components
-                            className='w-full px-4 py-2 rounded-lg border-1 outline-none text-red-500 placeholder-neutral-800'
+                            className='w-full px-4 py-2 rounded-lg border-1 outline-none text-neutral-500 placeholder-neutral-800'
                             placeholder='Enter Username'
                             onChange={change}
                             value={inputs.username}
@@ -81,7 +81,7 @@ const SignIn = () => {
                             type='password'
                             id='password'
                             name='password' // Added name attribute for controlled components
-                            className='w-full px-4 py-2 rounded-lg border-1 outline-none text-red-500 placeholder-neutral-800'
+                            className='w-full px-4 py-2 rounded-lg border-1 outline-none text-neutral-500 placeholder-neutral-800'
                             placeholder='Enter Password'
                             onChange={change}
                             value={inputs.password}
