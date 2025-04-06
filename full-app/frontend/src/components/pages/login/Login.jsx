@@ -46,8 +46,8 @@ const Login = () => {
                 >
                     {/* Email field */}
                     <div className='flex flex-col'>
-                        <label htmlFor='email' className='text-red-500 font-semibold mb-1'>Email:</label>
-                        <input type='email' id='email' className='w-full px-4 py-2 rounded-lg border-1  outline-none  text-red-500 placeholder-neutral-800' placeholder='Enter Email'
+                        <label htmlFor='email' className='text-neutral-500 font-semibold mb-1'>Email:</label>
+                        <input type='email' id='email' className='w-full px-4 py-2 rounded-lg border-1  outline-none  text-neutral-500 placeholder-neutral-800' placeholder='Enter Email'
                         name='email'
                         value={inputs.email}
                         onChange={change}
@@ -56,8 +56,8 @@ const Login = () => {
                                       
                    {/* Password field */}
                    <div className='flex flex-col'>
-                       <label htmlFor='password' className='text-red-500 font-semibold mb-1'>Password:</label>
-                       <input type='password' id='password' className='w-full px-4 py-2 rounded-lg border-1  outline-none  text-red-500 placeholder-neutral-800' placeholder='Enter Password' 
+                       <label htmlFor='password' className='text-neutral-500 font-semibold mb-1'>Password:</label>
+                       <input type='password' id='password' className='w-full px-4 py-2 rounded-lg border-1  outline-none  text-neutral-500 placeholder-neutral-800' placeholder='Enter Password' 
                        name='password'
                        value={inputs.password}
                        onChange={change}
@@ -66,7 +66,7 @@ const Login = () => {
                    
                    {/* Button field */}
                    <div className='pt-4'>
-                       <button className='w-full bg-red-500 text-white font-semibold py-2 rounded-lg   hover:bg-neutral-800 hover:text-neutral-200' type='submit'>
+                       <button className='w-full bg-neutral-500 text-white font-semibold py-2 rounded-lg   hover:bg-neutral-800 hover:text-neutral-200' type='submit'>
                             Log In
                         </button>
                    </div>
