@@ -7,7 +7,7 @@ const Home = () => {
         <p className='font-base text-l flex items-center justify-center'>
             Creating Fully managed Mern stack for your convience
        </p>
-       <button className='px-2 py-2 text-neutral-100 shadow-sm bg-red-500 border-1 font-bold border-neutral-500 rounded-lg'>
+       <button className='px-2 py-2 text-neutral-100 shadow-sm bg-red-500 border-2 font-bold border-neutral-500/50 rounded-lg'>
         Make Todo List
        </button>
     </div>
