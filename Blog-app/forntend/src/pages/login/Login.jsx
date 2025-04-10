@@ -7,6 +7,7 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
+  const[showpassword,setShowpassword]= useState(false) //for showing password state
   const {setUserInfo}=useContext(UserContext)
   async function login(e) {
     e.preventDefault();
@@ -41,13 +42,22 @@ const Login = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full p-2 border border-gray-300 rounded-md mb-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className='relative'>
+                <input
+                  type={showpassword?'text':'password'}
+                  placeholder="password"
+                  className="w-full p-2 border border-gray-300 rounded-md mb-2 focus:outline-none focus:ring-2 focus:ring-gray-400 "
+                  value={password}
+                  onChange={(e)=>setPassword(e.target.value)}
+                />
+                <span 
+                className='absolute top-3 bottom-3 left-70 cursor-pointer'
+                onClick={()=>setShowpassword(!showpassword)}
+                >
+                    {showpassword?<FaEyeSlash/>:<FaEye />}
+                </span>
+        
+         </div>
         <button type="submit" className="w-full bg-gray-600 text-white p-2 rounded-md">
           Login
         </button>
