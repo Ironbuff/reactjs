@@ -2,13 +2,15 @@ import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { UserContext } from '../../User-Context';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
-  const[showpassword,setShowpassword]= useState(false) //for showing password state
-  const {setUserInfo}=useContext(UserContext)
+  const [showPassword, setShowPassword] = useState(false);
+  const { setUserInfo } = useContext(UserContext);
+
   async function login(e) {
     e.preventDefault();
     try {
@@ -21,44 +23,53 @@ const Login = () => {
         setUserInfo(response.data);
         setRedirect(true);
       }
-      
     } catch (error) {
       alert('Wrong credentials or server error',error);
     }
   }
 
-  // Redirect user after successful login
   if (redirect) {
     return <Navigate to="/" />;
   }
 
   return (
-    <div className="flex justify-center items-center h-[85vh]">
-      <form className="w-80" onSubmit={login}>
+    <div className="flex justify-center items-center h-screen bg-gray-50">
+      <form 
+        className="bg-white p-8 rounded-2xl shadow-lg w-80 sm:w-96 flex flex-col gap-4" 
+        onSubmit={login}
+      >
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">Login to Your Account</h2>
+
         <input
           type="text"
           placeholder="Username"
-          className="w-full p-2 border border-gray-300 rounded-md mb-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          required
         />
-        <div className='relative'>
-                <input
-                  type={showpassword?'text':'password'}
-                  placeholder="password"
-                  className="w-full p-2 border border-gray-300 rounded-md mb-2 focus:outline-none focus:ring-2 focus:ring-gray-400 "
-                  value={password}
-                  onChange={(e)=>setPassword(e.target.value)}
-                />
-                <span 
-                className='absolute top-3 bottom-3 left-70 cursor-pointer'
-                onClick={()=>setShowpassword(!showpassword)}
-                >
-                    {showpassword?<FaEyeSlash/>:<FaEye />}
-                </span>
-        
-         </div>
-        <button type="submit" className="w-full bg-gray-600 text-white p-2 rounded-md">
+
+        <div className="relative">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Password"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <span
+            className="absolute top-3 right-3 text-gray-600 cursor-pointer"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+
+        <button 
+          type="submit"
+          className="w-full bg-gray-700 hover:bg-gray-800 transition-all text-white font-semibold py-3 rounded-lg shadow-md"
+        >
           Login
         </button>
       </form>
