@@ -1,79 +1,78 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
-  const[password,setPassword]= useState('')
-  const[username,setUsername]=useState('')
+  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
-  const[showpassword,setShowpassword]= useState(false) //for showing password state
 
-  async function registerUser(e){
-          e.preventDefault()
-          try{
-            const response=await axios.post('http://localhost:8000/api/users/register',{
-              username,
-              password,
-            });
-            
-            //to check if register is sucessful
-            if(response.status==200){
-              toast.success("Sucessfully registered")
-              setUsername('');
-              setPassword('');
-              navigate('/login')
-            }
-            else{
-              toast.error('error during login')
-            }
+  async function registerUser(e) {
+    e.preventDefault()
+    try {
+      const response = await axios.post('http://localhost:8000/api/users/register', {
+        username,
+        password,
+      })
 
-          }catch(error){
-               console.log(error);
-              alert('server error')
-          }
+      if (response.status === 200) {
+        toast.success("Successfully registered")
+        setUsername('')
+        setPassword('')
+        navigate('/login')
+      } else {
+        toast.error('Error during registration')
+      }
+    } catch (error) {
+      console.error(error)
+      alert('Server error')
+    }
   }
-  
+
   return (
-  
-    <div className="flex justify-center items-center h-[85vh]">
-      <ToastContainer/>
-      <form className="w-80" onSubmit={registerUser}>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <ToastContainer />
+      <form 
+        className="w-full max-w-sm bg-white p-8 rounded-xl shadow-xl"
+        onSubmit={registerUser}
+      >
+        <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">Create Account</h2>
+        
         <input
           type="text"
-          placeholder="username"
-          className="w-full p-2 border border-gray-300 rounded-md mb-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          placeholder="Username"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-gray-400"
           value={username}
-          onChange={(e)=>setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
         />
-        <div className='relative'>
-        <input
-          type={showpassword?'text':'password'}
-          placeholder="password"
-          className="w-full p-2 border border-gray-300 rounded-md mb-2 focus:outline-none focus:ring-2 focus:ring-gray-400 "
-          value={password}
-          onChange={(e)=>setPassword(e.target.value)}
-        />
-        <span 
-        className='absolute top-3 bottom-3 left-70 cursor-pointer'
-        onClick={()=>setShowpassword(!showpassword)}
-        >
-            {showpassword?<FaEyeSlash/>:<FaEye />}
-        </span>
 
+        <div className="relative mb-4">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Password"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <span
+            className="absolute right-3 top-3 text-gray-600 cursor-pointer"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
         </div>
-        
+
         <button
           type="submit"
-          className="w-full bg-gray-600 text-white p-2 rounded-md"
+          className="w-full bg-gray-700 hover:bg-gray-800 text-white py-2 rounded-lg transition duration-300"
         >
-         Register
+          Register
         </button>
       </form>
     </div>
-
   )
 }
 
