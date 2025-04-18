@@ -54,7 +54,7 @@ const Quotepage = ({ title, quote, creator, _id }) => {
       </div>
 
       <div className="w-full flex flex-row justify-between mt-4">
-        {isUserLoggedIn ? (
+        {isUserLoggedIn && isCreator ? (
           <>
             <Link
               to={`/edit/${_id || ''}`}
@@ -70,8 +70,10 @@ const Quotepage = ({ title, quote, creator, _id }) => {
               <MdDeleteSweep /> Delete
             </button>
           </>
+        ) : isUserLoggedIn ? (
+          <h1 className='text-xl font-semibold'>Only the creator can change the quote</h1>
         ) : (
-          <h1 className='text-2xl font-semibold'>Please Login for Editing</h1>
+          <h1 className='text-xl font-semibold'>Please login to edit — only the creator can change the quote</h1>
         )}
       </div>
     </div>
