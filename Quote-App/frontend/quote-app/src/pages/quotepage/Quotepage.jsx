@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { UserContext } from '../../User-Context';
 
-const Quotepage = ({ title, quote, creator, _id }) => {
+const Quotepage = ({ title, quote, creator, _id,image }) => {
   const { setUserInfo, userInfo } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -45,7 +45,10 @@ const Quotepage = ({ title, quote, creator, _id }) => {
     <div className="w-full max-w-2xl mx-auto flex flex-col gap-4 items-center justify-center px-6 py-8 border border-amber-100 shadow-lg rounded-2xl bg-white my-3">
       <ToastContainer />
       <div className="flex items-center justify-center w-full">
-        <h1 className="font-bold text-3xl text-gray-800 text-center">{title}</h1>
+        <h1 className="font-semibold text-3xl text-gray-700 text-center">{title}</h1>
+      </div>
+      <div>
+        <img src={'http://localhost:2000/'+image} className=' h-[16rem] rounded-full object-cover items-center aspect-ratio'/>
       </div>
 
       <div className="flex flex-col gap-3 w-full text-center">

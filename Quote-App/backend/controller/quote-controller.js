@@ -2,6 +2,7 @@ const express = require('express')
 const secret = "asdsadasdfasdasfgdg"
 const jwt = require('jsonwebtoken')
 const Quote = require('../model/quote')
+const fs= require('fs')
 
 
 
@@ -9,7 +10,25 @@ const Quote = require('../model/quote')
 const createpost = async(req,res)=>{
     
     try{
-         //verify user
+         
+         // Check if a file was uploaded
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+  
+    // Destructure original file name from the uploaded file object
+    const { originalname,path } = req.file;
+  
+    // Split the file name by dot to get the extension (e.g., .jpg, .png)
+    const parts = originalname.split('.');
+    const ext = parts[parts.length - 1]; // Get the last part as extension
+  //to get extension of image we use fs or file system
+     const newpath= path+'.'+ext
+  
+    fs.renameSync(path,newpath)
+    //to save post
+      
+      //verify user
           //get token from user
           const { token } = req.cookies;
           //to verify token
@@ -22,7 +41,8 @@ const createpost = async(req,res)=>{
                 const createdpost = new Quote({
                 title,
                 quote,
-                creator:info.id
+                creator:info.id,
+                image:newpath
             })
             try{
                 await createdpost.save()
@@ -75,6 +95,7 @@ const getquoteByQuotetId= async(req,res)=>{
 //to update quote
 const Updatequote = async(req,res) =>{
   try{
+
     const {token} = req.cookies;
     jwt.verify(token,secret,{},async(err,info)=>{
        //to check token
@@ -94,6 +115,16 @@ const Updatequote = async(req,res) =>{
       else{
         Doc.title=title;
         Doc.quote=quote;
+          // Check if a new file was uploaded
+          if (req.file) {
+            // Process the new file
+            const { originalname,path } = req.file;
+            const parts = originalname.split('.');
+            const ext = parts[parts.length - 1];
+            const newpath= path+'.'+ext;
+            fs.renameSync(path,newpath);
+            Doc.image = newpath; // Update the image path
+          }
         await Doc.save();
         res.status(200).json({message:"quote Sucessfully updated",Quote:Doc})
       }

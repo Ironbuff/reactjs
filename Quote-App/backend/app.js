@@ -10,7 +10,7 @@ const app = express()
 const userroute= require('../backend/routes/user')
 //for quoteroute specific
 const quoteroute = require('../backend/routes/quote')
-
+const path = require('path');
 //for parsing json
 app.use(express.json())
 //for parsing cookie
@@ -20,6 +20,7 @@ app.use(cookieparsing())
 app.use('/api/users',userroute)
 //to for post quote
 app.use('/api/quotes',quoteroute)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 mongoose.connect("mongodb+srv://insane:insane22@cluster0.kv56yao.mongodb.net/")
 .then(()=>{

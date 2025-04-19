@@ -14,6 +14,11 @@ const QuoteSchema = new Schema({
         required:true,
         unique:true,
     },
+    image:{
+        type:String,
+        required:true,
+        unique:true,
+    },
     creator: {
         type: Schema.Types.ObjectId,
         ref: 'User',

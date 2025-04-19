@@ -7,6 +7,7 @@ const Update = () => {
   //state for value
   const[title,setTitle]= useState('');
   const[quote,setQuote]= useState('');
+  const[file,setFile]= useState(null);
   const{id}=useParams()
   const navigate = useNavigate()
   
@@ -33,9 +34,17 @@ const Update = () => {
      
       //to prevent from reloading
     e.preventDefault()
-    //to store the new data
-    const data = {title,quote,_id:id}
-    const response = await axios.post('http://localhost:2000/api/quotes/updatequote',data,{withCredentials:true})
+    const formdata = new FormData()
+    //for setting value for title quote and image
+    formdata.set('title',title)
+    formdata.set('quote',quote)
+    formdata.set('_id',id)
+     // Only append the file if one has been selected
+     if (file) {
+      formdata.append('file', file);
+    }
+
+    const response = await axios.post('http://localhost:2000/api/quotes/updatequote',formdata,{withCredentials:true})
     if(response.status===200){
                toast.success("Sucessfully Updated Quote")
                navigate('/')
@@ -77,6 +86,23 @@ const Update = () => {
                  onChange={(e) => setTitle(e.target.value)}
                />
              </div>
+
+              {/* image field */}
+          <div className="mb-4">
+            <label
+              htmlFor="file"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Image:
+            </label>
+            <input
+              type="file"
+              id="file"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Enter quote Image"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+          </div>
    
              {/* Description Field */}
              <div className="mb-6">

@@ -8,6 +8,7 @@ const Addquote = () => {
   
     const [title, setTitle] = useState('');
     const [quote, setQuote] = useState('');
+    const[file,setFile]= useState(null);
     const navigate = useNavigate();
 
     async function handleSubmit(e){
@@ -17,8 +18,15 @@ const Addquote = () => {
           title,
           quote
          }
+         const formdata = new FormData()
+         //for setting value for title quote and image
+         formdata.set('title',title)
+         formdata.set('quote',quote)
+         formdata.set('file',file)
+
+
         try{
-           const response=await axios.post('http://localhost:2000/api/quotes/addquote',data,
+           const response=await axios.post('http://localhost:2000/api/quotes/addquote',formdata,
             {withCredentials: true}, //for cookies
           )
           console.log("Sucess:",data) //to show form data
@@ -61,6 +69,22 @@ const Addquote = () => {
               placeholder="Enter quote title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          {/* image field */}
+          <div className="mb-4">
+            <label
+              htmlFor="file"
+              className="block text-gray-700 text-sm font-bold mb-2"
+            >
+              Image:
+            </label>
+            <input
+              type="file"
+              id="file"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Enter quote Image"
+              onChange={(e) => setFile(e.target.files[0])}
             />
           </div>
 
