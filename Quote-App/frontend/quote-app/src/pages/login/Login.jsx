@@ -3,6 +3,8 @@ import React, { useContext, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 import { UserContext } from '../../User-Context'
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa6";
 
 const Login = () => {
    
@@ -10,6 +12,7 @@ const Login = () => {
     const[password,setPassword]=useState('')
     const[redirect,setRedirect]= useState(false)
     const {setUserInfo} = useContext(UserContext)
+    const[showpassword,setShowpassword]=useState(false)
 
  //function to handle login
  async function handleSubmit(e) {
@@ -59,18 +62,21 @@ const Login = () => {
             />
           </div>
           {/* password */}
-          <div className="pb-6"> {/* Changed mb-6 to pb-6 */}
+          <div className="pb-6 relative"> {/* Changed mb-6 to pb-6 */}
             <label htmlFor="password" className="block text-gray-700 text-sm font-bold pb-2"> {/* Changed mb-2 to pb-2 */}
               Password
             </label>
             <input
-              type="password"
+              type={showpassword?"text":"password"}
               id="password"
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter your password"
               value={password}
               onChange={e=>setPassword(e.target.value)}
             />
+            <span className='absolute top-10 left-70 cursor-pointer' onClick={()=>{setShowpassword(!showpassword)}}>
+              {showpassword?<FaEye />:<FaEyeSlash />}
+            </span>
           </div>
           {/* log in */}
           <div className="flex flex-col items-center">
