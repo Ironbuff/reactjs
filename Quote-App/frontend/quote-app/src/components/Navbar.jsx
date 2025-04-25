@@ -69,22 +69,22 @@ const Navbar = () => {
         <ul className='md:hidden flex flex-col items-start px-6 py-4 gap-3 bg-white shadow-md'>
           {!user ? (
             <>
-              <li className='bg-red-500 px-4 py-2 rounded-xl text-white w-full flex items-center gap-2'>
+              <li className='bg-red-600 px-4 py-2 rounded-xl text-white w-full flex items-center gap-2'>
                 <FaSignInAlt />
                 <Link to='/login'>Log In</Link>
               </li>
-              <li className='bg-red-500 px-4 py-2 rounded-xl text-white w-full flex items-center gap-2'>
+              <li className='bg-red-600 px-4 py-2 rounded-xl text-white w-full flex items-center gap-2'>
                 <FaUserPlus />
                 <Link to='/register'>Register</Link>
               </li>
             </>
           ) : (
             <>
-              <li className='bg-red-500 px-4 py-2 rounded-xl text-white w-full flex items-center gap-2'>
+              <li className='bg-red-600 px-4 py-2 rounded-xl text-white w-full flex items-center gap-2'>
                 <FaPlus />
                 <Link to='/addquote'>Add Quote</Link>
               </li>
-              <li className='bg-red-500 px-4 py-2 rounded-xl text-white w-full flex items-center gap-2'>
+              <li className='bg-red-600 px-4 py-2 rounded-xl text-white w-full flex items-center gap-2'>
                 <FaSignOutAlt />
                 <Link to='/' onClick={() => { logout(); setMobilenav(false); }}>Logout</Link>
               </li>
