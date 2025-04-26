@@ -73,10 +73,10 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link to="/login" className="block bg-neutral-500 text-white px-4 py-2 rounded-full hover:bg-neutral-600">
+              <Link to="/login" className="block bg-neutral-500/90 text-white px-4 py-2 rounded-full hover:bg-neutral-600">
                 Login
               </Link>
-              <Link to="/register" className="block bg-neutral-500 text-white px-4 py-2 rounded-full hover:bg-neutral-600">
+              <Link to="/register" className="block bg-neutral-500/90 text-white px-4 py-2 rounded-full hover:bg-neutral-600">
                 Register
               </Link>
             </>
