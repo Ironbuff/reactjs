@@ -38,7 +38,7 @@ const Login = () => {
         className="bg-white p-8 rounded-2xl shadow-lg w-80 sm:w-96 flex flex-col gap-4" 
         onSubmit={login}
       >
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">Login to Your Account</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800/80 mb-4">Login to Your Account</h2>
 
         <input
           type="text"
