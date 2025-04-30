@@ -78,7 +78,7 @@ const Login = () => {
             <input
               type={showpassword ? 'text' : 'password'}
               id="password"
-              className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700/90 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -89,7 +89,7 @@ const Login = () => {
                 setShowpassword(!showpassword);
               }}
             >
-              {showpassword ? <FaEye className="text-gray-500" /> : <FaEyeSlash className="text-gray-500" />}
+              {showpassword ? <FaEye className="text-gray-500" /> : <FaEyeSlash className="text-gray-500/90" />}
             </span>
           </div>
           {/* Log In Button */}
