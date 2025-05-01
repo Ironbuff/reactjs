@@ -1,59 +1,57 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { formatISO9075 } from 'date-fns'; // Import date-fns or your chosen date library
+import { formatISO9075 } from 'date-fns';
 import { UserContext } from '../../User-Context';
 import { FaEdit } from "react-icons/fa";
 
 const Postpage = () => {
-  const { id } = useParams(); //to get id we use params
+  const { id } = useParams();
   const [postinfo, setPostinfo] = useState(null);
-  const{userInfo}=useContext(UserContext)
+  const { userInfo } = useContext(UserContext);
 
   useEffect(() => {
     axios.get(`http://localhost:8000/api/users/post/${id}`)
-      .then(response => setPostinfo(response.data)); //to store the response
+      .then(response => setPostinfo(response.data));
   }, []);
 
   if (!postinfo) return '';
 
   return (
-    <div className="max-w-4xl mx-auto p-4 space-y-6">
-      
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-800">{postinfo.title}</h1>
-         <p className="text-gray-500 text-sm ">{postinfo.username}<span className='text-gray-500 text-sm px-1'>{formatISO9075(new Date(postinfo.createdAt))}</span>  </p>
-        
-        {userInfo.id === postinfo.creator._id &&(
-          
-          <div className='flex items-center justify-center py-3'>
-            <Link to={`/edit/${postinfo._id}`} 
-            className='flex flex-row items-center gap-x-2.5 bg-neutral-700 px-4 py-2 rounded-3xl text-neutral-400 hover:bg-neutral-500'>
-               Edit the Post <FaEdit /> 
-              </Link>
-         </div>
+    <div className="max-w-3xl mx-auto px-4 py-10 space-y-8">
+      {/* Post Title and Meta */}
+      <div className="text-center space-y-2">
+        <h1 className="text-4xl font-extrabold text-white leading-tight">
+          {postinfo.title}
+        </h1>
+        <div className="text-gray-400 text-sm">
+          by <span className="text-blue-400">{postinfo.username}</span> • {formatISO9075(new Date(postinfo.createdAt))}
+        </div>
 
-
-        )}  
-          
-     
-          
+        {userInfo?.id === postinfo.creator._id && (
+          <div className="pt-4">
+            <Link
+              to={`/edit/${postinfo._id}`}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-700 text-neutral-300 hover:bg-neutral-600 transition duration-200"
+            >
+              Edit Post <FaEdit />
+            </Link>
+          </div>
+        )}
       </div>
 
-      
-      
-      <div className="rounded-lg overflow-hidden shadow-md">
+      {/* Post Image */}
+      <div className="rounded-lg overflow-hidden shadow-lg aspect-video">
         <img
           src={`http://localhost:8000/${postinfo.img}`}
           alt="Post visual"
-          className="w-full h-auto object-cover"
+          className="w-full h-full object-cover"
         />
       </div>
 
-     
-      {/* to print string */}
+      {/* Post Content */}
       <div
-        className="prose lg:prose-lg max-w-none text-gray-700"
+        className="prose prose-invert lg:prose-lg max-w-none text-neutral-600"
         dangerouslySetInnerHTML={{ __html: postinfo.content }}
       />
     </div>
