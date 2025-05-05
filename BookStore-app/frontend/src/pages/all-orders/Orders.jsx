@@ -28,6 +28,7 @@ const Orders = () => {
     try {
       const response = await axios.get('http://localhost:3000/api/books/order/get-all-order', header);
       setAllorder(response.data.data);
+      console.log(response.data.data)
     } catch (err) {
       console.error("Failed to fetch orders:", err);
     }
@@ -70,22 +71,22 @@ const Orders = () => {
         </div>
       }
 
-      {allorder.length >= 1 && allorder.map((items, i) => (
+      {allorder.length > 0  && allorder?.map((items, i) => (
         <div
           key={i}
           className='flex flex-row items-start justify-between w-full bg-neutral-700/60 rounded-xl px-8 py-4 mt-3 text-sm'
         >
           <div className='w-[5%] pt-1'>{i + 1}</div>
 
-          <Link to={`/view-book-detail/${items.book._id}`} className='w-[20%] text-blue-300 font-medium hover:underline pt-1'>
-            {items.book.title}
+          <Link to={`/view-book-detail/${items?.book?._id}`} className='w-[20%] text-blue-300 font-medium hover:underline pt-1'>
+            {items?.book?.title}
           </Link>
 
           <div className='w-[30%] text-gray-300 pt-1'>
             {items.book.description.slice(0, 50)}...
           </div>
 
-          <div className='w-[10%] pt-1'>₹ {items.book.price}</div>
+          <div className='w-[10%] pt-1'>₹ {items?.book?.price}</div>
 
           <div className='w-[25%] flex flex-col gap-1'>
             <button className={`text-left font-semibold ${items.status === 'Order Placed'
