@@ -21,7 +21,7 @@ const Bookdetail = () => {
     const fetch = async () => {
       try {
         const response = await axios.get(`http://localhost:3000/api/books/getbookbyid/${id}`);
-        setInfo(response.data.data);
+        setInfo(response.data);
       } catch (error) {
         console.error("Error fetching book details:", error);
       }
@@ -128,7 +128,21 @@ const Bookdetail = () => {
         
         {/* Book price */}
         <div className="text-xl font-semibold text-white py-4">
-          Price: $ {info.price}
+        <p>
+            Price:{" "}
+            <span
+              style={{
+                textDecoration: info.discount > 0 ? "line-through" : "none",
+              }}
+            >
+              ${info.price}
+            </span>
+            {info.discount > 0 && (
+              <span style={{ color: "green", marginLeft: "10px" }}>
+                ${info.discountedPrice}
+              </span>
+            )}
+          </p>
         </div>
       </div>
     </div>

@@ -9,9 +9,9 @@ const Login = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [showpassword,setShowpassword] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [ showpassword,setShowpassword]= useState(false)
 
   const handleSubmit = async(e) =>{
     try{
@@ -60,14 +60,14 @@ const Login = () => {
           <label htmlFor="password" className='text-neutral-300 py-1'>Password</label>
           <input
             id="password"
-            type={showpassword?'text':'password'}
+            type={showpassword?"text":"password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className='px-4 py-2 rounded-md bg-zinc-700 text-white border border-zinc-600 focus:outline-none focus:ring-2 focus:ring-blue-500'
             placeholder="Enter your password"
           />
-          <span className='absolute top-11 left-85 text-neutral-300' onClick={()=>setShowpassword(!showpassword)}>
-             {showpassword?<FaEye />:<FaEyeSlash />}
+          <span onClick={()=>setShowpassword(!showpassword)} className='absolute top-11 left-85 text-neutral-400'>
+              {showpassword?<FaEye />:<FaEyeSlash />}
           </span>
         </div>
 

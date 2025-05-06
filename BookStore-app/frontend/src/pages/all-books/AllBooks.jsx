@@ -11,7 +11,8 @@ const AllBooks = () => {
 
         const fetch = async()=>{
           const response = await axios.get('http://localhost:3000/api/books/getbooks')
-          setData(response.data.data)
+          setData(response.data)
+          console.log(response.data)
         }
         fetch()
   },[])

@@ -35,7 +35,7 @@ const Settings = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-[calc(100vh-20ch)] p-6">
+    <div className="flex justify-center items-center h-auto p-20">
       <div className="backdrop-filter backdrop-blur-md bg-white/10 border border-white/20 shadow-lg rounded-xl p-8 w-full max-w-md">
         <h1 className="text-3xl font-semibold text-white text-center mb-6">User Settings</h1>
 

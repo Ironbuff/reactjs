@@ -10,6 +10,7 @@ const Update = () => {
     const [language, setLanguage] = useState('')
     const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
+    const[discount,setDiscount]= useState('')
     const navigate = useNavigate()
     const { id } = useParams()
 
@@ -26,12 +27,13 @@ const Update = () => {
         const fetch = async () => {
             try {
                 const response = await axios.get(`http://localhost:3000/api/books/getbookbyid/${id}`);
-                setAuthor(response.data.data.author);
-                setDescription(response.data.data.description);
-                setLanguage(response.data.data.language);
-                setPrice(response.data.data.price);
-                setTitle(response.data.data.title);
-                setUrl(response.data.data.url)
+                setAuthor(response.data.author);
+                setDescription(response.data.description);
+                setLanguage(response.data.language);
+                setPrice(response.data.price);
+                setTitle(response.data.title);
+                setUrl(response.data.url);
+                setDiscount(response.data.discount);
             } catch (error) {
                 console.error("Error fetching book details:", error);
             }
@@ -45,7 +47,8 @@ const Update = () => {
         author,
         language,
         price,
-        description
+        description,
+        discount
     }
 
 
@@ -145,6 +148,20 @@ const Update = () => {
                                     value={price}
                                     onChange={(e) => setPrice(e.target.value)}
                                     placeholder="Price of book"
+                                    className=" block w-full bg-gray-800 border border-gray-700 text-white placeholder-gray-400 py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="price" className="block text-sm font-medium text-gray-300 py-1">
+                                    Discount
+                                </label>
+                                <input
+                                    type="number"
+                                    id="discount"
+                                    name="discount"
+                                    value={discount}
+                                    onChange={(e) => setDiscount(e.target.value)}
+                                    placeholder="Discount of  book"
                                     className=" block w-full bg-gray-800 border border-gray-700 text-white placeholder-gray-400 py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 />
                             </div>
