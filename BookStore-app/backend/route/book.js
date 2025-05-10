@@ -9,7 +9,7 @@ router.delete('/deletebook',authenticateToken,bookcontroller.deletebook)
 router.get('/getbooks',bookcontroller.getbooks)
 router.get('/getlatestbooks',bookcontroller.getlatestbooks)
 router.get('/getbookbyid/:id',bookcontroller.getbookbyid)
-
+router.get('/getfilteredbooks', bookcontroller.getfilteredbooks);
 
 
 module.exports = router
