@@ -47,17 +47,17 @@ const Addbook = () => {
   return (
     <div>
       {" "}
-      <div className="h-[85vh] text-neutral-300 ">
+      <div className="h-[75vh] text-neutral-300">
         <div className="max-w-3xl ">
           <h1 className="text-2xl font-semibold  text-center ">Add Book</h1>
           <form
             onSubmit={handleSubmit}
-            className="space-y-3 bg-gray-900 p-5 h-auto rounded-3xl"
+            className="space-y-2 bg-gray-900 p-3 h-auto rounded-3xl"
           >
             <div>
               <label
                 htmlFor="imageUrl"
-                className="block text-sm font-medium text-gray-300 py-3"
+                className="block text-sm font-medium text-gray-300 py-2"
               >
                 Image URL
               </label>
