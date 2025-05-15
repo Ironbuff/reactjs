@@ -16,13 +16,13 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="md:bg-blue-950 bg-gray-400">
+    <nav className="md:bg-blue-950 bg-gray-300">
       {/* Top Nav Bar */}
       <div className="flex justify-between items-center h-[7ch] px-6 md:px-14">
         {/* Logo */}
         <div className="flex items-center gap-x-2 cursor-pointer">
           <img src={img} className="h-[7vh]" alt="logo" />
-          <h1 className="text-neutral-100 font-bold tracking-widest text-xl">
+          <h1 className="md:text-neutral-100 text-blue-950 font-bold tracking-widest text-2xl">
             MetaLogic
           </h1>
         </div>
