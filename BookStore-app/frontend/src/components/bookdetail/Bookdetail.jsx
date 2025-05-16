@@ -59,7 +59,7 @@ const Bookdetail = () => {
       <div className="bg-zinc-800 rounded-xl shadow-md flex flex-col md:flex-row overflow-hidden w-full max-w-5xl border border-neutral-700">
 
         {/* Left - Image + Buttons */}
-        <div className="bg-neutral-800 p-6 md:w-1/2 flex flex-col justify-center items-center relative">
+        <div className="bg-neutral-800 p-5 md:w-1/2 flex flex-col justify-center items-center relative">
           <img src={info.url} alt={info.title} className="max-h-[450px] object-contain rounded-md shadow" />
 
           <div className="absolute top-6 right-6 flex flex-col gap-3">
@@ -100,10 +100,10 @@ const Bookdetail = () => {
         </div>
 
         {/* Right - Book Info */}
-        <div className="p-6 md:w-1/2 text-neutral-100 flex flex-col gap-5">
+        <div className="p-6 md:w-1/2 text-neutral-200 flex flex-col gap-5">
           <div>
             <h1 className="text-3xl font-bold mb-1">{info.title}</h1>
-            <p className="text-sm text-neutral-400">by <span className="text-white">{info.author}</span></p>
+            <p className="text-sm text-neutral-400">by <span className="text-neutral-200">{info.author}</span></p>
           </div>
 
           <p className="text-sm text-neutral-300 leading-relaxed">
