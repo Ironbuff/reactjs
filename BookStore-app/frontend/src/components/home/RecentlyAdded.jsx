@@ -18,8 +18,8 @@ const RecentlyAdded = () => {
   
   
   return (
-    <div className='bg-neutral-800 px-20 '>
-      <h1 className='text-3xl text-neutral-200 font-semibold py-3'>Recently Added Books</h1>
+    <div className='bg-neutral-900 px-20 '>
+      <h1 className='text-3xl text-neutral-300 font-semibold py-3'>Recently Added Books</h1>
        
        {/* using loader */}
        {!data && <div className='flex items-center justify-center py-3'><Loader/></div>}
