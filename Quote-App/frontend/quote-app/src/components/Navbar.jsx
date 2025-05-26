@@ -81,12 +81,12 @@ const Navbar = () => {
           ) : (
             <>
               <li className='bg-red-600 px-4 py-2 rounded-xl text-white w-full flex items-center gap-2'>
-                <FaPlus />
-                <Link to='/addquote'>Add Quote</Link>
+               
+                <Link to='/addquote' className='flex flex-row gap-x-1 items-center justify-center'> <FaPlus /> Add Quote</Link>
               </li>
-              <li className='bg-red-600 px-4 py-2 rounded-xl text-white w-full flex items-center gap-2'>
-                <FaSignOutAlt />
-                <Link to='/' onClick={() => { logout(); setMobilenav(false); }}>Logout</Link>
+              <li className=' bg-red-600 px-4 py-2 rounded-xl text-white w-full flex flex-row items-center gap-2'>
+                
+                <Link to='/' className='flex flex-row gap-x-1 items-center justify-center' onClick={() => { logout(); setMobilenav(false); }}> <FaSignOutAlt /> Logout</Link>
               </li>
             </>
           )}
