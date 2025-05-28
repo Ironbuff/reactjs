@@ -3,6 +3,7 @@ import img from '../assets/Ecommerce.webp'
 import { Link } from 'react-router-dom'
 import { IoMenu } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
+import { useSelector } from 'react-redux';
 
 const navitems = [
     { id: 1, name: "Home", links: "/home" },
@@ -17,6 +18,7 @@ const Navbar = () => {
 
     // for mobile nav
     const [mobilenav, setMobilenav] = useState(false)
+    const login = useSelector((state)=>state.auth.login)
 
     return (
         <nav className='md:bg-gray-200 bg-blue-400'>
@@ -41,13 +43,20 @@ const Navbar = () => {
 
                 {/* Contact Us Section */}
                 <div className='font-semibold md:flex hidden flex-row gap-x-4'>
-                    <Link to={"/login"} className='px-3 py-3 bg-gray-300 hover:bg-gray-200 hover:border-2 hover:border-neutral-400 rounded-2xl hover:translate-0.5  transition-all ease-in-out duration-300 shadow-md'>
+                   {!login?(
+                    <>
+                     <Link to={"/login"} className='px-3 py-3 bg-gray-300 hover:bg-gray-200 hover:border-2 hover:border-neutral-400 rounded-2xl hover:translate-0.5  transition-all ease-in-out duration-300 shadow-md'>
                         Log In
                     </Link>
-                     <button className='px-3 py-3 bg-gray-300 hover:bg-gray-200 hover:border-2 hover:border-neutral-400 rounded-2xl hover:translate-0.5  transition-all ease-in-out duration-300 shadow-md'>
+                     <Link to={'/sign'} className='px-3 py-3 bg-gray-300 hover:bg-gray-200 hover:border-2 hover:border-neutral-400 rounded-2xl hover:translate-0.5  transition-all ease-in-out duration-300 shadow-md'>
                         SignIn
-                    </button>
-
+                    </Link>
+                   </>
+                   ):(
+                    <Link to={'/logout'} className='px-3 py-3 bg-gray-300 hover:bg-gray-200 hover:border-2 hover:border-neutral-400 rounded-2xl hover:translate-0.5  transition-all ease-in-out duration-300 shadow-md'>
+                        Log Out
+                    </Link>
+                   )}
                 </div>
 
                 {/* mobile icon */}

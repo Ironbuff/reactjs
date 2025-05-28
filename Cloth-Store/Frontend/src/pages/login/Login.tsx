@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiLogIn } from 'react-icons/fi';
+import axios from 'axios'
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  
+  const handlelogin = async(e)=>{
+    e.preventDefault()
+    try{
+          const data = {
+            username,
+            password,
+          }
+
+      const response = axios.post('http://localhost:8081/api/users/login',data)
+      console.log(response)
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
+  
+  
+  
   return (
     <div className="w-full h-[calc(100vh-10ch)] bg-gradient-to-r from-gray-100 to-gray-200 flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-center mb-6 text-gray-700">Login</h1>
 
-        <form className="space-y-6">
+        <form onSubmit={handlelogin} className="space-y-6">
           {/* Username */}
           <div>
             <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
