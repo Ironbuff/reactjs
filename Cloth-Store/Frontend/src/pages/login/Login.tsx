@@ -1,31 +1,45 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiLogIn } from 'react-icons/fi';
 import axios from 'axios'
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../store/auth';
+
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-  
-  const handlelogin = async(e)=>{
+  const handlelogin = async (e) => {
     e.preventDefault()
-    try{
-          const data = {
-            username,
-            password,
-          }
+    try {
+      const data = {
+        username,
+        password,
+      }
 
-      const response = axios.post('http://localhost:8081/api/users/login',data)
-      console.log(response)
+      const response = await axios.post('http://localhost:8081/api/users/login', data)
+
+      if (response.status === 200) {
+        alert(response.data.message)
+        navigate('/')
+        dispatch(authActions.login())
+        dispatch(authActions.changeRole(response.data.role))
+        localStorage.setItem("id", response.data.id)
+        localStorage.setItem("token", response.data.token)
+        localStorage.setItem("role", response.data.role)
+
+      }
     }
-    catch(err){
+    catch (err) {
       console.log(err)
     }
   }
-  
-  
-  
+
+
+
   return (
     <div className="w-full h-[calc(100vh-10ch)] bg-gradient-to-r from-gray-100 to-gray-200 flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">

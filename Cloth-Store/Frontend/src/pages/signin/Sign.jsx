@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiLogIn } from 'react-icons/fi';
 import axios from 'axios'
 
@@ -7,6 +7,7 @@ const Sign = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email,setEmail] = useState('')
+  const navigate = useNavigate()
 
   
   const handleregister= async(e)=>{
@@ -20,9 +21,15 @@ const Sign = () => {
 
       const response = await axios.post('http://localhost:8081/api/users/register',data)
       console.log(response)
+      
+      if(response.status===200){
+        alert(response.data.message)
+        navigate('/login')
+      }
     }
     catch(err){
       console.log(err)
+      alert(err.response?.data?.message || "Registration failed. Please try again.");
     }
   }
   
@@ -94,9 +101,9 @@ const Sign = () => {
 
         {/* Footer */}
         <div className="mt-6 text-center text-sm text-gray-600">
-          Not registered yet?{' '}
+          Already have a account?{' '}
           <Link to="/" className="text-blue-600 hover:underline font-medium">
-            Sign Up
+            Log In
           </Link>
         </div>
       </div>
