@@ -18,7 +18,7 @@ const Navbar = () => {
 
     // for mobile nav
     const [mobilenav, setMobilenav] = useState(false)
-    const login = useSelector((state)=>state.auth.login)
+    const login = useSelector((state)=>state.auth.isloggedIn)
 
     return (
         <nav className='md:bg-gray-200 bg-blue-400'>

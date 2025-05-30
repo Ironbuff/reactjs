@@ -10,16 +10,21 @@ import {
   FiTag,
   FiFileText
 } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 
 const ClothDetail = () => {
   const [cloth, setCloth] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
+  const islogged = useSelector((state) => state.auth.isloggedIn);
+  const role = useSelector((state) => state.auth.role);
+  
 
   useEffect(() => {
     const fetchCloth = async () => {
       try {
         const response = await axios.get(`http://localhost:8081/api/user/clothes/getclothbyid/${id}`);
+        console.log(response)
         setCloth(response.data);
       } catch (error) {
         console.error('Failed to fetch cloth details:', error);
@@ -36,8 +41,8 @@ const ClothDetail = () => {
     );
   }
 
-  const handleBuy = () => {
-    alert(`Thank you for your interest in purchasing: ${cloth.title}`);
+  const handleBuy = async() => {
+    const result = await axios.post('http://localhost:8081/api/user/cart/addcart',)
   };
 
   const handleEdit = () => {
@@ -83,18 +88,19 @@ const ClothDetail = () => {
         </p>
 
         <div className="pt-4 flex gap-4">
-          <button
+          {islogged &&  (
+            <button
             onClick={handleBuy}
             className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white rounded-xl hover:scale-105 transition-transform duration-200"
           >
             <FiShoppingCart /> Buy Now
-          </button>
-          <button
+          </button>)}
+          {islogged && role === "admin" && (<button
             onClick={handleEdit}
             className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-xl hover:scale-105 transition-transform duration-200"
           >
             <FiEdit /> Edit
-          </button>
+          </button>)}
         </div>
       </div>
     </div>

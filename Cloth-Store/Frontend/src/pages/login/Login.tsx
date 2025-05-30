@@ -21,6 +21,7 @@ const Login = () => {
       }
 
       const response = await axios.post('http://localhost:8081/api/users/login', data)
+      console.log(response.status)
 
       if (response.status === 200) {
         alert(response.data.message)
@@ -32,6 +33,10 @@ const Login = () => {
         localStorage.setItem("role", response.data.role)
 
       }
+      else{
+        alert('login unsucessful')
+      }
+      
     }
     catch (err) {
       console.log(err)
