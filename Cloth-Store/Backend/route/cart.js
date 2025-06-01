@@ -7,3 +7,7 @@ const { authenticatetoken } = require('../controller/userAuth')
 router.post('/addcart',authenticatetoken,cartController.addtoCart)
 router.put('/removecart',authenticatetoken,cartController.removefromCart)
 router.get('/getcart',cartController.getcartcloth)
+
+
+
+module.exports=router

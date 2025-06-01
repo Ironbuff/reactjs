@@ -11,8 +11,8 @@ const OrderSchema = new Schema({
         ref:"Users"
     },
     status:{
+        type:String,
         enum:["Order Placed","Delivered","Cancelled"],
-        required:true,
         default:"Order Placed"
     }
 })

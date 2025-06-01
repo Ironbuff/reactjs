@@ -5,25 +5,29 @@ const express = require('express')
 
 // add the cloth to cart
 const addtoCart = async (req, res) => {
-    try {
-        const { clothid, id } = req.header;
+  try {
+    const { clothid, userid } = req.headers;
 
-        const user = await User.findById(id)
+    const user = await User.findById(userid);
 
-        const cart = user.cart.includes(clothid)
-
-        if (cart) {
-            return res.status(200).json({ message: "Clothes is already in Cart" })
-        }
-
-        await User.findByIdAndUpdate(id, { $push: { cart: clothid } })
-
-
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-    catch (err) {
-        return res.status(500).json({ message: "Server Error" })
+
+    const isAlreadyInCart = user.cart.includes(clothid);
+
+    if (isAlreadyInCart) {
+      return res.status(200).json({ message: "Clothes is already in Cart" });
     }
-}
+
+    await User.findByIdAndUpdate(userid, { $push: { cart: clothid } });
+
+    return res.status(200).json({ message: "Added to cart" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server Error", error: err });
+  }
+};
 
 // remove from cart
 const removefromCart = async (req, res) => {
@@ -42,18 +46,22 @@ const removefromCart = async (req, res) => {
 
 //get all cloth from cart
 const getcartcloth = async (req, res) => {
+  try {
+    const { id } = req.headers;
 
-    try {
-        const { id } = req.header
-        const Userinfo = await User.findById(id).populate('cart')
+    const Userinfo = await User.findById(id).populate('cart');
 
-        return res.status(200).json(Userinfo)
-
+    if (!Userinfo) {
+      return res.status(404).json({ message: "User not found" });
     }
-    catch (err) {
-        return res.status(500).json({ message: "Server Error" })
-    }
-}
+
+    return res.status(200).json({ cart: Userinfo.cart });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server Error", error: err });
+  }
+};
+
 
 
 exports.addtoCart = addtoCart

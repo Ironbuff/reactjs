@@ -71,7 +71,7 @@ const login = async(req,res)=>{
             // jwt verify part
             const token = jwt.sign({authclaims},process.env.JWT_Secert,{expiresIn:'30d'})
 
-            return res.status(200).json({id:existingUser._id,role:existingUser.role,token:token})
+            return res.status(200).json({id:existingUser._id,role:existingUser.role,token:token,message:"Login Sucessful"})
         }
     })
   }

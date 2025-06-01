@@ -2,7 +2,8 @@ const express = require('express')
 const cors = require('cors')
 const app = express()
 const userRoute = require('./route/user')
-// const orderRoute = require('./route/orders')
+const orderRoute = require('./route/orders')
+const cartRoute = require('./route/cart')
 const clothesRoute = require('./route/clothes')
 // import PORT 
 require('dotenv').config()
@@ -16,7 +17,8 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use(express.json())
 app.use('/api/users',userRoute);
 app.use('/api/user/clothes',clothesRoute);
-// app.use('/api/user/order',orderRoute)
+app.use('/api/user/order',orderRoute)
+app.use('/api/user/cart',cartRoute)
 
 app.listen(process.env.PORT,()=>{
     console.log(`App is listening in port  ${process.env.PORT}`)
