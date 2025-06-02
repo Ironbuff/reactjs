@@ -26,7 +26,6 @@ const ClothDetail = () => {
     const fetchCloth = async () => {
       try {
         const response = await axios.get(`http://localhost:8081/api/user/clothes/getclothbyid/${id}`);
-        console.log(response)
         setCloth(response.data);
       } catch (error) {
         console.error('Failed to fetch cloth details:', error);
@@ -57,7 +56,10 @@ const ClothDetail = () => {
           }
         }
       )
-      console.log(response)
+      if(response.status===200){
+        alert(response.data.message)
+        navigate('/cart' )
+      }
     }
     catch (err) {
       console.log(err)

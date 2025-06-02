@@ -92,6 +92,21 @@ const Navbar = () => {
                     <button className='font-semibold text-neutral-200 text-lg text-shadow-sm'>
                         Contact Us
                     </button>
+                     
+                     {!login?(
+                    <>
+                     <Link to={"/login"} className='px-3 py-3 bg-gray-300 hover:bg-gray-200 hover:border-2 hover:border-neutral-400 rounded-2xl hover:translate-0.5  transition-all ease-in-out duration-300 shadow-md'>
+                        Log In
+                    </Link>
+                     <Link to={'/sign'} className='px-3 py-3 bg-gray-300 hover:bg-gray-200 hover:border-2 hover:border-neutral-400 rounded-2xl hover:translate-0.5  transition-all ease-in-out duration-300 shadow-md'>
+                        SignIn
+                    </Link>
+                   </>
+                   ):(
+                    <Link to={'/logout'} className='px-3 py-3 bg-gray-300 hover:bg-gray-200 hover:border-2 hover:border-neutral-400 rounded-2xl hover:translate-0.5  transition-all ease-in-out duration-300 shadow-md'>
+                        Log Out
+                    </Link>
+                   )}
 
                 </div>
             )}
