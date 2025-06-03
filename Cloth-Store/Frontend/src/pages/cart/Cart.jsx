@@ -1,9 +1,12 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import {useNavigate} from 'react-router-dom'
 
 const Cart = () => {
     const [data, setData] = useState([]);
-
+    const navigate = useNavigate()
+    
+    
     useEffect(() => {
         const fetch = async () => {
             try {
@@ -35,6 +38,24 @@ const Cart = () => {
     const getDiscountedPrice = (item) => {
         return item.price - (item.price * item.discount / 100);
     };
+
+    const handleOrder = async()=>{
+        try{
+            const response = await axios.post('http://localhost:8081/api/user/order/order-place',{order:data},{
+                headers:{
+                    'Authorization':`Bearer ${localStorage.getItem('token')}`,
+                    id:localStorage.getItem('id')
+                }
+            })
+            if(response.status===200){
+              alert(response.data.message)
+              navigate('/profile')
+            }
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
 
     const subtotal = data.reduce((sum, item) => { //it accumaltes through array elements and allow to acess the single value
         return sum + getDiscountedPrice(item) * item.quantity;
@@ -95,6 +116,12 @@ const Cart = () => {
                         <span>Total</span>
                         <span>${total.toFixed(2)}</span>
                     </div>
+                    <button 
+                    className='p-3 rounded-2xl shadow-sm flex items-center bg-red-500/80 text-neutral-200 hover:bg-red-500 transition-all ease-in-out duration-300'
+                    onClick={handleOrder}
+                    >
+                        Place Order
+                    </button>
                 </div>
             </div>
         </div>

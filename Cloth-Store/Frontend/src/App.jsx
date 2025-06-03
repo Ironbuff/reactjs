@@ -8,6 +8,7 @@ import {Provider} from 'react-redux'
 import Store from "./store"
 import Sign from "./pages/signin/Sign"
 import Cart from "./pages/cart/Cart"
+import Profile from "./pages/profile/Profile"
 function App() {
 
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path="/sign" element={<Sign/>}/>
           <Route path="/cart" element={<Cart/>}/>
+          <Route path="/profile" element={<Profile/>}/>
         </Routes>
       </Provider>
     </Router>
