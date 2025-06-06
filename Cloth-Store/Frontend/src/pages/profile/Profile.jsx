@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {Outlet} from 'react-router-dom'
 const Profile = () => {
   return (
     <div className='h-screen w-full flex flex-row items-center justify-center'>
@@ -8,7 +8,7 @@ const Profile = () => {
       <Sidebar />
       </div>
       <div>
-      <Outlet className='w-3/5 h-full'/>
+      <Outlet className='w-3/5 h-full'/> 
       </div>
     </div>
   )

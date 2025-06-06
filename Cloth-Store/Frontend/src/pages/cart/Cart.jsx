@@ -39,6 +39,22 @@ const Cart = () => {
         return item.price - (item.price * item.discount / 100);
     };
 
+    //remove from the cart
+    const removefromCart = async(id)=>{
+        try{
+            const response = await axios.put('http://localhost:8081/api/user/cart/removecart',{},{
+                headers:{
+                    'Authorization':`Bearer ${localStorage.getItem('token')}`,
+                    userid:localStorage.getItem('id'),
+                    clothid:id,
+                }
+            })
+            console.log(response)
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
     const handleOrder = async()=>{
         try{
             const response = await axios.post('http://localhost:8081/api/user/order/order-place',{order:data},{
@@ -77,7 +93,7 @@ const Cart = () => {
                 <tbody>
                     {data.map((item) => (
                         <tr key={item._id} className="border-b relative text-neutral-800">
-                            <td className="p-3 flex gap-4 items-center">
+                            <td className="p-3 flex md:flex-row flex-col gap-4 items-center">
                                 <img
                                     src={`http://localhost:8081/${item.img}`}
                                     alt={item.title}
@@ -91,7 +107,7 @@ const Cart = () => {
                                     <div className="text-sm text-gray-600">
                                         <span className="text-green-400">${item.price}</span>
                                     </div>
-                                    <button className="text-red-500 text-sm hover:underline mt-1">Remove</button>
+                                    <button onClick={()=>removefromCart(item._id)} className="text-red-500 text-sm hover:underline mt-1">Remove</button>
                                 </div>
                             </td>
                             <td className="p-3">{item.quantity}</td>
