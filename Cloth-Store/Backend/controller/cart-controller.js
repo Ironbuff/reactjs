@@ -31,18 +31,29 @@ const addtoCart = async (req, res) => {
 
 // remove from cart
 const removefromCart = async (req, res) => {
+  try {
+    const { id, clothid } = req.headers;
 
-    const { id, clothid } = req.header
-    const Userinfo = await User.findById(id)
+    const Userinfo = await User.findById(id);
 
-    const isInCart = Userinfo.cart.includes(clothid)
-
-    if (isInCart) {
-        return res.status(400).json({ message: "Item not in the Cart" })
+    if (!Userinfo) {
+      return res.status(404).json({ message: "User not found" });
     }
 
-    await Userinfo.findByIdAndUpdate(id, { $pull: { cart: clothid } })
-}
+    const isInCart = Userinfo.cart.includes(clothid);
+
+    if (!isInCart) {
+      return res.status(400).json({ message: "Item not in the Cart" });
+    }
+
+    await User.findByIdAndUpdate(id, { $pull: { cart: clothid } });
+
+    return res.status(200).json({ message: "Item removed from cart" });
+  } catch (err) {
+    console.error("Error in removefromCart:", err);
+    return res.status(500).json({ message: "Server Error", error: err.message });
+  }
+};
 
 //get all cloth from cart
 const getcartcloth = async (req, res) => {
