@@ -32,7 +32,7 @@ const Cart = () => {
         };
 
         fetch();
-    }, []);
+    }, [data]);
 
     // Compute price after discount
     const getDiscountedPrice = (item) => {
@@ -45,11 +45,13 @@ const Cart = () => {
             const response = await axios.put('http://localhost:8081/api/user/cart/removecart',{},{
                 headers:{
                     'Authorization':`Bearer ${localStorage.getItem('token')}`,
-                    userid:localStorage.getItem('id'),
+                    id:localStorage.getItem('id'),
                     clothid:id,
                 }
             })
-            console.log(response)
+           if(response.status===200){
+            fetch()
+           }
         }
         catch(err){
             console.log(err)
