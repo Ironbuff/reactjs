@@ -10,7 +10,11 @@ require('dotenv').config()
 const mongoose = require('./conn/conn')
 const clothes = require('./model/clothes')
 
-app.use(cors())
+app.use(cors({
+    origin:'http://localhost:5173',
+    credentials:true
+
+}))
 app.use('/uploads', express.static(__dirname + '/uploads'));
 //✅ This tells Express to serve files from uploads/ directory. So if an image is saved like and also to server all static file
 
