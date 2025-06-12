@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Sidebar = () => {
+const Sidebar = ({datas}) => {
   
   
   return (
@@ -9,7 +9,7 @@ const Sidebar = () => {
           All Settings
          </h1>
          <div>
-
+            {datas.map()}
          </div>
          
     </div>

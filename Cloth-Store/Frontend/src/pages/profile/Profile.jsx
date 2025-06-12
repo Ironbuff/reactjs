@@ -11,13 +11,13 @@ const Profile = () => {
   
   useEffect(()=>{
     const fetch = async()=>{
-      const response = await axios.get ('http//localhost:8081/api/users/getuser',{headers:
+      const response = await axios.get ('http://localhost:8081/api/users/getuser',{headers:
         {
                'Authorization':`Bearer ${localStorage.getItem('token')}`,
                     id:localStorage.getItem('id'),
         }
       })
-      console.log(response)
+
       setProfile(response.data)
     }
     fetch()
@@ -29,7 +29,7 @@ const Profile = () => {
     <div className='h-screen w-full flex flex-row items-center justify-center'>
       
       <div className='w-2/5 h-full'>
-      <Sidebar />
+      <Sidebar datas={profile} />
       </div>
       <div>
       <Outlet className='w-3/5 h-full'/> 
