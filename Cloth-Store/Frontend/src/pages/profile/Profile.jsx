@@ -17,7 +17,8 @@ const Profile = () => {
                     id:localStorage.getItem('id'),
         }
       })
-
+      
+    
       setProfile(response.data)
     }
     fetch()
@@ -26,9 +27,9 @@ const Profile = () => {
   
   
   return (
-    <div className='h-screen w-full flex flex-row items-center justify-center'>
+    <div className='h-screen w-full flex flex-row items-center justify-start'>
       
-      <div className='w-2/5 h-full'>
+      <div className='w-1/5 h-full'>
       <Sidebar datas={profile} />
       </div>
       <div>
