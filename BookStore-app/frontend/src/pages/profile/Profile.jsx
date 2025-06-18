@@ -17,6 +17,7 @@ const Profile = () => {
     const fetch = async() => {
       try {
         const response = await axios.get('http://localhost:3000/api/users/getuser', {headers})
+        console.log(response)
         setProfile(response.data)
       } catch (error) {
         console.error("Error fetching profile:", error)

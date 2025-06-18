@@ -4,40 +4,45 @@ const Order = require('../models/order')
 
 
 const orderPlaced = async (req, res) => {
-    try {
-        const { id } = req.headers; // Get user ID from headers
-        const { order } = req.body; // Get order array from request body
+    try{
+        
+        const {id} = req.headers;
 
-        // Loop through each item in the order array
-        for (const orderData of order) {
-            // Create a new order with user ID and book ID
+        const {order} = req.body;
+
+        const createdOrders = []
+
+        // to array through every order
+        for (orderData of order){
+
             const newOrder = new Order({
-                user: id,
-                book: orderData._id
-            });
+                user:id,
+                clothes:orderData._id
+            })
 
-            // Save the order to the database
-            const orderDatafromDB = await newOrder.save();
+            //save the order
+            const OrderfromDB = await newOrder.save()
 
-            // Add the order ID to the user's orders array
-            await User.findByIdAndUpdate(id, {
-                $push: { orders: orderDatafromDB._id },
-            });
-
-            // Remove the book from the user's cart
-            await User.findByIdAndUpdate(id, {
-                $pull: { cart: orderData._id }
-              });
-              
+            //to add to order array of user
+            await User.findByIdAndUpdate(id,{$push:{order:OrderfromDB._id}})
+            // clearing data from cart
+            await User.findByIdAndUpdate(id,{$pull:{cart:OrderfromDB._id}})
+            //to see if data has been saved
+            createdOrders.push(OrderfromDB)
         }
 
-        // Send success response
-        return res.status(200).json({ message: "Order placed successfully" });
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: "Server Error" });
+        
+     
+        return res.status(200).json({
+            message:"Order placed Sucessfully",
+            orders:createdOrders
+        })
     }
-};
+    catch(err){
+        return res.status(500).json({message:"Server Error"})
+    }
+}
+
 
 const removeOrder = async (req, res) => {
     try {
