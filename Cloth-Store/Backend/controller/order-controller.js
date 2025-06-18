@@ -8,9 +8,11 @@ const clothes = require('../model/clothes')
 const OrderPlaced = async(req,res)=>{
     try{
         
-        const {id} = req.header;
+        const {id} = req.headers;
 
         const {order} = req.body;
+
+        const createdOrders = []
 
         // to array through every order
         for (orderData of order){
@@ -25,8 +27,18 @@ const OrderPlaced = async(req,res)=>{
 
             //to add to order array of user
             await User.findByIdAndUpdate(id,{$push:{order:OrderfromDB._id}})
-            return res.status(200).json({message:"Order placed Sucessfully"})
+            // clearing data from cart
+            await User.findByIdAndUpdate(id,{$pull:{cart:OrderfromDB._id}})
+            //to see if data has been saved
+            createdOrders.push(OrderfromDB)
         }
+
+        
+     
+        return res.status(200).json({
+            message:"Order placed Sucessfully",
+            orders:createdOrders
+        })
     }
     catch(err){
         return res.status(500).json({message:"Server Error"})
