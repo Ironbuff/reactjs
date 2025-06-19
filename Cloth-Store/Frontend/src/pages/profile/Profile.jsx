@@ -17,7 +17,7 @@ const Profile = () => {
                     id:localStorage.getItem('id'),
         }
       })
-      
+      console.log(response)
     
       setProfile(response.data)
     }
