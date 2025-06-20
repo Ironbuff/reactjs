@@ -7,7 +7,8 @@ const Sidebar = ({datas}) => {
   
   
   return (
-    <div className="flex flex-col gap-y-2 px-28 py-10 w-full ">
+    <div className="flex flex-col gap-y-2 px-28  py-10 w-full ">
+         
          
          <div className="flex flex-col gap-y-1 border-b py-5 border-b-neutral-300 w-full">
 
@@ -22,12 +23,19 @@ const Sidebar = ({datas}) => {
 
          </div>
          
+         
          {/* Cart Section */}
          <div className="w-full bg-blue-500 flex items-center">
           {/* total Orders */}
+          {datas.role==="user"?
           <Link to={'/order'} className="text-base w-full bg-red-500">
-             All Order
+            Total Order
+          </Link>:
+          <Link to={"/total"} className="text-base w-full ">
+             All Orders
           </Link>
+          }
+          
          </div>
 
          <div>
