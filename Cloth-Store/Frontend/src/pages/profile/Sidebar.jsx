@@ -1,72 +1,70 @@
 import React from "react";
 import { RxAvatar } from "react-icons/rx";
 import { useDispatch } from "react-redux";
-import { Link, Router, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authActions } from "../../store/auth";
 
+const Sidebar = ({ datas }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const handlelogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    dispatch(authActions.logout());
+    alert("Successfully Logged Out");
+    navigate("/");
+  };
 
-const Sidebar = ({datas}) => {
-  
-   const dispatch = useDispatch()
-   const navigate = useNavigate()
-
-  const handlelogout = ()=>{
-    localStorage.removeItem("token")
-    localStorage.removeItem("role")
-    dispatch(authActions.logout())
-    alert("Sucessfully Logout")
-    navigate("/")  
-  }
-  
   return (
-    <div className="flex  items-center justify-center  py-10  px-28 h-full w-full  ">
-         
-       <div className="flex flex-col gap-y-3 w-full h-[80%] rounded-xl bg-gray-200 justify-center items-start px-5">
-            
-         <div className="flex flex-col gap-y-2 border-b py-5 border-b-neutral-300 w-full">
+    <div className="w-full h-full flex flex-col justify-between bg-gray-100 p-4 rounded-lg shadow">
+      <div className="flex flex-col gap-4">
+        {/* User Info */}
+        <div className="flex flex-col items-center gap-1 border-b border-gray-300 pb-4">
+          <RxAvatar size={50} className="text-green-600" />
+          <h2 className="text-lg font-semibold">{datas.username}</h2>
+          <p className="text-sm text-gray-600">{datas.email}</p>
+        </div>
 
-           <RxAvatar size={50} className="text-green-600" />
-           <h2 className="text-lg font-semibold leading-relaxed">
-                          {datas.username}
-           </h2>
+        {/* Navigation */}
+        <div className="flex flex-col gap-2 mt-4">
+          {datas.role === "user" ? (
+            <Link
+              to="order"
+              className="text-sm bg-blue-100 text-blue-700 p-2 rounded hover:bg-blue-200"
+            >
+              My Orders
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="total"
+                className="text-sm bg-blue-100 text-blue-700 p-2 rounded hover:bg-blue-200"
+              >
+                All Orders
+              </Link>
+              <Link
+                to="add"
+                className="text-sm bg-green-500 text-white p-2 rounded hover:bg-green-600 text-center"
+              >
+                Add Cloth
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
 
-           <p className="text-sm font-light ">
-            {datas.email}
-           </p>
-
-         </div>
-         
-         
-         {/* Cart Section */}
-         <div className="w-full  flex items-center">
-          {/* total Orders */}
-          {datas.role==="user"?
-          <Link to={'order'} className="text-base w-[100%] ">
-            Total Order
-          </Link>:
-          <>
-          <Link to={"total"} className="text-base w-full ">
-             All Orders
-          </Link>
-          <Link to={"add"} className="p-2 text-neutral-100 text-base bg-cyan-400 flex items-center justify-center">
-          Add Cloth
-          </Link>
-          </>
-          }
-          
-         </div>
-
-         <div className="flex items-center">
-            <button onClick={handlelogout} className="p-2 rounded-xl bg-blue-500 text-neutral-200">
-               Logout 
-            </button>
-         </div>
-
-       </div>
-         
+      {/* Logout Button */}
+      <div className="mt-6">
+        <button
+          onClick={handlelogout}
+          className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600 text-sm"
+        >
+          Logout
+        </button>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

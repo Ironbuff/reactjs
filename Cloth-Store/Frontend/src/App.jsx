@@ -26,8 +26,8 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           {/* Nest routes under profile */}
       <Route path="/profile" element={<Profile />}>
-        <Route path="order" element={<Total />} />
-        <Route path="total" element={<Allorder />} />
+        <Route path="order" element={<Allorder />} />
+        <Route path="total" element={<Total />} />
       </Route>
 
         </Routes>

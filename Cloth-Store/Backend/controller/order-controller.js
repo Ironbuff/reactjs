@@ -64,7 +64,8 @@ const RemoveOrder = async(req,res)=>{
         })
 
         //delete order from order db
-        Order.findByIdAndDelete(ordersId)     
+        Order.findByIdAndDelete(ordersId)
+        return res.status(200).json({ message: "Order removed successfully" });     
     }
     catch(err){
         return res.status(500).json({message:"Server Error"})
@@ -74,7 +75,7 @@ const RemoveOrder = async(req,res)=>{
 const getOrderhistory = async(req,res)=>{
 
     try{
-        const {id} = req.header
+        const {id} = req.headers
 
     //show order history so it shows order from latest order
     const userInfo = await User.findById(id).populate({
