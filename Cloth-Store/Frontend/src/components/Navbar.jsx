@@ -6,10 +6,9 @@ import { RxCross2 } from "react-icons/rx";
 import { useSelector } from 'react-redux';
 
 const navitems = [
-    { id: 1, name: "Home", links: "/home" },
-    { id: 2, name: "About Us", links: "/about" },
-    { id: 3, name: "Shop", links: "/shops" },
-    {id:4, name:"Profile", links:"/profile"}
+    { id: 1, name: "Home", links: "/" },
+    { id: 3, name: "Shop", links: "/shop" },
+  
 ]
 
 
@@ -53,8 +52,8 @@ const Navbar = () => {
                     </Link>
                    </>
                    ):(
-                    <Link to={'/logout'} className='px-3 py-3 bg-gray-300 hover:bg-gray-200 hover:border-2 hover:border-neutral-400 rounded-2xl hover:translate-0.5  transition-all ease-in-out duration-300 shadow-md'>
-                        Log Out
+                    <Link to={'/profile'} className='px-3 py-3 bg-gray-300 hover:bg-gray-200 hover:border-2 hover:border-neutral-400 rounded-2xl hover:translate-0.5  transition-all ease-in-out duration-300 shadow-md'>
+                        Profile
                     </Link>
                    )}
                 </div>

@@ -70,7 +70,8 @@ const Allorder = () => {
                 <td className="px-4 py-2 text-center text-green-700 font-medium">
                   ₹{getDiscountedPrice(item)?.toFixed(2)}
                 </td>
-                <td className="px-4 py-2 text-center">{item.status}</td>
+                <td className={`px-4 py-2 text-center
+                  ${item.status==="Delivered"?"text-green-500":item.status==="Cancelled"?"text-red-500":"text-blue-500"}`}>{item.status}</td>
                 <td className="px-4 py-2 text-center">
                   <button
                     onClick={() => handleRemove(item._id)}
