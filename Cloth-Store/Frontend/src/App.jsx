@@ -44,10 +44,11 @@ const AppContent = () => {
         <Route path="/profile" element={<Profile />}>
           <Route path="order" element={<Allorder />} />
           <Route path="total" element={<Total />} />
-        </Route>
-        {role === "admin" && (
-          <Route path="/add" element={<Add />} />
+          {role === "admin" && (
+          <Route path="add" element={<Add />} />
         )}
+        </Route>
+        
         <Route path="/shop" element={<Shop />} />
       </Routes>
     </>
