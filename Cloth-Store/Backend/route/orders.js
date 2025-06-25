@@ -7,7 +7,7 @@ router.post('/order-place',authenticatetoken,OrderController.OrderPlaced)
 router.put('/remove-order/:ordersId',authenticatetoken,OrderController.RemoveOrder)
 router.get('/get-order-history',authenticatetoken,OrderController.getOrderhistory)
 router.get('/get-all-order',authenticatetoken,OrderController.getAllOrder)
-router.get('/update-status/:orderid',authenticatetoken,OrderController.UpdateStatus)
+router.put('/update-status/:orderid',authenticatetoken,OrderController.UpdateStatus)
 
 
 module.exports=router

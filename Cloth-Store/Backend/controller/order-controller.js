@@ -109,7 +109,7 @@ const getAllOrder = async(req,res)=>{
 const UpdateStatus = async(req,res)=>{
     try{
          const {orderid} = req.params
-         const {id}= req.header
+         const {id}= req.headers
 
          await Order.findByIdAndUpdate(orderid,{status:req.body.status})
 

@@ -8,7 +8,7 @@ const OrderSchema = new Schema({
     },
     user:{
         type:mongoose.Types.ObjectId,
-        ref:"Users"
+        ref:"User"
     },
     status:{
         type:String,

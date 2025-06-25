@@ -69,7 +69,7 @@ const update = async(req,res)=>{
             fs.renameSync(path,newpath)
         }
 
-        const {clothid} = req.headers;
+        const {clothid} = req.params;
 
         const updateCloth = await Clothes.findById(clothid)
 
@@ -99,7 +99,7 @@ const update = async(req,res)=>{
 //delete cloth
 const removecloth = async(req,res)=>{
     try{
-        const{clothid}= req.headers;
+        const{clothid}= req.body;
         await clothes.findByIdAndDelete(clothid)
         return res.status(200).json({message:"Cloth sucessfully deleted"})
     }
