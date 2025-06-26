@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "./store/auth";
 import Add from "./components/addcloth/Add";
 import Shop from "./pages/shop/Shop";
+import Edit from "./components/edit/Edit";
 
 // ✅ Component containing logic now *inside* Provider
 const AppContent = () => {
@@ -50,6 +51,7 @@ const AppContent = () => {
         </Route>
         
         <Route path="/shop" element={<Shop />} />
+        <Route path="/edit-cloth/:id" element={<Edit/>}/>
       </Routes>
     </>
   );

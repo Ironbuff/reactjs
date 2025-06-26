@@ -11,6 +11,7 @@ import {
   FiFileText
 } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
+import { MdDeleteSweep } from 'react-icons/md';
 
 const ClothDetail = () => {
   const [cloth, setCloth] = useState(null);
@@ -20,9 +21,6 @@ const ClothDetail = () => {
   const role = useSelector((state) => state.auth.role);
 
 
-
-
-  useEffect(() => {
     const fetchCloth = async () => {
       try {
         const response = await axios.get(`http://localhost:8081/api/user/clothes/getclothbyid/${id}`);
@@ -31,6 +29,9 @@ const ClothDetail = () => {
         console.error('Failed to fetch cloth details:', error);
       }
     };
+
+  useEffect(() => {
+
     fetchCloth();
   }, [id]);
 
@@ -65,9 +66,24 @@ const ClothDetail = () => {
       console.log(err)
     }
   }
-    const handleEdit = () => {
-      navigate(`/edit-cloth/${cloth._id}`);
+    
+  const handleEdit = (id) => {
+      navigate(`/edit-cloth/${id}`);
     };
+
+  const handledelete = async(clothid)=>{
+    const response = await axios.put(`http://localhost:8081/api/user/clothes/removecloth`,clothid,{
+      headers:{
+        'Authorization':`Bearer ${localStorage.getItem("token")}`,
+        'id':`${localStorage.getItem("id")}`
+      }
+    })
+    if(response.status===200){
+      alert(response.data.message)
+      fetchCloth()
+      navigate('/shop')
+    }
+  }
 
   
 
@@ -82,6 +98,15 @@ const ClothDetail = () => {
           />
           <span className="absolute top-4 right-4 bg-red-500 text-white text-sm px-3 py-1 rounded-full shadow-md font-semibold">
             {cloth.discount}% OFF
+          </span>
+
+          <span className='absolute top-4 left-4 flex items-center'>
+            <button 
+            className=' p-2 bg-red-500 rounded-xl text-neutral-300 hover:bg-red-600 hover:scale-105 transition-all ease-in-out'
+            onClick={()=>handledelete(cloth._id)}
+            >
+              <MdDeleteSweep />
+            </button>
           </span>
         </div>
 
@@ -118,7 +143,7 @@ const ClothDetail = () => {
                 <FiShoppingCart /> Buy Now
               </button>)}
             {islogged && role === "admin" && (<button
-              onClick={handleEdit}
+              onClick={()=>handleEdit(cloth._id)}
               className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-xl hover:scale-105 transition-transform duration-200"
             >
               <FiEdit /> Edit
