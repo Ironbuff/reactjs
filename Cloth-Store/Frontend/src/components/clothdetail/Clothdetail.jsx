@@ -100,7 +100,8 @@ const ClothDetail = () => {
             {cloth.discount}% OFF
           </span>
 
-          <span className='absolute top-4 left-4 flex items-center'>
+          {islogged && role==="admin" &&(
+            <span className='absolute top-4 left-4 flex items-center'>
             <button 
             className=' p-2 bg-red-500 rounded-xl text-neutral-300 hover:bg-red-600 hover:scale-105 transition-all ease-in-out'
             onClick={()=>handledelete(cloth._id)}
@@ -108,6 +109,9 @@ const ClothDetail = () => {
               <MdDeleteSweep />
             </button>
           </span>
+          )}
+
+          
         </div>
 
         {/* Detail Section */}
