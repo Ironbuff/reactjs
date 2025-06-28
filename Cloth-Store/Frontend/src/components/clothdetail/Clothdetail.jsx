@@ -72,7 +72,7 @@ const ClothDetail = () => {
     };
 
   const handledelete = async(clothid)=>{
-    const response = await axios.put(`http://localhost:8081/api/user/clothes/removecloth`,clothid,{
+    const response = await axios.put(`http://localhost:8081/api/user/clothes/removecloth`,{clothid},{
       headers:{
         'Authorization':`Bearer ${localStorage.getItem("token")}`,
         'id':`${localStorage.getItem("id")}`
