@@ -6,6 +6,7 @@ const upload = mutler({dest:'uploads/'})
 const fs = require('fs')
 const Clothes = require('../model/clothes')
 const clothes = require('../model/clothes')
+const { error } = require('console')
 
 const addCloth = async(req,res)=>{
     try{
@@ -104,7 +105,8 @@ const removecloth = async(req,res)=>{
         return res.status(200).json({message:"Cloth sucessfully deleted"})
     }
     catch(err){
-        return res.status(500).json({message:"Server Error"})
+        return res.status(500).json({message:"Server Error",error:err.message})
+
     }
 }
 
