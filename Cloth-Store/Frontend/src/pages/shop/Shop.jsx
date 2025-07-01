@@ -6,6 +6,7 @@ const Shop = () => {
   const [datas, setDatas] = useState([]);
   const [selectedData, setSelectedData] = useState(null);
   const [isWinterChecked, setIsWinterChecked] = useState(false);
+  const[isSummerChecked,setIsSummerChecked] = useState(false)
 
   useEffect(() => {
     const fetch = async () => {
@@ -17,7 +18,7 @@ const Shop = () => {
 
   const handleFilter = (e) => {
     const checked = e.target.checked;
-    setIsWinterChecked(checked);
+    
 
     if (checked) {
       const winterClothes = datas.filter(item => item.category === "winter clothes");
@@ -41,6 +42,19 @@ const Shop = () => {
           onChange={handleFilter}
         />
       </div>
+      <div className='flex  gap-x-3'>
+        <label htmlFor='winterClothes'>
+          Winter clothes
+        </label>
+        <input
+          id='winterClothes'
+          type='checkbox'
+          className='rounded-xl bg-transparent'
+          checked={isSummerChecked}
+          onChange={handleFilter}
+        />
+      </div>
+
 
       <Clothcard item={selectedData ? selectedData : datas} />
     </div>
