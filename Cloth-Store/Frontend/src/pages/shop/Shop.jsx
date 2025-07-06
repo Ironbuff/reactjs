@@ -59,7 +59,7 @@ const Shop = () => {
           <input
             id='winterClothes'
             type='checkbox'
-            className='rounded'
+            className='rounded bg-transparent'
             checked={isWinterChecked}
             onChange={handleFilter}
           />
@@ -69,13 +69,13 @@ const Shop = () => {
           <input
             id='summerClothes'
             type='checkbox'
-            className='rounded'
+            className='rounded bg-transparent'
             checked={isSummerChecked}
             onChange={handleFilter}
           />
         </div>
       </div>
-      <Clothcard item={selectedData} />
+      <Clothcard item={selectedData.length>0?selectedData:datas} />
     </div>
   );
 };
