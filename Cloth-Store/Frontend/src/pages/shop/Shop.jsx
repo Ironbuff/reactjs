@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Clothcard from '../../components/clothcard/Clothcard';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Clothcard from "../../components/clothcard/Clothcard";
 
 const Shop = () => {
   const [datas, setDatas] = useState([]);
@@ -11,11 +11,13 @@ const Shop = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = await axios.get('http://localhost:8081/api/user/clothes/getcloth');
+        const response = await axios.get(
+          "http://localhost:8081/api/user/clothes/getcloth"
+        );
         setDatas(response.data);
         setSelectedData(response.data);
       } catch (error) {
-        console.error('Error fetching clothes:', error);
+        console.error("Error fetching clothes:", error);
       }
     };
     fetch();
@@ -24,9 +26,9 @@ const Shop = () => {
   const handleFilter = (e) => {
     const { id, checked } = e.target;
 
-    if (id === 'winterClothes') {
+    if (id === "winterClothes") {
       setIsWinterChecked(checked);
-    } else if (id === 'summerClothes') {
+    } else if (id === "summerClothes") {
       setIsSummerChecked(checked);
     }
 
@@ -34,13 +36,13 @@ const Shop = () => {
 
     if (checked || isWinterChecked || isSummerChecked) {
       const filters = [];
-      if (id === 'winterClothes' ? checked : isWinterChecked) {
-        filters.push('winter clothes');
+      if (id === "winterClothes" ? checked : isWinterChecked) {
+        filters.push("winter clothes");
       }
-      if (id === 'summerClothes' ? checked : isSummerChecked) {
-        filters.push('summer clothes');
+      if (id === "summerClothes" ? checked : isSummerChecked) {
+        filters.push("summer clothes");
       }
-      filteredData = datas.filter(item => filters.includes(item.category));
+      filteredData = datas.filter((item) => filters.includes(item.category));
     }
 
     // If no filters are active, show all
@@ -52,30 +54,30 @@ const Shop = () => {
   };
 
   return (
-    <div className='px-28 flex flex-col gap-x-4 items-center  bg-gray-200 min-h-screen'>
-      <div className='flex gap-x-8 py-4'>
-        <div className='flex items-center gap-x-2'>
-          <label htmlFor='winterClothes'>Winter Clothes</label>
+    <div className="px-28 flex flex-col gap-x-4 items-center  bg-gray-200 min-h-screen">
+      <div className="flex gap-x-8 py-4">
+        <div className="flex items-center gap-x-2">
+          <label htmlFor="winterClothes">Winter Clothes</label>
           <input
-            id='winterClothes'
-            type='checkbox'
-            className='rounded bg-transparent'
+            id="winterClothes"
+            type="checkbox"
+            className="rounded-xl bg-transparent shadow-md"
             checked={isWinterChecked}
             onChange={handleFilter}
           />
         </div>
-        <div className='flex items-center gap-x-2'>
-          <label htmlFor='summerClothes'>Summer Clothes</label>
+        <div className="flex items-center gap-x-2">
+          <label htmlFor="summerClothes">Summer Clothes</label>
           <input
-            id='summerClothes'
-            type='checkbox'
-            className='rounded bg-transparent'
+            id="summerClothes"
+            type="checkbox"
+            className="rounded-xl bg-transparent shadow-md"
             checked={isSummerChecked}
             onChange={handleFilter}
           />
         </div>
       </div>
-      <Clothcard item={selectedData.length>0?selectedData:datas} />
+      <Clothcard item={selectedData.length > 0 ? selectedData : datas} />
     </div>
   );
 };
