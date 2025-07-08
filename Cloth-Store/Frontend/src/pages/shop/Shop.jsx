@@ -56,7 +56,7 @@ const Shop = () => {
   return (
     <div className="px-28 flex flex-col gap-x-4 items-center  bg-gray-200 min-h-screen">
       <div className="flex gap-x-8 py-4">
-        <div className="flex items-center gap-x-2">
+        <div className="flex items-center gap-x-4">
           <label htmlFor="winterClothes">Winter Clothes</label>
           <input
             id="winterClothes"
