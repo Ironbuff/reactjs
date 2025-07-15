@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Clothcard = ({ item }) => {
   return (
-    <div className='md:px-28 px-4 bg-gray-200'>
+    <div className='md:px-28 px-4 bg-gray-200 w-full'>
       <h1 className='text-2xl font-bold w-full '>Our Latest Product</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4 ">
 
