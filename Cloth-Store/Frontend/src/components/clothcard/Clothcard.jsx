@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 
 const Clothcard = ({ item }) => {
   return (
-    <div className='md:px-28 px-4 bg-gray-100 w-full py-8'>
-      <h1 className='text-2xl font-bold mb-6 text-gray-800'>Our Latest Product</h1>
+    <div className='md:px-28 px-4 bg-gray-200 w-full py-8'>
+      <h1 className='text-3xl font-bold mb-6 text-gray-800'>Our Latest Product</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 
         {item.map((product, i) => (
           <Link to={`/detail/${product._id}`} key={i}>
             <div
-              className="bg-white shadow-sm rounded-2xl overflow-hidden border hover:shadow-md hover:scale-[1.02] transition-all duration-300"
+              className="bg-neutral-200 shadow-sm rounded-2xl overflow-hidden border hover:shadow-md hover:scale-[1.02] transition-all duration-300"
             >
               <img
                 src={`http://localhost:8081/${product.img}`}
