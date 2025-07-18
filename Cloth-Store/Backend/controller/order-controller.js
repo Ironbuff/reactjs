@@ -28,7 +28,7 @@ const OrderPlaced = async(req,res)=>{
             //to add to order array of user
             await User.findByIdAndUpdate(id,{$push:{order:OrderfromDB._id}})
             // clearing data from cart
-            await User.findByIdAndUpdate(id,{$pull:{cart:OrderfromDB._id}})
+            await User.findByIdAndUpdate(id,{$pull:{cart:orderData._id}})
             //to see if data has been saved
             createdOrders.push(OrderfromDB)
         }
