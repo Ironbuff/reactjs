@@ -6,7 +6,7 @@ require('dotenv').config()
 
 connDB()
 
-app.listen(8081,()=>{
+app.listen(process.env.PORT,()=>{
     console.log("App Started")
 })
 
