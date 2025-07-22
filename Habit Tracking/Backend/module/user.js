@@ -1,14 +1,14 @@
 const { timeStamp } = require('console')
 const mongoose = require('mongoose')
 const { type } = require('os')
-const Schema  = mongoose.Schema()
+const Schema  = mongoose.Schema
 
 const userSchema = new Schema({
     username:{
         type:String,
-        uniqiue:true,
+        unique:true,
         minlength:3,
-        required:string,
+        required:true,
     },
     email:{
         type:String,
@@ -16,8 +16,7 @@ const userSchema = new Schema({
         required:true,
     },
     password:{
-          type:string,
-          unique:true,
+          type:String,
           minlength:3,
     },
 
