@@ -8,11 +8,23 @@ require("dotenv").config();
 const sign = async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    
+    // Validate password
     const checkPassword = passwordSchema.safeParse({ password });
-    console.log(checkPassword);
+  
+    
     if (!checkPassword.success) {
-      const errors = checkPassword?.error?.errors.map((err) => err.message);
-      return res.status(400).json({ message: errors });
+      
+      
+      // Extract errors from ZodError - the errors are in the error object itself
+      const errors = checkPassword.error.issues?.map((err) => err.message) || 
+                   checkPassword.error.errors?.map((err) => err.message) || 
+                   ['Password validation failed'];
+      
+      return res.status(400).json({ 
+        message: "Password validation failed",
+        errors: errors 
+      });
     }
 
     const isEmailSame = await User.findOne({ email });
@@ -40,10 +52,13 @@ const sign = async (req, res) => {
 
     return res.status(200).json({ message: "User created successfully." });
   } catch (err) {
-    console.error(err);
+    console.error('Sign up error:', err);
     return res.status(500).json({ message: "Error within the server." });
   }
 };
+
+
+
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
