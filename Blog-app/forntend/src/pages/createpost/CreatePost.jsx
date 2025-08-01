@@ -28,8 +28,7 @@ const CreatePost = () => {
             const response = await axios.post('http://localhost:8000/api/users/createpost', formdata, {
                 withCredentials: true, // Include cookies in the request
             });
-
-            console.log('Success:', response.data); // Log the response data
+            
             if (response.status === 200) {
                 setRedirect(true); // Set redirect state to true on successful post creation
             }

@@ -30,5 +30,7 @@ router.post('/createpost', uploadimg.single('file'),postcontroller.createpost)
 //to update the post the api
 router.put('/updatepost',uploadimg.single('file'),postcontroller.updatepost)
 
+router.delete('/deletepost/:id',postcontroller.deletepost)
+
 
   module.exports = router //to import router property

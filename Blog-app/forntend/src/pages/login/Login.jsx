@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
       <form 
-        className="bg-white p-8 rounded-2xl shadow-lg w-80 sm:w-96 flex flex-col gap-4" 
+        className="bg-neutral-50 p-8 rounded-2xl shadow-lg w-full sm:w-[30%] flex flex-col gap-4" 
         onSubmit={login}
       >
         <h2 className="text-2xl font-bold text-center text-gray-800/80 mb-4">Login to Your Account</h2>
@@ -59,7 +59,7 @@ const Login = () => {
             required
           />
           <span
-            className="absolute top-3 right-3 text-gray-600 cursor-pointer"
+            className="absolute top-4 right-3 text-gray-600 cursor-pointer"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}

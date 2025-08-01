@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -5,6 +7,7 @@ const cookieParser = require('cookie-parser'); // Fixed the case (cookieParser i
 const userRoutes = require('./route/user'); // Renamed for clarity
 
 const app = express();
+require('dotenv').config();
 
 // Middleware
 app.use(express.json()); // Parse JSON from request
@@ -21,10 +24,10 @@ app.use((req, res, next) => {
 });
 
 // MongoDB Connection
-mongoose.connect('mongodb+srv://kushal:kushal@cluster0.2cew4zy.mongodb.net/Blogs')
+mongoose.connect(`${process.env.DB_API}`)
     .then(() => {
-        app.listen(8000, () => {
-            console.log("Server is running on port 8000");
+        app.listen(process.env.PORT, () => {
+            console.log(`Server is running on port ${process.env.PORT}`);
         });
     })
     .catch((error) => {

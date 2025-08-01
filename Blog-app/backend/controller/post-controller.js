@@ -133,9 +133,34 @@ const updatepost = async(req,res)=>{
   })
 }
 
+const deletepost = async(req,res)=>{
+
+  const{token}= req.cookies;
+  //verify token
+  jwt.verify(token, secret, {}, async(err, info) => 
+    {
+    
+      if (err) return res.status(401).json({ message: "Invalid token" });
+    
+      const {id}= req.params
+      const Doc = await post.findById(id)
+      //check userid is same as sent by client or authenticated user
+      //since creator is type of object id so for better comparsion we use JSON.stringify for comparsion
+      const isAuthor = JSON.stringify(Doc.creator)===JSON.stringify(info.id)
+      //now we check author true and then update the blog
+      if(!isAuthor){
+        res.status(400).json("You aren't the author")
+      }
+
+  
+       await post.findByIdAndDelete(id)
+       return res.status(200).json({message:"Post Sucessfully Deleted"})
+    })
+}
 
 
 exports.createpost = createpost;
 exports.getpost= getpost;
 exports.getPostByPostId=getPostByPostId;
 exports.updatepost=updatepost;
+exports.deletepost= deletepost

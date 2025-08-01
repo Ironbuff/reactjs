@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { formatISO9075 } from 'date-fns';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import moment from 'moment'
 import { UserContext } from '../../User-Context';
 import { FaEdit } from "react-icons/fa";
 
@@ -9,11 +9,33 @@ const Postpage = () => {
   const { id } = useParams();
   const [postinfo, setPostinfo] = useState(null);
   const { userInfo } = useContext(UserContext);
+  const navigate = useNavigate()
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/users/post/${id}`)
-      .then(response => setPostinfo(response.data));
+ const fetch = async()=>{
+     const response =await axios.get(`http://localhost:8000/api/users/post/${id}`)
+    if(response.status===200){
+      setPostinfo(response?.data)
+      console.log(response)
+    }
+ }
+ fetch()
+ 
   }, []);
+
+
+  const handledelete = async(id)=>{
+    try{
+       const response = await axios.delete(`http://localhost:8000/api/users/deletepost/${id}`)
+       if(response.status===200){
+        alert("Item Sucessfully deleted")
+        navigate('/')
+       }
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
 
   if (!postinfo) return '';
 
@@ -24,8 +46,8 @@ const Postpage = () => {
         <h1 className="text-4xl font-extrabold text-white leading-tight">
           {postinfo.title}
         </h1>
-        <div className="text-gray-400 text-sm">
-          by <span className="text-blue-400">{postinfo.username}</span> • {formatISO9075(new Date(postinfo.createdAt))}
+        <div className="text-gray-400 text-lg font-sans">
+          by <span className="text-blue-400">{postinfo?.creator?.username}</span> • {moment(postinfo?.createdAt).format('MMMM Do YYYY, h:mm:ss a')};
         </div>
 
         {userInfo?.id === postinfo.creator._id && (
@@ -36,6 +58,13 @@ const Postpage = () => {
             >
               Edit Post <FaEdit />
             </Link>
+            <button 
+            onClick={()=>handledelete(postinfo._id)}
+             type='button'
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-700 text-neutral-300 hover:bg-neutral-600 transition duration-200"
+             >
+               Delete Post 
+            </button>
           </div>
         )}
       </div>
