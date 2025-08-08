@@ -21,9 +21,8 @@ catch(err){
 
 exports.getUserHabit = async(req,res)=>{
     try{
-      const userid = req.user.id
-      const newhabit = await Habit.find({user:userid}).sort({createdAt:-1})
-      return res.status(200).json({habit:newhabit})
+      const newhabit = await Habit.find().sort({createdAt:-1})
+      return res.status(200).json({newhabit})
     }
     catch(err){
         return res.status(500).json({message:"Server Error",error:err.message})   
@@ -33,8 +32,8 @@ exports.getUserHabit = async(req,res)=>{
 exports.deleteUserHabit = async(req,res)=>{
     try{
         const userid = req.user.id;
-        const id = req.params;
-        await Habit.findByIdAndDelete(id)
+        const {ids} = req.params;
+        await Habit.findByIdAndDelete(ids)
         return res.status(200).json({message:"Sucessfully deleted"})
     }
     catch(err){
