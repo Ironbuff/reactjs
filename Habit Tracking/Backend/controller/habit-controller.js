@@ -40,3 +40,25 @@ exports.deleteUserHabit = async(req,res)=>{
         return res.status(500).json({message:"Server Error",error:err.message})
     }
 }
+
+// Update a habit's title or description
+exports.updateHabit = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description } = req.body;
+
+    const updatedHabit = await Habit.findByIdAndUpdate(
+      id,
+      { title, description },
+      { new: true }
+    );
+
+    if (!updatedHabit) {
+      return res.status(404).json({ message: 'Habit not found' });
+    }
+
+    res.status(200).json({ message: 'Habit updated', habit: updatedHabit });
+  } catch (err) {
+    res.status(500).json({ message: 'Error updating habit', error: err.message });
+  }
+};
