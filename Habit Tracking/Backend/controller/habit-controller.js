@@ -2,6 +2,7 @@ const express = require('express')
 const Habit = require('../module/habit');
 const { error } = require('console');
 const habit = require('../module/habit');
+const habit = require('../module/habit');
 
 exports.addHabit = async(req,res)=>{
    try{
@@ -63,15 +64,15 @@ exports.updateHabit = async (req, res) => {
   }
 };
 
-const Habit = require('../models/habit-model');
 
-const toggleHabitCompletion = async (req, res) => {
+
+exports.toggleHabitCompletion = async (req, res) => {
     const habitId = req.params.id;
     const userId = req.user._id; // Make sure your middleware attaches this
     const { date } = req.body;
 
     try {
-        const habit = await Habit.findOne({ _id: habitId, user: userId });
+        const habit = await habit.findOne({ _id: habitId, user: userId });
 
         if (!habit) {
             return res.status(404).json({ message: 'Habit not found' });
