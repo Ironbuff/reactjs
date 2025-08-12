@@ -1,8 +1,6 @@
 const express = require('express')
 const Habit = require('../module/habit');
-const { error } = require('console');
-const habit = require('../module/habit');
-const habit = require('../module/habit');
+
 
 exports.addHabit = async(req,res)=>{
    try{
