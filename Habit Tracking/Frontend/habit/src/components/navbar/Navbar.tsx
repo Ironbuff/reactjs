@@ -12,7 +12,7 @@ const Navbar = () => {
   
   
     return (
-    <div className='flex flex-row items-center w-full h-[9ch] justify-between px-28'>
+    <div className='flex flex-row items-center w-full h-[9ch] shadow-md justify-between px-28'>
         <h1 className='font-bold text-2xl flex items-center justify-center text-red-300'>
             Habit
             <span className='text-neutral-700 px-1'>
