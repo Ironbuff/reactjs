@@ -2,7 +2,7 @@ import axios from 'axios'
 import api from './Api'
 
 export const getHabits = async()=>{
-   const response = await api.get('/habits')
+   const response = await api.get('user/habit')
    if(response.status===200){
     return response
    }
