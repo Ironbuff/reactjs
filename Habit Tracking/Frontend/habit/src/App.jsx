@@ -1,11 +1,12 @@
 import React from "react"
-import { BrowserRouter as Router } from "react-router-dom"
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import Navbar from "./components/navbar/Navbar"
 import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
 import Habit from "./components/habit/Habit"
+import Login from "./pages/login/Login"
 
 function App() {
 const queryClient = new QueryClient()
@@ -15,7 +16,10 @@ const queryClient = new QueryClient()
         <QueryClientProvider client={queryClient}>
       <Router>
         <Navbar/>
-        <Habit/>
+        <Routes>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/" element={<Habit/>}/>
+        </Routes>
       </Router>
       </QueryClientProvider>
     
