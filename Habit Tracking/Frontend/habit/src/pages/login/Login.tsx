@@ -2,8 +2,8 @@ import React from "react";
 
 const Login = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-2xl">
+    <div className="flex items-center justify-center min-h-screen ">
+      <div className="w-full max-w-md p-8 space-y-6 bg-gray-50 shadow-lg rounded-2xl">
         <h2 className="text-3xl font-bold text-center text-gray-800">
           Login
         </h2>
@@ -43,7 +43,7 @@ const Login = () => {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full py-2 text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+            className="w-full py-2 text-white  bg-red-200 hover:bg-red-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
           >
             Login
           </button>
