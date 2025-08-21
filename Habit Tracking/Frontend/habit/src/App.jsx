@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-query'
 import Habit from "./components/habit/Habit"
 import Login from "./pages/login/Login"
+import Register from "./pages/register/Register"
 
 function App() {
 const queryClient = new QueryClient()
@@ -18,6 +19,7 @@ const queryClient = new QueryClient()
         <Navbar/>
         <Routes>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/register" element={<Register/>}/>
             <Route path="/" element={<Habit/>}/>
         </Routes>
       </Router>
