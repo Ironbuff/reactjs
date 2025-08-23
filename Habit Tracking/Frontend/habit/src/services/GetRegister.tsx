@@ -1,11 +1,14 @@
 import api from './Api'
 
-export const getHabits = async()=>{
-   const response = await api.get('/auth/user/sign')
-   if(response.status===200){
-    return response
-   }
-   else{
-    console.log("error in fetching data")
-   }
+export const UseRegister = async(data:{
+   username:string,
+   email:string,
+   password:string,
+})=>{
+   const response = await api.post('/auth/user/sign',data,{
+      headers:{
+         'Content-Type':'application/json'
+      }
+   })
+  return response
 }
