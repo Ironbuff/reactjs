@@ -1,5 +1,5 @@
-import React from "react";
-import { FormSchema } from "../../schema/LoginSchema";
+
+import { LoginSchema } from "../../schema/LoginSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -10,13 +10,12 @@ import { useNavigate, Link } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
 
-  // Form setup with Zod validation
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(FormSchema),
+    resolver: zodResolver(LoginSchema),
   });
 
 
@@ -24,6 +23,9 @@ const Login = () => {
     mutationKey: ["login"], 
     mutationFn: (formData) => LoginUser(formData),
     onSuccess: (data) => {
+      localStorage.setItem("accesstoken",data?.data?.token),
+      localStorage.setItem("refreshtoken",data?.data?.refreshtoken),
+      localStorage.setItem("expriesAt",data?.data?.refreshTokenExpiresAt)
       toast.success(data?.data?.message || "Login Successful");
       navigate("/");
     },
@@ -36,9 +38,10 @@ const Login = () => {
   const onSubmit = (data) => {
     mutation.mutate(data);
   };
-
+  
+  
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-[calc(100vh-13ch)] bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-2xl">
         <h2 className="text-3xl font-bold text-center text-gray-800">
           Login
@@ -95,7 +98,7 @@ const Login = () => {
             disabled={mutation.isPending} 
             className="w-full py-2 text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 disabled:opacity-50"
           >
-            {mutation.isPending ? "Logging in..." : "Login"}
+           Login
           </button>
         </form>
 

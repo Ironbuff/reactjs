@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
 import Navbar from "./components/navbar/Navbar"
 import {
@@ -10,9 +10,19 @@ import Login from "./pages/login/Login"
 import Register from "./pages/register/Register"
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css";
+import {useDispatch} from 'react-redux'
+import { authAction } from "./store/auth"
 
 function App() {
   const queryClient = new QueryClient()
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    if(localStorage.getItem('accesstoken')&& localStorage.getItem('id'))
+    {
+      dispatch(authAction.login())
+    }
+  },[])
 
   return (
     <>
