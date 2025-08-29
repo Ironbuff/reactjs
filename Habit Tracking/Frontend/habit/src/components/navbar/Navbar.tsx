@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { authAction } from '../../store/auth'
 
 const Navbar = () => {
   
@@ -13,9 +14,17 @@ const Navbar = () => {
     ]
 
     const isLoggedIn = useSelector((state:any)=>state?.auth?.isLoggedIn)
+    const dispatch = useDispatch()
+
+    const handleLogout = ()=>{
+        localStorage.clear()
+        dispatch(authAction.logout())
+    }
 
        // choose which items to show
-    const navitems = isLoggedIn ? item.slice(0,2) : item.slice(2,4)
+  // Corrected condition
+const navitems = isLoggedIn ? item.slice(2,4) : item.slice(0,2)
+
   
     return (
     <div className='flex flex-row items-center w-full h-[9ch] shadow-md justify-between px-28'>
@@ -27,6 +36,11 @@ const Navbar = () => {
         </h1>
         <div className='flex flex-row items-center justify-center gap-x-2'>
             {navitems.map((value)=>(
+                value.title==='Logout'?(
+                    <button key={value.id} onClick={handleLogout} className='text-base font-normal p-2 rounded-xl bg-red-400 hover:bg-red-500 text-neutral-100 hover:text-neutral-50 duration-300 ease-in-out transition-all '>
+                          {value.title}
+                    </button>
+                ):
                 <Link to={value.links} key={value.id} className='text-base font-normal p-2 rounded-xl bg-red-400 hover:bg-red-500 text-neutral-100 hover:text-neutral-50 duration-300 ease-in-out transition-all '>
                     {value.title}
                 </Link>
