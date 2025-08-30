@@ -13,7 +13,7 @@ api.interceptors.request.use(
     // Check if token is expired
     if (expiresAt && Date.now() > Number(expiresAt)) {
       token = await refreshAccessToken();
-      localStorage.setItem("expriesAt", Date.now() + 0.3 * 60 * 1000 + ""); // update expiry
+      localStorage.setItem("expriesAt", Date.now() + 30 * 1000 + ""); // update expiry
     }
 
     if (token) {

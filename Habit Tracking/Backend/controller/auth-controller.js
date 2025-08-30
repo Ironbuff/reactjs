@@ -32,10 +32,10 @@ exports.refreshtoken = async (req, res) => {
             const accessToken = jwt.sign(
                 { id: decoded.id, email: decoded.email },
                 process.env.JWT_SECRET,
-                { expiresIn: "15m" }
+                { expiresIn: "30s" }
             );
 
-            res.json({ accessToken, expiresAt: Date.now() + 15 * 60 * 1000 });
+            res.json({ accessToken, expiresAt: Date.now() +30 * 1000 });
         });
     } catch (error) {
         console.error(error); // Log the error for debugging

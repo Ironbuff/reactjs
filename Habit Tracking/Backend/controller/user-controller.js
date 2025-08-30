@@ -82,11 +82,11 @@ const login = async (req, res) => {
     };
 
     // Get expiry times in milliseconds for sending to client
-    const accessTokenExpiresIn = 15 * 60 * 1000; // 15 minutes in milliseconds
+    const accessTokenExpiresIn = 30 * 1000; // 15 minutes in milliseconds
     const refreshTokenExpiresIn = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "15m",
+      expiresIn: "30s",
     });
     const refreshtoken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
       expiresIn: "7d",
