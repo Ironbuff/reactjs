@@ -1,24 +1,32 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { authAction } from '../../store/auth'
 
+
+interface items {
+    id:Number,
+    title:string,
+    links?:string
+}
 const Navbar = () => {
   
+    const navigate = useNavigate()
  
-    const item = [
+    const item:items[] = [
         {id:1, title:"Login", links:"/login"},
         {id:2, title:"Register", links:"/register"},
         {id:3, title:"Add Habit", links:"/habit"},
-        {id:4, title:"Logout", links:"/logout"}
+        {id:4, title:"Logout"}
     ]
 
-    const isLoggedIn = useSelector((state:any)=>state?.auth?.isLoggedIn)
+    const isLoggedIn = useSelector((state:any)=>state?.auth?.isloggedIn)
     const dispatch = useDispatch()
 
     const handleLogout = ()=>{
         localStorage.clear()
         dispatch(authAction.logout())
+        navigate("/")
     }
 
        // choose which items to show

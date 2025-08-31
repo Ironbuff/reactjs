@@ -24,9 +24,10 @@ const Login = () => {
     mutationKey: ["login"], 
     mutationFn: (formData) => LoginUser(formData),
     onSuccess: (data) => {
-      localStorage.setItem("accesstoken",data?.data?.token),
-      localStorage.setItem("refreshtoken",data?.data?.refreshtoken),
-      localStorage.setItem("expriesAt",data?.data?.refreshTokenExpiresAt)
+      localStorage.setItem("accessToken",data?.data?.token),
+      localStorage.setItem("refreshToken",data?.data?.refreshtoken),
+      localStorage.setItem("expiresAt",data?.data?.accessTokenExpiresAt)
+      localStorage.setItem('id',data?.data?.user?.id)
       toast.success(data?.data?.message || "Login Successful");
       navigate("/");
     },

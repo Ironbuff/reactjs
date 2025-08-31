@@ -18,7 +18,7 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(()=>{
-    if(localStorage.getItem('accesstoken')&& localStorage.getItem('id'))
+    if(localStorage.getItem('accessToken')&& localStorage.getItem('id'))
     {
       dispatch(authAction.login())
     }
