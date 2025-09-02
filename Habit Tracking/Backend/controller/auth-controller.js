@@ -35,7 +35,7 @@ exports.refreshtoken = async (req, res) => {
                 { expiresIn: "30s" }
             );
 
-            res.json({ accessToken, expiresAt: Date.now() +30 * 1000 });
+            res.json({ accessToken, expiresAt: Date.now() +1 * 60 * 1000 });
         });
     } catch (error) {
         console.error(error); // Log the error for debugging
