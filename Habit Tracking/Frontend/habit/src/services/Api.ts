@@ -5,6 +5,16 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_PUBLIC_URL
 });
 
+// Interceptor to add auth token to requests
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token'); // Or wherever your token is stored
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+
 // Add request interceptor
 api.interceptors.request.use(
   async (config) => {
