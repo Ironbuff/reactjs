@@ -66,13 +66,13 @@ const login = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(401).json({ messge: "Credentials Doesn't Match" });
+      return res.status(401).json({ message: "Credentials Doesn't Match" });
     }
 
     //  Password Checking
     const matchPassword = await bcrypt.compare(password, user.password);
     if (!matchPassword) {
-      return res.status(401).json({ messge: "Enter Valid Password" });
+      return res.status(401).json({ message: "Enter Valid Password" });
     }
 
     //Payload for JWT Sign
