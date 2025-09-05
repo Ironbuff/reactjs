@@ -2,58 +2,59 @@ import axios from 'axios';
 import { RefreshToken } from './Refresh';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_PUBLIC_URL
-});
-
-// Interceptor to add auth token to requests
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token'); // Or wherever your token is stored
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+  baseURL: import.meta.env.VITE_PUBLIC_URL
 });
 
 
-// Add request interceptor
+const axiosPrivate = axios.create({
+  baseURL: import.meta.env.VITE_PUBLIC_URL
+});
+
+
 api.interceptors.request.use(
   async (config) => {
-    const accessToken = localStorage.getItem("accessToken")
-    const expiresAt = localStorage.getItem("expiresAt")
+    const accessToken = localStorage.getItem("accessToken");
+    const expiresAt = localStorage.getItem("expiresAt");
 
-    // Check if token is expired or about to expire
+
     if (accessToken && expiresAt && Date.now() >= parseInt(expiresAt)) {
       try {
-        // Refresh token
-        const res = await RefreshToken()
-        const newAccessToken = res.data.accessToken
-        const newExpiresAt = res.data.expiresAt
+       
+        
+     
+        const res = await RefreshToken(axiosPrivate); 
 
-        // Store new values
-        localStorage.setItem("accessToken", newAccessToken)
-        localStorage.setItem("expiresAt", newExpiresAt)
+        const newAccessToken = res.data.accessToken;
+        const newExpiresAt = res.data.expiresAt;
 
-        // Update header with fresh token
-        config.headers["Authorization"] = `Bearer ${newAccessToken}`
+
+        localStorage.setItem("accessToken", newAccessToken);
+        localStorage.setItem("expiresAt", newExpiresAt);
+
+        config.headers["Authorization"] = `Bearer ${newAccessToken}`;
+
       } catch (err) {
-        console.error("Token refresh failed:", err)
-        localStorage.removeItem("accessToken")
-        localStorage.removeItem("refreshToken")
-        localStorage.removeItem("expiresAt")
-        // optional: redirect to login
+        console.error("Token refresh failed:", err);
+
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("expiresAt");
+
+        window.location.href = '/login'; 
+        return Promise.reject(err);
       }
     } else if (accessToken) {
-      // If token still valid, just attach it
-      config.headers["Authorization"] = `Bearer ${accessToken}`
+
+      config.headers["Authorization"] = `Bearer ${accessToken}`;
     }
 
-    return config
+    return config;
   },
   (error) => {
-    return Promise.reject(error)
+
+    return Promise.reject(error);
   }
-)
-
-
+);
 
 export default api;
+

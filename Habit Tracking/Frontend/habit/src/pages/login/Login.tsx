@@ -7,9 +7,18 @@ import { LoginUser } from "../../services/GetLogin";
 import { toast } from "react-toastify";
 import { useNavigate, Link } from "react-router-dom";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { authAction } from "../../store/auth";
+import { AxiosError } from "axios";
+
+
+interface errorResponseMessge{
+  message:string;
+}
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const {
     register,
@@ -22,17 +31,20 @@ const Login = () => {
 
   const mutation = useMutation({
     mutationKey: ["login"], 
-    mutationFn: (formData) => LoginUser(formData),
+    mutationFn: LoginUser,
     onSuccess: (data) => {
       localStorage.setItem("accessToken",data?.data?.token),
       localStorage.setItem("refreshToken",data?.data?.refreshtoken),
       localStorage.setItem("expiresAt",data?.data?.accessTokenExpiresAt)
       localStorage.setItem('id',data?.data?.user?.id)
       toast.success(data?.data?.message || "Login Successful");
+      dispatch(authAction.login())
       navigate("/");
     },
-    onError: (error) => {
-      toast.error(error?.response?.data as unknown as string || "Something went wrong");
+    onError: (error:AxiosError<errorResponseMessge>) => {
+
+       const errorMessage = error?.response?.data?.message  || "Something went wrong!";
+              toast.error(errorMessage);
     },
   });
 
