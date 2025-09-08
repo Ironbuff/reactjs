@@ -5,6 +5,14 @@ import { deleteHabit } from "../../services/ChangeHabits";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 
+
+interface habitType{
+   _id?: string;
+  title?:string;
+  description?:string;
+  user?:string;
+}
+
 const Habit = () => {
   
   const queryClient = useQueryClient()
@@ -53,7 +61,7 @@ const Habit = () => {
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl">
-        {data?.data?.newhabit?.map((habit, idx) => (
+        {data?.data?.newhabit?.map((habit:habitType, idx:number) => (
           <div
             key={idx}
             className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-5 flex flex-col gap-3 border border-gray-100"
