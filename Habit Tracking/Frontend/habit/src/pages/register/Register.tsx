@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormSchema } from "../../schema/LoginSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,6 +6,12 @@ import { useMutation } from "@tanstack/react-query";
 import { UseRegister } from "../../services/GetRegister";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AxiosError } from "axios";
+import { Eye, EyeClosed } from "lucide-react";
+
+interface errorResponseMessge {
+  message: string;
+}
 
 const Register = () => {
   const {
@@ -22,15 +28,16 @@ const Register = () => {
   });
 
   const navigate = useNavigate();
+  const [seepassword, setSeepassword] = useState(false);
 
   const mutation = useMutation({
     mutationKey: ["register"],
-    mutationFn: (formData) => UseRegister(formData),
+    mutationFn: UseRegister,
     onSuccess: (data) => {
-      toast.success(data?.data?.message||"Register Sucessful")
+      toast.success(data?.data?.message || "Register Sucessful");
       navigate("/login");
     },
-    onError: (error) => {
+    onError: (error: AxiosError<errorResponseMessge>) => {
       toast.error(error?.response?.data?.message || "Something went wrong");
     },
   });
@@ -99,13 +106,21 @@ const Register = () => {
             >
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              {...register("password")}
-              className="w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
+            <div className="relative">
+              <input
+                type={seepassword?"text":"password"}
+                id="password"
+                placeholder="Enter your password"
+                {...register("password")}
+                className="w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+              <span
+                onClick={() => setSeepassword(!seepassword)}
+                className="absolute right-0 top-0"
+              >
+                {seepassword ? <EyeClosed /> : <Eye />}
+              </span>
+            </div>
             {errors.password && (
               <p className="mt-1 text-sm text-red-500">
                 {errors.password.message}
