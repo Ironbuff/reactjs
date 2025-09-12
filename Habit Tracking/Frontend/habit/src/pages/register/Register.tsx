@@ -116,9 +116,9 @@ const Register = () => {
               />
               <span
                 onClick={() => setSeepassword(!seepassword)}
-                className="absolute right-0 top-0"
+                className="absolute right-3 top-2 "
               >
-                {seepassword ? <EyeClosed /> : <Eye />}
+                {seepassword ? <EyeClosed size={20} /> : <Eye size={20} />}
               </span>
             </div>
             {errors.password && (
