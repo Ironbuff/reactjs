@@ -13,7 +13,7 @@ const Postpage = () => {
 
   useEffect(() => {
  const fetch = async()=>{
-     const response =await axios.get(`http://localhost:8000/api/users/post/${id}`)
+     const response =await axios.get(`http://localhost:8081/api/users/post/${id}`)
     if(response.status===200){
       setPostinfo(response?.data)
       console.log(response)
@@ -26,7 +26,9 @@ const Postpage = () => {
 
   const handledelete = async(id)=>{
     try{
-       const response = await axios.delete(`http://localhost:8000/api/users/deletepost/${id}`)
+       const response = await axios.delete(`http://localhost:8000/api/users/deletepost/${id}`,{
+                withCredentials: true, // Include cookies in the request
+            });
        if(response.status===200){
         alert("Item Sucessfully deleted")
         navigate('/')

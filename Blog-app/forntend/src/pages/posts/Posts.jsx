@@ -3,6 +3,8 @@ import { formatISO9075 } from 'date-fns';
 import { Link } from 'react-router-dom';
 
 const Posts = ({ _id, title, summary, img, creator, createdAt }) => {
+  
+  console.log(title)
   return (
     <div className="w-full flex justify-center py-6 px-4">
       <div className="w-full max-w-5xl bg-white rounded-2xl shadow-md border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-xl">
