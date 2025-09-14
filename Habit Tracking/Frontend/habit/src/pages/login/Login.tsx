@@ -10,15 +10,20 @@ import { useDispatch } from "react-redux";
 import { authAction } from "../../store/auth";
 import { AxiosError } from "axios";
 import { Eye, EyeOff } from "lucide-react";
+import z from "zod";
 
 interface errorResponseMessge {
   message: string;
 }
 
+type loginSchema = 
+z.infer<typeof LoginSchema>
+
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [seepassword, setSeepassword] = useState(false);
+
 
   const {
     register,
@@ -48,7 +53,7 @@ const Login = () => {
   });
 
   // Handle form submit
-  const onSubmit = (data) => {
+  const onSubmit = (data:loginSchema) => {
     mutation.mutate(data);
   };
 

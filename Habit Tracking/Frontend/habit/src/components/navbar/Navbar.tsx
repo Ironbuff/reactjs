@@ -26,6 +26,7 @@ const Navbar = () => {
     const handleLogout = () => {
         localStorage.clear();
         dispatch(authAction.logout());
+        window.location.reload()
         navigate("/");
     };
 

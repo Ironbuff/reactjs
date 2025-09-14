@@ -8,10 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { Eye, EyeClosed } from "lucide-react";
+import z from "zod";
 
 interface errorResponseMessge {
   message: string;
 }
+
+type registerschema = 
+z.infer<typeof FormSchema>
 
 const Register = () => {
   const {
@@ -42,7 +46,7 @@ const Register = () => {
     },
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data:registerschema) => {
     mutation.mutate(data);
   };
 
