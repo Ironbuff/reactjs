@@ -65,37 +65,35 @@ exports.updateHabit = async (req, res) => {
 
 
 exports.toggleHabitCompletion = async (req, res) => {
-    const habitId = req.params.id;
-    const userId = req.user._id; // Make sure your middleware attaches this
-    const { date } = req.body;
+    const { id } = req.params
+    const userId = req.user.id; 
+    const date = req.body?.date; 
 
-    try {
-        const habit = await habit.findOne({ _id: habitId, user: userId });
-
+    try {  
+        const habit = await Habit.findOne({ _id: id, user: userId });
         if (!habit) {
             return res.status(404).json({ message: 'Habit not found' });
         }
-
+  
         const targetDate = date ? new Date(date) : new Date();
-        targetDate.setHours(0, 0, 0, 0); // normalize time
+        targetDate.setHours(0, 0, 0, 0);
 
         const isAlreadyCompleted = habit.completedDates.some(d =>
             new Date(d).toDateString() === targetDate.toDateString()
         );
 
         if (isAlreadyCompleted) {
-            // Remove the date (uncheck)
             habit.completedDates = habit.completedDates.filter(d =>
-                new Date(d).toDateString() !== targetDate.toDateString()
+                new Date(d).toDateString() !== targetDate.toDateString(),
+                responseMessage="Task Already Completed"
             );
         } else {
-            // Add the date (mark complete)
             habit.completedDates.push(targetDate);
+            responseMessage ="Habit is now Completed"
         }
 
         await habit.save();
-
-        return res.status(200).json({ message: 'Habit updated', habit });
+        return res.status(200).json({ message: responseMessage, habit });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: 'Something went wrong' });
