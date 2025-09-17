@@ -8,5 +8,6 @@ router.get('/',habitController.getUserHabit)
 router.post('/addhabit',authVerify,habitController.addHabit)
 router.delete('/:ids',authVerify,habitController.deleteUserHabit)
 router.post('/toggle/:id',authVerify,habitController.toggleHabitCompletion)
+router.put('/updatehabit/:id',authVerify,habitController.updateHabit)
 
 module.exports = router

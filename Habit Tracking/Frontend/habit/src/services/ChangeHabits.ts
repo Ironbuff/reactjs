@@ -9,3 +9,8 @@ export const toggleHabit = async(id:string)=>{
     const response = await api.post(`/user/habit/toggle/${id}`,{})
     return response;
 }
+
+export const edithabit = async(id:string,data:any)=>{
+    const response = await api.post(`/user/habit/${id}`,{data})
+    return response;
+}
