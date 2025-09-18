@@ -5,8 +5,9 @@ import { deleteHabit, toggleHabit } from "../../services/ChangeHabits";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import HabitEdit from "../habitEdit/HabitEdit";
+import {Link} from 'react-router-dom'
 
-interface habitType {
+export interface habitType {
   _id?: string;
   title?: string;
   description?: string;
@@ -126,13 +127,12 @@ const Habit = () => {
                 )}
 
                 {habit?.user === userId && (
-                  <button
-                    type="button"
-                    onClick={() => setEditHabit(habit)} 
+                  <Link to={`/edit/${habit?._id}`}
+                    type="button" 
                     className="px-4 py-2 text-sm font-medium text-white bg-yellow-600 rounded-xl hover:bg-yellow-700 transition-colors duration-300"
                   >
                     Edit
-                  </button>
+                  </Link>
                 )}
               </div>
             </div>
@@ -140,14 +140,6 @@ const Habit = () => {
         })}
       </div>
 
-
-      {editHabit && (
-        <HabitEdit
-          id={editHabit._id}
-          habitData={editHabit}
-          onClose={() => setEditHabit(null)}
-        />
-      )}
     </div>
   );
 };

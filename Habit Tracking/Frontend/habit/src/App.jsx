@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 import {useDispatch} from 'react-redux'
 import { authAction } from "./store/auth"
 import AddnewHabit from "./pages/addhabit/Addhabit"
+import HabitEdit from "./components/habitEdit/HabitEdit"
 
 function App() {
   const queryClient = new QueryClient()
@@ -36,6 +37,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/" element={<Habit />} />
             <Route path="/habit" element={<AddnewHabit/>}/>
+            <Route path="/edit/:id" element={<HabitEdit/>}/>
           </Routes>
         </Router>
       </QueryClientProvider>

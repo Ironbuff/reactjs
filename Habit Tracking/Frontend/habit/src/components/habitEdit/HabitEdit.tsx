@@ -1,10 +1,13 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { useState, useEffect } from "react";
 import { edithabit } from "../../services/ChangeHabits";
+import { useNavigate, useParams } from "react-router-dom";
+import { getHabits } from "../../services/GetHabits";
+import { habitType } from "../habit/Habit";
+import { AxiosError } from "axios";
+import { toast } from "react-toastify";
 
 interface HabitEditProps {
-  id?: string;
-  habitData: {
     title?: string;
     description?: string;
     completedDates?: string[];
@@ -12,18 +15,30 @@ interface HabitEditProps {
     updatedAt?: string;
     user?: string;
     _id?: string;
-  };
 }
 
-const HabitEdit: React.FC<HabitEditProps> = ({ id, habitData }) => {
+const HabitEdit: React.FC<HabitEditProps> = () => {
+
+  const { id }= useParams()
+  const navigate = useNavigate()
   const [formValues, setFormValues] = useState({
     title: "",
     description: "",
     completedDates: [] as string[],
   });
 
-  // Prefill form when habitData changes
+    const { data:habits, isLoading:habitDataLoading, error } = useQuery({
+    queryKey: ["habit"],
+    queryFn: getHabits,
+  });
+
+
   useEffect(() => {
+   if (habits && id) {
+    const habitData = habits?.data?.newhabit?.find(
+      (item: habitType) => item._id === id
+    );
+
     if (habitData) {
       setFormValues({
         title: habitData.title || "",
@@ -31,7 +46,10 @@ const HabitEdit: React.FC<HabitEditProps> = ({ id, habitData }) => {
         completedDates: habitData.completedDates || [],
       });
     }
-  }, [habitData]);
+  }
+  }, [habits]);
+
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -45,10 +63,18 @@ const HabitEdit: React.FC<HabitEditProps> = ({ id, habitData }) => {
   const EditHabitMutation = useMutation({
     mutationKey:['editData'],
     mutationFn:edithabit,
+    onSuccess:(res)=>{
+        toast.success(res?.data?.message)
+        navigate('/')
+    },
+    onError:(err:AxiosError<{message:string}>)=>{
+      toast.error(err?.response?.data?.message || 'Something Went Wrong')
+    }
   })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    EditHabitMutation.mutateAsync({id, data:formValues})
 
   };
 
