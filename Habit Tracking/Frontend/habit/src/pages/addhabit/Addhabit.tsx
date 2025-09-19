@@ -5,6 +5,7 @@ import { AddhabitSchema } from '../../schema/AddhabitSchema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -13,6 +14,7 @@ import { toast } from 'react-toastify';
 
 const AddnewHabit = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate()
   
 
  const {
@@ -28,6 +30,7 @@ const AddnewHabit = () => {
     mutationFn:AddHabit,
     onSuccess:(data)=>{
        toast.success(data?.data?.message || "Habit added successfully!")
+       navigate('/')
     },
     onError:(err:any)=>{
          const errorMessage = err?.response?.data?.message || "Something went wrong!";
@@ -35,8 +38,9 @@ const AddnewHabit = () => {
     }
   })
   
-  const onSubmit = (data)=>{
+  const onSubmit = (data:any)=>{
     CreateHabit.mutateAsync(data)
+
   }
 
 
@@ -77,7 +81,7 @@ const AddnewHabit = () => {
             <input
               type="text"
               id="description"
-              placeholder="Enter your password"
+              placeholder="Enter Description"
               {...register("description")}
               className="w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
