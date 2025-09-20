@@ -78,8 +78,11 @@ const HabitEdit: React.FC<HabitEditProps> = () => {
 
   };
 
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded">
+  return (<>
+ 
+  <div className="flex flex-col gap-y-1  p-2 rounded-md shadow-md max-w-lg mx-auto mt-2">
+    <h1 className="font-semibold text-xl text-black">Edit your Habit</h1>
+  <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded">
       <div>
         <label className="block font-medium">Title</label>
         <input
@@ -108,6 +111,9 @@ const HabitEdit: React.FC<HabitEditProps> = () => {
         Save Changes
       </button>
     </form>
+  </div>
+  </>
+    
   );
 };
 
