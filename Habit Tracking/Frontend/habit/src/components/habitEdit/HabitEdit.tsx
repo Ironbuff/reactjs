@@ -8,112 +8,129 @@ import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 
 interface HabitEditProps {
-    title?: string;
-    description?: string;
-    completedDates?: string[];
-    createdAt?: string;
-    updatedAt?: string;
-    user?: string;
-    _id?: string;
+  title?: string;
+  description?: string;
+  completedDates?: string[];
+  createdAt?: string;
+  updatedAt?: string;
+  user?: string;
+  _id?: string;
 }
 
 const HabitEdit: React.FC<HabitEditProps> = () => {
-
-  const { id }= useParams()
-  const navigate = useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
     title: "",
     description: "",
     completedDates: [] as string[],
   });
 
-    const { data:habits, isLoading:habitDataLoading, error } = useQuery({
+  const { data: habits } = useQuery({
     queryKey: ["habit"],
     queryFn: getHabits,
   });
 
-
   useEffect(() => {
-   if (habits && id) {
-    const habitData = habits?.data?.newhabit?.find(
-      (item: habitType) => item._id === id
-    );
+    if (habits && id) {
+      const habitData = habits?.data?.newhabit?.find(
+        (item: habitType) => item._id === id
+      );
 
-    if (habitData) {
-      setFormValues({
-        title: habitData.title || "",
-        description: habitData.description || "",
-        completedDates: habitData.completedDates || [],
-      });
+      if (habitData) {
+        setFormValues({
+          title: habitData.title || "",
+          description: habitData.description || "",
+          completedDates: habitData.completedDates || [],
+        });
+      }
     }
-  }
-  }, [habits]);
+  }, [habits, id]);
 
-
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormValues(prev => ({
+    setFormValues((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-
   const EditHabitMutation = useMutation({
-    mutationKey:['editData'],
-    mutationFn:edithabit,
-    onSuccess:(res)=>{
-        toast.success(res?.data?.message)
-        navigate('/')
+    mutationKey: ["editData"],
+    mutationFn: edithabit,
+    onSuccess: (res) => {
+      toast.success(res?.data?.message);
+      navigate("/");
     },
-    onError:(err:AxiosError<{message:string}>)=>{
-      toast.error(err?.response?.data?.message || 'Something Went Wrong')
-    }
-  })
+    onError: (err: AxiosError<{ message: string }>) => {
+      toast.error(err?.response?.data?.message || "Something Went Wrong");
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    EditHabitMutation.mutateAsync({id, data:formValues})
-
+    EditHabitMutation.mutateAsync({ id, data: formValues });
   };
 
-  return (<>
- 
-  <div className="flex flex-col gap-y-1  p-2 rounded-md shadow-md max-w-lg mx-auto mt-2">
-    <h1 className="font-semibold text-xl text-black">Edit your Habit</h1>
-  <form onSubmit={handleSubmit} className="space-y-4 p-4 border rounded">
-      <div>
-        <label className="block font-medium">Title</label>
-        <input
-          type="text"
-          name="title"
-          value={formValues.title}
-          onChange={handleChange}
-          className="border p-2 w-full rounded"
-        />
-      </div>
+  return (
+    <div className="flex justify-center items-center min-h-screen bg-gray-50 px-4">
+      <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+          ✏️ Edit Habit
+        </h1>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Title */}
+          <div>
+            <label className="block font-medium text-gray-700 mb-1">
+              Title
+            </label>
+            <input
+              type="text"
+              name="title"
+              value={formValues.title}
+              onChange={handleChange}
+              placeholder="Enter habit title"
+              className="border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-100 p-3 w-full rounded-lg transition"
+            />
+          </div>
 
-      <div>
-        <label className="block font-medium">Description</label>
-        <textarea
-          name="description"
-          value={formValues.description}
-          onChange={handleChange}
-          className="border p-2 w-full rounded"
-        />
-      </div>
+          {/* Description */}
+          <div>
+            <label className="block font-medium text-gray-700 mb-1">
+              Description
+            </label>
+            <textarea
+              name="description"
+              value={formValues.description}
+              onChange={handleChange}
+              placeholder="Describe your habit..."
+              rows={4}
+              className="border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-100 p-3 w-full rounded-lg transition"
+            />
+          </div>
 
-      <button
-        type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Save Changes
-      </button>
-    </form>
-  </div>
-  </>
-    
+          {/* Buttons */}
+          <div className="flex justify-between items-center">
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={EditHabitMutation.isPending}
+              className="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 disabled:opacity-50 transition"
+            >
+              {EditHabitMutation.isPending ? "Saving..." : "Save Changes"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
