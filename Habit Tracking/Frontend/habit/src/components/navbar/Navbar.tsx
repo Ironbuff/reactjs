@@ -36,7 +36,7 @@ const Navbar = () => {
         <div className="flex flex-row items-center w-full h-[9ch] shadow-md justify-between px-28">
             <Link to={'/'} className="font-bold text-2xl flex items-center justify-center text-red-300">
                 Habit
-                <span className="text-neutral-700 px-1">App</span>
+                <span className="text-neutral-700  font-semibold px-1">App</span>
             </Link>
             <div className="flex flex-row items-center justify-center gap-x-2">
                 {navItems.map((value) =>
@@ -49,13 +49,15 @@ const Navbar = () => {
                             {value.title}
                         </button>
                     ) : (
-                        <Link
-                            to={value.links!}
+                        value.links &&(
+                            <Link
+                            to={value.links}
                             key={value.id}
                             className="text-base font-normal p-2 rounded-xl bg-red-400 hover:bg-red-500 text-neutral-100 hover:text-neutral-50 duration-300 ease-in-out transition-all "
                         >
                             {value.title}
                         </Link>
+                        )                 
                     )
                 )}
             </div>
