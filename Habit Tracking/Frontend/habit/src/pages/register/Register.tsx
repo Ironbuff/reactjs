@@ -50,13 +50,13 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-13ch)] bg-gradient-to-br from-gray-100 via-white to-gray-50">
+    <div className="flex items-center justify-center min-h-[calc(100vh-10ch)] bg-gradient-to-br py-4 from-gray-100 via-white to-gray-50">
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl rounded-2xl border border-gray-100">
         <h2 className="text-3xl font-bold text-center text-gray-800">
           Create an Account
         </h2>
         <p className="text-center text-gray-500 text-sm">
-          Join us today and start your journey 🚀
+          Join us today track your habit
         </p>
 
         <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
