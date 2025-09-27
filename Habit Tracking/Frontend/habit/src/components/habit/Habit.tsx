@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { getHabits } from "../../services/GetHabits";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteHabit, toggleHabit } from "../../services/ChangeHabits";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { Link } from "react-router-dom";
-import { CheckCircle, Trash2, Edit3, Loader2 } from "lucide-react";
+import { CheckCircle, Trash2, Edit3, Loader2, Plus } from "lucide-react";
 
 export interface habitType {
   _id?: string;
@@ -52,8 +52,8 @@ const Habit = () => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-6 h-6 text-blue-600 animate-spin" />
-        <p className="ml-2 text-lg font-medium text-gray-600">Loading...</p>
+        <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+        <p className="ml-3 text-lg font-semibold text-gray-700">Loading habits...</p>
       </div>
     );
   }
@@ -61,7 +61,7 @@ const Habit = () => {
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-red-500 font-medium">
+        <p className="text-red-500 font-semibold">
           Error: {(error as Error).message}
         </p>
       </div>
@@ -69,8 +69,8 @@ const Habit = () => {
   }
 
   return (
-    <div className="flex flex-col items-center p-8 bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen">
-      <h1 className="text-5xl font-extrabold font-serif text-gray-800 mb-8">
+    <div className="flex flex-col items-center px-6 py-12 bg-gradient-to-b from-white via-gray-50 to-gray-100 min-h-screen">
+      <h1 className="text-4xl md:text-5xl font-extrabold font-serif text-gray-900 mb-10 tracking-tight drop-shadow-sm">
         🌱 My Habits
       </h1>
 
@@ -84,23 +84,25 @@ const Habit = () => {
           return (
             <div
               key={habit._id}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 p-6 flex flex-col gap-4 border border-gray-100"
+              className="relative bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6 flex flex-col gap-4 border border-gray-100 group"
             >
-              <div className="flex justify-between items-start">
-                <h2 className="text-2xl font-bold text-gray-800">
-                  {habit?.title}
-                </h2>
-                {isCompletedToday ? (
-                  <span className="px-3 py-1 text-xs text-center font-semibold text-green-800 bg-green-100 rounded-full">
-                    Done
-                  </span>
-                ) : (
-                  <span className="px-3 py-1 text-xs font-semibold text-yellow-800 bg-yellow-100 rounded-full">
-                    Pending
-                  </span>
-                )}
-              </div>
+              {/* Status Badge */}
+              <span
+                className={`absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${
+                  isCompletedToday
+                    ? "bg-green-100 text-green-700"
+                    : "bg-yellow-100 text-yellow-700"
+                }`}
+              >
+                {isCompletedToday ? "Done" : "Pending"}
+              </span>
 
+              {/* Title */}
+              <h2 className="text-2xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
+                {habit?.title}
+              </h2>
+
+              {/* Description */}
               <p className="text-gray-600 text-sm leading-relaxed">
                 {habit?.description}
               </p>
@@ -113,7 +115,7 @@ const Habit = () => {
                       toggleHabitMutation.mutate(habit?._id as string)
                     }
                     disabled={toggleHabitMutation.isPending}
-                    className={`flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-xl w-full transition-colors duration-300 ${
+                    className={`flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-xl w-full transition-all duration-300 shadow-md ${
                       isCompletedToday
                         ? "bg-blue-600 hover:bg-blue-700"
                         : "bg-green-600 hover:bg-green-700"
@@ -130,7 +132,7 @@ const Habit = () => {
                   {/* Edit Button */}
                   <Link
                     to={`/edit/${habit?._id}`}
-                    className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 rounded-xl transition-colors duration-300"
+                    className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-800 bg-yellow-300 hover:bg-yellow-400 rounded-xl transition-all duration-300 shadow-md"
                   >
                     <Edit3 className="w-4 h-4" />
                     Edit
@@ -140,7 +142,7 @@ const Habit = () => {
                   <button
                     onClick={() => DeleteMutation?.mutate(habit?._id as string)}
                     disabled={DeleteMutation.isPending}
-                    className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-xl transition-colors duration-300"
+                    className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-xl transition-all duration-300 shadow-md"
                   >
                     {DeleteMutation.isPending ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
@@ -161,7 +163,7 @@ const Habit = () => {
         to="/add"
         className="fixed bottom-8 right-8 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full p-4 shadow-lg hover:scale-110 transition-transform duration-300"
       >
-        <span className="text-2xl font-bold">+</span>
+        <Plus className="w-6 h-6" />
       </Link>
     </div>
   );
