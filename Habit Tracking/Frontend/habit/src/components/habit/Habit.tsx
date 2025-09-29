@@ -70,11 +70,11 @@ const Habit = () => {
 
   return (
     <div className="flex flex-col items-center px-6 py-12 bg-gradient-to-b from-white via-gray-50 to-gray-100 min-h-screen">
-      <h1 className="text-4xl md:text-5xl font-extrabold font-serif text-gray-900 mb-10 tracking-tight drop-shadow-sm">
+      <h1 className="text-2xl md:text-3xl font-extrabold font-serif text-gray-900 mb-10 tracking-tight drop-shadow-sm">
         🌱 My Habits
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl cursor-pointer ">
         {data?.data?.newhabit?.map((habit: habitType) => {
           const today = new Date().toDateString();
           const isCompletedToday = habit.completedDates?.some(
@@ -98,7 +98,7 @@ const Habit = () => {
               </span>
 
               {/* Title */}
-              <h2 className="text-2xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
+              <h2 className="text-2xl font-bold text-gray-800 group-hover:text-red-400 transition-colors">
                 {habit?.title}
               </h2>
 
@@ -158,7 +158,7 @@ const Habit = () => {
         })}
       </div>
 
-      {/* Floating Add Button */}
+
       <Link
         to="/add"
         className="fixed bottom-8 right-8 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full p-4 shadow-lg hover:scale-110 transition-transform duration-300"

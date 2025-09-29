@@ -33,7 +33,7 @@ const Navbar = () => {
     const navItems = isLoggedIn ? items.slice(2, 4) : items.slice(0, 2);
 
     return (
-        <div className="flex flex-row items-center w-full h-[9ch] shadow-md justify-between px-28">
+        <div className="flex flex-row items-center w-full h-[9ch] shadow-md justify-between px-28 border-b border-b-gray-50">
             <Link to={'/'} className="font-bold text-2xl flex items-center justify-center text-red-300">
                 Habit
                 <span className="text-neutral-700  font-semibold px-1">App</span>
