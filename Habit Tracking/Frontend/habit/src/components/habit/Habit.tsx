@@ -98,7 +98,7 @@ const Habit = () => {
               </span>
 
               {/* Title */}
-              <h2 className="text-2xl font-bold text-gray-800 group-hover:text-red-400 transition-colors">
+              <h2 className="text-xl font-bold text-gray-800 group-hover:text-red-400 transition-colors">
                 {habit?.title}
               </h2>
 
@@ -115,7 +115,7 @@ const Habit = () => {
                       toggleHabitMutation.mutate(habit?._id as string)
                     }
                     disabled={toggleHabitMutation.isPending}
-                    className={`flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-xl w-full transition-all duration-300 shadow-md ${
+                    className={`flex flex-row items-center justify-center gap-2 px-4 py-2 text-xs font-light text-white rounded-xl w-full transition-all duration-300 shadow-md ${
                       isCompletedToday
                         ? "bg-blue-600 hover:bg-blue-700"
                         : "bg-green-600 hover:bg-green-700"
