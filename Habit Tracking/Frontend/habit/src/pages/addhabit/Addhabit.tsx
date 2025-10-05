@@ -92,14 +92,23 @@ const AddnewHabit = () => {
             )}
           </div>
 
-          {/* Submit */}
+        <div className='w-full flex gap-x-2'>
+              {/* Submit */}
           <button
             type="submit"
             disabled={CreateHabit.isPending} 
-            className="w-full py-2 text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 disabled:opacity-50"
+            className="w-full py-2 text-white cursor-pointer bg-indigo-600 hover:bg-indigo-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 disabled:opacity-50"
           >
            Create Habit
           </button>
+          <button 
+          type='button'
+          className='w-full py-2 text-white cursor-pointer bg-neutral-600 hover:bg-neutral-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-neutral-500 transition duration-300 disabled:opacity-50'
+          onClick={()=>navigate('/')}
+          >
+            Cancel
+          </button>
+        </div>
         </form>
     </div>
   );
