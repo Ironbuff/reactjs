@@ -20,7 +20,13 @@ catch(err){
 
 exports.getUserHabit = async(req,res)=>{
     try{
-      const newhabit = await Habit.find().sort({createdAt:-1})
+        let newhabit;
+        if(req.user && req.user.id){
+            newhabit = await Habit.find({user:req.user.id}).sort({createdAt:-1})
+        }
+        else{
+            newhabit = await Habit.find().sort({createdAt:-1})
+        }
       return res.status(200).json({newhabit})
     }
     catch(err){
