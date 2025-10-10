@@ -157,7 +157,7 @@ const Habit = () => {
                       {isCompletedToday ? "Completed" : "Mark Done"}
                     </button>
 
-                    {/* Edit Button */}
+
                     <Link
                       to={`/edit/${habit?._id}`}
                       className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-800 bg-yellow-300 hover:bg-yellow-400 rounded-xl transition-all duration-300 shadow-md"
@@ -166,7 +166,6 @@ const Habit = () => {
                       Edit
                     </Link>
 
-                    {/* Delete Button */}
                     <button
                       onClick={() =>
                         DeleteMutation.mutate(habit?._id as string)
