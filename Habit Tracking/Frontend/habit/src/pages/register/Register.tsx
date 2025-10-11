@@ -50,7 +50,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
+    <div className="flex items-center justify-center h-[calc(100vh-9ch)] bg-gray-50 px-4">
       <div className="w-full max-w-sm bg-white p-6 rounded-xl shadow-md border border-gray-100">
         <h2 className="text-2xl font-semibold text-center text-gray-800 mb-1">
           Create an account
