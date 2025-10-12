@@ -118,6 +118,16 @@ const Login = () => {
             )}
           </div>
 
+          {/* Forgot Password */}
+          <div className="flex justify-end -mt-3">
+            <Link
+              to="/forgot-password"
+              className="text-sm text-green-500 hover:underline"
+            >
+              Forgot password?
+            </Link>
+          </div>
+
           {/* Submit Button */}
           <button
             type="submit"

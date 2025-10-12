@@ -2,12 +2,12 @@ const jwt = require('jsonwebtoken');
 
 const optionalAuth = (req, res, next) => {
   try {
-    // Get token from header
+
     const authHeader = req.header('Authorization');
-    if (!authHeader) return next(); // no token → continue
+    if (!authHeader) return next(); 
 
     const token = authHeader.split(' ')[1];
-    if (!token) return next(); // malformed header
+    if (!token) return next(); 
 
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -15,7 +15,7 @@ const optionalAuth = (req, res, next) => {
 
     next();
   } catch (err) {
-    // Invalid or expired token → still continue
+
     next();
   }
 };
