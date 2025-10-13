@@ -112,5 +112,76 @@ const login = async (req, res) => {
   }
 };
 
+
+let verificationCodes = {}; // Temporary (you can replace this with MongoDB later)
+
+const verifyEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ message: "No account found with that email" });
+
+    // Generate 6-digit code
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Store it temporarily (you can use Redis or MongoDB instead)
+    verificationCodes[email] = {
+      code,
+      expiresAt: Date.now() + 5 * 60 * 1000,
+    };
+
+    // Setup email transport
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER, 
+        pass: process.env.EMAIL_PASS, 
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Password Reset Verification Code",
+      text: `Your verification code is: ${code}. It will expire in 5 minutes.`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ message: "Verification code sent successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to send verification code." });
+  }
+};
+
+const confirmCode = async (req, res) => {
+  try {
+    const { email, code } = req.body;
+
+    const stored = verificationCodes[email];
+    if (!stored) return res.status(400).json({ message: "No code sent for this email." });
+
+    if (Date.now() > stored.expiresAt) {
+      delete verificationCodes[email];
+      return res.status(400).json({ message: "Verification code expired." });
+    }
+
+    if (stored.code !== code) {
+      return res.status(400).json({ message: "Invalid verification code." });
+    }
+
+    delete verificationCodes[email]; 
+
+    res.status(200).json({ message: "Email verified successfully. Proceed to change password." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Verification failed." });
+  }
+};
+
 exports.sign = sign;
 exports.login = login;
+exports.verifyEmail = verifyEmail;
+exports.confirmCode=confirmCode;
