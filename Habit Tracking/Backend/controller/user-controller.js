@@ -2,6 +2,8 @@ const User = require("../module/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passwordSchema = require("../validation/Passwordschema");
+const crypto = require("crypto"); 
+const nodemailer = require("nodemailer"); 
 
 require("dotenv").config();
 
@@ -113,75 +115,104 @@ const login = async (req, res) => {
 };
 
 
-let verificationCodes = {}; // Temporary (you can replace this with MongoDB later)
+const forgotPassword = async (req, res) => {
+    let user; // <-- 1. Declare 'user' here, outside the try block.
+    try {
+        const { email } = req.body;
+        user = await User.findOne({ email }); // <-- 2. Assign the value here.
 
-const verifyEmail = async (req, res) => {
-  try {
-    const { email } = req.body;
+        if (!user) {
+            return res.status(200).json({ message: "If an account with that email exists, a reset link has been sent." });
+        }
 
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "No account found with that email" });
+        // 1. Generate a secure token
+        const resetToken = crypto.randomBytes(20).toString('hex');
 
-    // Generate 6-digit code
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
+        // 2. Hash the token and set it on the user model
+        user.resetPasswordToken = crypto
+            .createHash('sha256')
+            .update(resetToken)
+            .digest('hex');
+        
+        // 3. Set an expiration time (e.g., 15 minutes)
+        user.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
 
-    // Store it temporarily (you can use Redis or MongoDB instead)
-    verificationCodes[email] = {
-      code,
-      expiresAt: Date.now() + 5 * 60 * 1000,
-    };
+        await user.save();
 
-    // Setup email transport
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER, 
-        pass: process.env.EMAIL_PASS, 
-      },
-    });
+        // 4. Create the reset URL for the frontend
+        const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Password Reset Verification Code",
-      text: `Your verification code is: ${code}. It will expire in 5 minutes.`,
-    };
+        // 5. Send the email with the link
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
 
-    await transporter.sendMail(mailOptions);
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: "Password Reset Request",
+            text: `You are receiving this email because you (or someone else) have requested the reset of a password. Please click on the following link, or paste this into your browser to complete the process within 15 minutes:\n\n${resetUrl}\n\nIf you did not request this, please ignore this email and your password will remain unchanged.`,
+        };
 
-    res.status(200).json({ message: "Verification code sent successfully." });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Failed to send verification code." });
-  }
+        await transporter.sendMail(mailOptions);
+
+        res.status(200).json({ message: "Password reset link sent successfully." });
+
+    } catch (error) {
+        console.error("Forgot Password Error:", error);
+        // Clear token on error
+        if (user) { // <-- Now 'user' is accessible here
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpire = undefined;
+            await user.save();
+        }
+        res.status(500).json({ message: "Failed to send reset link." });
+    }
 };
 
-const confirmCode = async (req, res) => {
-  try {
-    const { email, code } = req.body;
+const resetPassword = async (req, res) => {
+    try {
+        // Get the token from the URL params
+        const resetToken = req.params.token;
+        const hashedToken = crypto
+            .createHash('sha256')
+            .update(resetToken)
+            .digest('hex');
 
-    const stored = verificationCodes[email];
-    if (!stored) return res.status(400).json({ message: "No code sent for this email." });
+        // Find the user with the matching, non-expired token
+        const user = await User.findOne({
+            resetPasswordToken: hashedToken,
+            resetPasswordExpire: { $gt: Date.now() },
+        });
 
-    if (Date.now() > stored.expiresAt) {
-      delete verificationCodes[email];
-      return res.status(400).json({ message: "Verification code expired." });
+        if (!user) {
+            return res.status(400).json({ message: "Invalid or expired token." });
+        }
+
+        // Set the new password
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(req.body.password, salt);
+        
+        // Invalidate the token
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+
+        await user.save();
+
+        res.status(200).json({ message: "Password updated successfully." });
+
+    } catch (error) {
+        console.error("Reset Password Error:", error);
+        res.status(500).json({ message: "Failed to reset password." });
     }
-
-    if (stored.code !== code) {
-      return res.status(400).json({ message: "Invalid verification code." });
-    }
-
-    delete verificationCodes[email]; 
-
-    res.status(200).json({ message: "Email verified successfully. Proceed to change password." });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Verification failed." });
-  }
 };
+
 
 exports.sign = sign;
 exports.login = login;
-exports.verifyEmail = verifyEmail;
-exports.confirmCode=confirmCode;
+exports.forgotPassword = forgotPassword;
+exports.resetPassword = resetPassword;
