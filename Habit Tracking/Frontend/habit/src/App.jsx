@@ -14,6 +14,8 @@ import {useDispatch} from 'react-redux'
 import { authAction } from "./store/auth"
 import AddnewHabit from "./pages/addhabit/Addhabit"
 import HabitEdit from "./components/habitEdit/HabitEdit"
+import VerifyEmailPassword from "./pages/resethabit/Forget"
+import ResetPassword from "./components/reset-password/ResetPassword"
 
 function App() {
   const queryClient = new QueryClient()
@@ -38,6 +40,8 @@ function App() {
             <Route path="/" element={<Habit />} />
             <Route path="/habit" element={<AddnewHabit/>}/>
             <Route path="/edit/:id" element={<HabitEdit/>}/>
+           < Route path="/forgot-password" element={<VerifyEmailPassword />} />
+           <Route path="/reset-password/:token" element={<ResetPassword />} />
           </Routes>
         </Router>
       </QueryClientProvider>
