@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPassword } from "../../services/verify";
 import { ResetPasswordSchema } from "../../schema/LoginSchema";
 import z from "zod";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, LockKeyhole } from "lucide-react"; // Added LockKeyhole icon
 
 interface IErrorMessage {
   message: string;
@@ -53,65 +53,97 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
-        <h1 className="text-2xl font-semibold text-center mb-6">
-          Set New Password
-        </h1>
+    <div className="flex min-h-screen flex-col justify-center items-center bg-gray-100 dark:bg-gray-900 px-6 py-12 lg:px-8">
+      <div className="w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl space-y-6">
+        {/* Header Section */}
+        <div className="text-center">
+          <LockKeyhole
+            className="mx-auto h-12 w-12 text-indigo-400"
+            aria-hidden="true"
+          />
+          <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+            Set a New Password
+          </h1>
+          <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            Create a strong password to keep your account secure.
+          </p>
+        </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Password Field */}
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Enter your new password"
-              {...register("password")}
-              className="w-full border rounded-lg p-3 focus:ring focus:ring-blue-300 pr-10"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute inset-y-0 right-3 flex items-center text-gray-500"
-              tabIndex={-1}
+        {/* Form Section */}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {/* New Password Field */}
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
             >
-              {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-            </button>
+              New Password
+            </label>
+            <div className="relative mt-2">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                {...register("password")}
+                className="block w-full rounded-md border-0 py-2.5 pr-10 text-gray-900 dark:bg-gray-700 dark:text-white dark:ring-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700 dark:hover:text-gray-200"
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
             {errors.password && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="mt-2 text-xs text-red-500">
                 {errors.password.message}
               </p>
             )}
           </div>
 
           {/* Confirm Password Field */}
-          <div className="relative">
-            <input
-              type={showConfirmPassword ? "text" : "password"}
-              placeholder="Confirm new password"
-              {...register("confirmPassword")}
-              className="w-full border rounded-lg p-3 focus:ring focus:ring-blue-300 pr-10"
-            />
-            <button
-              type="button"
-              onClick={() => setShowConfirmPassword((prev) => !prev)}
-              className="absolute inset-y-0 right-3 flex items-center text-gray-500"
-              tabIndex={-1}
+          <div>
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
             >
-              {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-            </button>
+              Confirm New Password
+            </label>
+            <div className="relative mt-2">
+              <input
+                id="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="••••••••"
+                {...register("confirmPassword")}
+                className="block w-full rounded-md border-0 py-2.5 pr-10 text-gray-900 dark:bg-gray-700 dark:text-white dark:ring-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700 dark:hover:text-gray-200"
+                tabIndex={-1}
+              >
+                {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
             {errors.confirmPassword && (
-              <p className="text-red-500 text-sm mt-1">
+              <p className="mt-2 text-xs text-red-500">
                 {errors.confirmPassword.message}
               </p>
             )}
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={isSubmitting || resetPasswordMutation.isPending}
-            className="w-full bg-blue-600 text-white rounded-lg py-2 hover:bg-blue-700 transition disabled:bg-blue-300"
+            className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {resetPasswordMutation.isPending ? "Resetting..." : "Reset Password"}
+            {resetPasswordMutation.isPending
+              ? "Resetting Password..."
+              : "Reset Password"}
           </button>
         </form>
       </div>
