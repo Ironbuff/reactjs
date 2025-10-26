@@ -85,12 +85,12 @@ const ResetPassword = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
                 {...register("password")}
-                className="block w-full rounded-md border-0 py-2.5 pr-10 text-gray-900 dark:bg-gray-700 dark:text-white dark:ring-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full px-2 rounded-md border-0 py-2.5 pr-10 text-gray-900 dark:bg-gray-700 dark:text-white dark:ring-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700 dark:hover:text-gray-200"
+                className="absolute inset-y-0  right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700 dark:hover:text-gray-200"
                 tabIndex={-1}
               >
                 {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -117,7 +117,7 @@ const ResetPassword = () => {
                 type={showConfirmPassword ? "text" : "password"}
                 placeholder="••••••••"
                 {...register("confirmPassword")}
-                className="block w-full rounded-md border-0 py-2.5 pr-10 text-gray-900 dark:bg-gray-700 dark:text-white dark:ring-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 px-2 py-2.5 pr-10 text-gray-900 dark:bg-gray-700 dark:text-white dark:ring-gray-600 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               <button
                 type="button"
