@@ -116,11 +116,10 @@ const Habit = () => {
               >
                 {/* Status Badge */}
                 <span
-                  className={`absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${
-                    isCompletedToday
+                  className={`absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${isCompletedToday
                       ? "bg-green-100 text-green-700"
                       : "bg-yellow-100 text-yellow-700"
-                  }`}
+                    }`}
                 >
                   {isCompletedToday ? "Done" : "Pending"}
                 </span>
@@ -143,11 +142,10 @@ const Habit = () => {
                         toggleHabitMutation.mutate(habit?._id as string)
                       }
                       disabled={toggleHabitMutation.isPending}
-                      className={`flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-xl w-full transition-all duration-300 shadow-md ${
-                        isCompletedToday
+                      className={`flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-xl w-full transition-all duration-300 shadow-md ${isCompletedToday
                           ? "bg-blue-600 hover:bg-blue-700"
                           : "bg-green-600 hover:bg-green-700"
-                      }`}
+                        }`}
                     >
                       {toggleHabitMutation.isPending ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
@@ -187,17 +185,17 @@ const Habit = () => {
           })}
         </div>
       )}
-{
-  userId && (
-    
-      <Link
-        to="/habit"
-        className="fixed bottom-8 right-8 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full p-4 shadow-lg hover:scale-110 transition-transform duration-300"
-      >
-        <Plus className="w-6 h-6" />
-      </Link>
-  )
-}
+      {
+        userId && (
+
+          <Link
+            to="/habit"
+            className="fixed bottom-8 right-8 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full p-4 shadow-lg hover:scale-110 transition-transform duration-300"
+          >
+            <Plus className="w-6 h-6" />
+          </Link>
+        )
+      }
     </div>
   );
 };
