@@ -160,7 +160,7 @@ const forgotPassword = async (req, res) => {
 
         await transporter.sendMail(mailOptions);
 
-        res.status(200).json({ message: "Password reset link sent successfully." });
+        res.status(200).json({ message: "Password reset link sent successfully to your email." });
 
     } catch (error) {
         console.error("Forgot Password Error:", error);
