@@ -53,7 +53,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col justify-center items-center bg-gray-100 dark:bg-gray-900 px-6 py-12 lg:px-8">
+    <div className="flex min-h-[calc(100vh-9ch)] flex-col justify-center items-center bg-gray-100 dark:bg-gray-900 px-6 py-12 lg:px-8">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl space-y-6">
         {/* Header Section */}
         <div className="text-center">
@@ -61,7 +61,7 @@ const ResetPassword = () => {
             className="mx-auto h-12 w-12 text-indigo-400"
             aria-hidden="true"
           />
-          <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <h1 className="mt-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             Set a New Password
           </h1>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
