@@ -58,9 +58,7 @@ const Login = () => {
         {/* Header */}
         <div className="text-center mb-6">
           <Lock className="mx-auto text-green-500 w-10 h-10 mb-2" />
-          <h1 className="text-2xl font-semibold text-gray-800">
-            Welcome Back
-          </h1>
+          <h1 className="text-2xl font-semibold text-gray-800">Welcome Back</h1>
           <p className="text-gray-500 text-sm mt-1">Sign in to your account</p>
         </div>
 
@@ -132,7 +130,9 @@ const Login = () => {
           <button
             type="submit"
             disabled={mutation.isPending}
-            className="w-full py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-medium text-sm flex items-center justify-center transition disabled:opacity-50"
+            className="w-full py-2.5 bg-green-500 hover:bg-green-600 text-white 
+          rounded-lg font-medium text-sm flex items-center justify-center transition-all 
+          duration-200 disabled:opacity-50 hover:shadow-md"
           >
             {mutation.isPending ? (
               <>
@@ -142,7 +142,7 @@ const Login = () => {
             ) : (
               <>
                 Sign In
-                <ArrowRight className="w-4 h-4 ml-2" />
+                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </>
             )}
           </button>
