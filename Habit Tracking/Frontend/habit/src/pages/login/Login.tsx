@@ -130,7 +130,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={mutation.isPending}
-            className="w-full py-2.5 bg-green-500 hover:bg-green-600 text-white 
+            className="group w-full py-2.5 bg-green-500 hover:bg-green-600 text-white 
           rounded-lg font-medium text-sm flex items-center justify-center transition-all 
           duration-200 disabled:opacity-50 hover:shadow-md"
           >
@@ -142,7 +142,7 @@ const Login = () => {
             ) : (
               <>
                 Sign In
-                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-2" />
               </>
             )}
           </button>
