@@ -30,7 +30,7 @@ const VerifyEmailPassword = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-blue-50 to-white px-4">
+    <div className="min-h-[calc(100vh-9ch)] flex items-center justify-center bg-gray-200 px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-2xl border border-gray-100 transition-all hover:shadow-blue-200">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-3">
           Forgot Password?
