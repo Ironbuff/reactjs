@@ -74,7 +74,7 @@ const login = async (req, res) => {
     //  Password Checking
     const matchPassword = await bcrypt.compare(password, user.password);
     if (!matchPassword) {
-      return res.status(401).json({ message: "Enter Valid Password" });
+      return res.status(401).json({ message: "Enter the Correct Password" });
     }
 
     //Payload for JWT Sign
