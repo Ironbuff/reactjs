@@ -57,9 +57,9 @@ const Habit = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100">
         <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
-        <p className="ml-3 text-lg font-semibold text-gray-700">
+        <p className="mt-3 text-lg font-semibold text-gray-700">
           Loading habits...
         </p>
       </div>
@@ -87,16 +87,14 @@ const Habit = () => {
       {habits.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-[60vh] text-center">
           <NotebookPen className="w-16 h-16 text-gray-400 mb-4" />
-          <h2 className="text-xl font-semibold text-gray-700">
-            No habits yet!
-          </h2>
+          <h2 className="text-xl font-semibold text-gray-700">No habits yet!</h2>
           <p className="text-gray-500 mt-2 mb-6 max-w-md">
-            Start your journey by adding your first habit to track your
-            progress. Consistency starts with a single step!
+            Start your journey by adding your first habit. Consistency begins
+            with one small step!
           </p>
           <Link
             to="/habit"
-            className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-blue-500 text-white px-5 py-3 rounded-full shadow-md hover:scale-105 transition-transform duration-300"
+            className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-blue-500 text-white px-5 py-3 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
           >
             <Plus className="w-5 h-5" /> Add Habit
           </Link>
@@ -112,7 +110,7 @@ const Habit = () => {
             return (
               <div
                 key={habit._id}
-                className="relative bg-white/80 backdrop-blur-lg rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex flex-col gap-4 border border-gray-100 group"
+                className="relative bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 p-6 flex flex-col border border-gray-100 group"
               >
                 {/* Status Badge */}
                 <span
@@ -125,17 +123,17 @@ const Habit = () => {
                 </span>
 
                 {/* Title */}
-                <h2 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
+                <h2 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-1">
                   {habit?.title}
                 </h2>
 
                 {/* Description */}
-                <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+                <p className="text-gray-600 text-sm leading-relaxed mt-1 line-clamp-3">
                   {habit?.description}
                 </p>
 
                 {habit?.user === userId && (
-                  <div className="flex flex-col sm:flex-row gap-2 mt-auto pt-4">
+                  <div className="flex flex-col sm:flex-row gap-2 mt-5">
                     {/* Toggle Button */}
                     <button
                       onClick={() =>
@@ -155,7 +153,7 @@ const Habit = () => {
                       {isCompletedToday ? "Completed" : "Mark Done"}
                     </button>
 
-
+                    {/* Edit */}
                     <Link
                       to={`/edit/${habit?._id}`}
                       className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-800 bg-yellow-300 hover:bg-yellow-400 rounded-xl transition-all duration-300 shadow-md"
@@ -164,6 +162,7 @@ const Habit = () => {
                       Edit
                     </Link>
 
+                    {/* Delete */}
                     <button
                       onClick={() =>
                         DeleteMutation.mutate(habit?._id as string)
@@ -185,17 +184,15 @@ const Habit = () => {
           })}
         </div>
       )}
-      {
-        userId && (
 
-          <Link
-            to="/habit"
-            className="fixed bottom-8 right-8 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full p-4 shadow-lg hover:scale-110 transition-transform duration-300"
-          >
-            <Plus className="w-6 h-6" />
-          </Link>
-        )
-      }
+      {userId && (
+        <Link
+          to="/habit"
+          className="fixed bottom-8 right-8 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full p-4 shadow-xl hover:scale-110 hover:shadow-2xl transition-all duration-300"
+        >
+          <Plus className="w-6 h-6" />
+        </Link>
+      )}
     </div>
   );
 };
