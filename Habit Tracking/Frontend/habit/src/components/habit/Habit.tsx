@@ -12,6 +12,8 @@ import {
   Loader2,
   Plus,
   NotebookPen,
+  Target,
+  CircleCheck,
 } from "lucide-react";
 
 export interface habitType {
@@ -148,9 +150,18 @@ const Habit = () => {
                       {toggleHabitMutation.isPending ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
                       ) : (
-                        <CheckCircle className="w-4 h-4" />
+                         isCompletedToday?(
+                          <>
+                          <Target  className="w-4 h-4"  /> <span> Completed</span>
+                          </>
+                         ):(
+                          <>
+                          <CheckCircle className="w-4 h-4" />
+                          <span>Mark as Done</span>
+                          </>
+                         )
                       )}
-                      {isCompletedToday ? "Completed" : "Mark Done"}
+                    
                     </button>
 
                     {/* Edit */}
