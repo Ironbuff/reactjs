@@ -40,8 +40,13 @@ const Habit = () => {
       toast.success(data?.data?.message || "Habit deleted successfully!");
       queryClient.invalidateQueries({ queryKey: ["habit"] });
     },
-    onError: (error: AxiosError<{ message: string }>) => {
-      toast.error(error?.response?.data?.message);
+    onError: (error: AxiosError<any>) => {
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.response?.data?.messge ||
+        "An unexpected error occurred.";
+
+      toast.error(errorMessage);
     },
   });
 
@@ -89,7 +94,9 @@ const Habit = () => {
       {habits.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-[60vh] text-center">
           <NotebookPen className="w-16 h-16 text-gray-400 mb-4" />
-          <h2 className="text-xl font-semibold text-gray-700">No habits yet!</h2>
+          <h2 className="text-xl font-semibold text-gray-700">
+            No habits yet!
+          </h2>
           <p className="text-gray-500 mt-2 mb-6 max-w-md">
             Start your journey by adding your first habit. Consistency begins
             with one small step!
@@ -116,10 +123,11 @@ const Habit = () => {
               >
                 {/* Status Badge */}
                 <span
-                  className={`absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${isCompletedToday
+                  className={`absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${
+                    isCompletedToday
                       ? "bg-green-100 text-green-700"
                       : "bg-yellow-100 text-yellow-700"
-                    }`}
+                  }`}
                 >
                   {isCompletedToday ? "Done" : "Pending"}
                 </span>
@@ -142,26 +150,24 @@ const Habit = () => {
                         toggleHabitMutation.mutate(habit?._id as string)
                       }
                       disabled={toggleHabitMutation.isPending}
-                      className={`flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-xl w-full transition-all duration-300 shadow-md ${isCompletedToday
+                      className={`flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-xl w-full transition-all duration-300 shadow-md ${
+                        isCompletedToday
                           ? "bg-blue-600 hover:bg-blue-700"
                           : "bg-green-600 hover:bg-green-700"
-                        }`}
+                      }`}
                     >
                       {toggleHabitMutation.isPending ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : isCompletedToday ? (
+                        <>
+                          <Target className="w-4 h-4" /> <span> Completed</span>
+                        </>
                       ) : (
-                         isCompletedToday?(
-                          <>
-                          <Target  className="w-4 h-4"  /> <span> Completed</span>
-                          </>
-                         ):(
-                          <>
+                        <>
                           <CheckCircle className="w-4 h-4" />
                           <span>Mark as Done</span>
-                          </>
-                         )
+                        </>
                       )}
-                    
                     </button>
 
                     {/* Edit */}
