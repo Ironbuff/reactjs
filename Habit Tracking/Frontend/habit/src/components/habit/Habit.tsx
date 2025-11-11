@@ -45,7 +45,6 @@ const Habit = () => {
         error?.response?.data?.message ||
         error?.response?.data?.messge ||
         "An unexpected error occurred.";
-
       toast.error(errorMessage);
     },
   });
@@ -149,18 +148,25 @@ const Habit = () => {
                       onClick={() =>
                         toggleHabitMutation.mutate(habit?._id as string)
                       }
-                      disabled={toggleHabitMutation.isPending}
-                      className={`flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-xl w-full transition-all duration-300 shadow-md ${
+                      disabled={isCompletedToday || toggleHabitMutation.isPending}
+                      title={
                         isCompletedToday
-                          ? "bg-blue-600 hover:bg-blue-700"
-                          : "bg-green-600 hover:bg-green-700"
-                      }`}
+                          ? "Already completed today"
+                          : "Mark as done"
+                      }
+                      className={`flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-xl w-full transition-all duration-300 shadow-md
+                        ${
+                          isCompletedToday
+                            ? "bg-gray-400 cursor-not-allowed"
+                            : "bg-green-600 hover:bg-green-700"
+                        }`}
                     >
                       {toggleHabitMutation.isPending ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
                       ) : isCompletedToday ? (
                         <>
-                          <Target className="w-4 h-4" /> <span> Completed</span>
+                          <CircleCheck className="w-4 h-4" />
+                          <span>Completed</span>
                         </>
                       ) : (
                         <>
