@@ -88,14 +88,17 @@ exports.toggleHabitCompletion = async (req, res) => {
             new Date(d).toDateString() === targetDate.toDateString()
         );
 
+        let responseMessage;
+
         if (isAlreadyCompleted) {
-            habit.completedDates = habit.completedDates.filter(d =>
-                new Date(d).toDateString() !== targetDate.toDateString(),
-                responseMessage="Task Already Completed"
-            );
+
+            return res.status(400).json({ 
+                message: 'Habit already completed today. Cannot undo.' 
+            });
+        
         } else {
             habit.completedDates.push(targetDate);
-            responseMessage ="Habit is now Completed"
+            responseMessage = "Habit marked as complete!";
         }
 
         await habit.save();
