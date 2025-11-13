@@ -120,7 +120,7 @@ const Habit = () => {
                 key={habit._id}
                 className="relative bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 p-6 flex flex-col border border-gray-100 group"
               >
-                {/* Status Badge */}
+
                 <span
                   className={`absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${
                     isCompletedToday
@@ -131,24 +131,22 @@ const Habit = () => {
                   {isCompletedToday ? "Done" : "Pending"}
                 </span>
 
-                {/* Title */}
                 <h2 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-1">
                   {habit?.title}
                 </h2>
 
-                {/* Description */}
                 <p className="text-gray-600 text-sm leading-relaxed mt-1 line-clamp-3">
                   {habit?.description}
                 </p>
 
                 {habit?.user === userId && (
                   <div className="flex flex-col sm:flex-row gap-2 mt-5">
-                    {/* Toggle Button */}
+
                     <button
                       onClick={() =>
                         toggleHabitMutation.mutate(habit?._id as string)
                       }
-                      disabled={isCompletedToday || toggleHabitMutation.isPending}
+                      disabled={ toggleHabitMutation.isPending}
                       title={
                         isCompletedToday
                           ? "Already completed today"
