@@ -15,7 +15,6 @@ import {
   CircleCheck,
 } from "lucide-react";
 
-// --- This interface is great, no changes needed ---
 export interface habitType {
   _id?: string;
   title?: string;
@@ -24,10 +23,6 @@ export interface habitType {
   completedDates?: string[];
 }
 
-// ====================================================================
-// --- 1. NEW: HabitCard Component ---
-// This component now manages the logic for a single habit.
-// ====================================================================
 
 interface HabitCardProps {
   habit: habitType;
@@ -42,25 +37,23 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
     (dateStr) => new Date(dateStr).toDateString() === today
   );
 
-  // --- IMPROVED: Toggle Mutation with Optimistic Update ---
   const toggleHabitMutation = useMutation({
     mutationKey: ["toggleHabit", habit._id],
     mutationFn: () => toggleHabit(habit._id as string),
     
-    // --- Optimistic Update Logic ---
+
     onMutate: async () => {
-      // 1. Cancel any outgoing refetches
+
       await queryClient.cancelQueries({ queryKey: ["habit"] });
 
-      // 2. Snapshot the previous value
+
       const previousHabits = queryClient.getQueryData<any>(["habit"]);
 
-      // 3. Optimistically update to the new value
       queryClient.setQueryData(["habit"], (oldData: any) => {
         const oldHabits = oldData?.data?.newhabit || [];
         const newHabits = oldHabits.map((h: habitType) => {
           if (h._id === habit._id) {
-            // Add today's date to the completedDates array
+
             return {
               ...h,
               completedDates: [...(h.completedDates || []), new Date().toISOString()],
@@ -71,50 +64,47 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
         return { ...oldData, data: { ...oldData.data, newhabit: newHabits } };
       });
 
-      // 4. Return a context object with the snapshotted value
+
       return { previousHabits };
     },
     
-    // --- Toast on Success ---
+
     onSuccess: (data) => {
       toast.success(data.data.message || "Habit updated!");
     },
 
-    // --- Rollback on error ---
+
     onError: (
       error: AxiosError<{ message: string }>,
       variables,
       context
     ) => {
       toast.error(error?.response?.data?.message || "Could not update habit.");
-      // Rollback to the previous state
       if (context?.previousHabits) {
         queryClient.setQueryData(["habit"], context.previousHabits);
       }
     },
 
-    // --- Always refetch after error or success to sync with server ---
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["habit"] });
     },
   });
 
-  // --- IMPROVED: Delete Mutation with Optimistic Update ---
+
   const deleteMutation = useMutation({
     mutationKey: ["delete", habit._id],
     mutationFn: () => deleteHabit(habit._id as string),
 
     onMutate: async () => {
-      // --- NEW: Add delete confirmation ---
+
       if (!window.confirm(`Are you sure you want to delete "${habit.title}"?`)) {
-        // By throwing an error, we stop the mutation from proceeding
+
         throw new Error("Delete cancelled by user");
       }
 
       await queryClient.cancelQueries({ queryKey: ["habit"] });
       const previousHabits = queryClient.getQueryData<any>(["habit"]);
 
-      // Optimistically remove the habit from the list
       queryClient.setQueryData(["habit"], (oldData: any) => {
         const oldHabits = oldData?.data?.newhabit || [];
         const newHabits = oldHabits.filter((h: habitType) => h._id !== habit._id);
@@ -129,12 +119,11 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
     },
 
     onError: (error: AxiosError<any>, variables, context) => {
-      // Don't show toast if user cancelled
       if (error.message === "Delete cancelled by user") {
         return;
       }
       
-      // --- BUG FIX: Fixed typo 'messge' -> 'message' ---
+
       const errorMessage =
         error?.response?.data?.message || "An unexpected error occurred.";
       toast.error(errorMessage);
@@ -150,12 +139,12 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
     },
   });
 
-  // --- NEW: Centralized styles for readability ---
+
   const baseButtonClass = "flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-xl w-full sm:w-auto transition-all duration-300 shadow-md";
   const editButtonClass = `${baseButtonClass} text-gray-800 bg-yellow-300 hover:bg-yellow-400`;
   const deleteButtonClass = `${baseButtonClass} text-white bg-red-600 hover:bg-red-700 disabled:opacity-50`;
   
-  // Conditional class for the toggle button
+
   const toggleButtonClass = `${baseButtonClass} ${
     isCompletedToday
       ? "bg-gray-400 cursor-not-allowed"
@@ -231,11 +220,6 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
   );
 };
 
-// ====================================================================
-// --- 2. UPDATED: Main Habit (List) Component ---
-// This is now much cleaner, as it only worries about
-// loading the list and rendering the empty state.
-// ====================================================================
 
 const Habit = () => {
   const { data, isLoading, error } = useQuery({
@@ -245,7 +229,7 @@ const Habit = () => {
 
   const userId = localStorage.getItem("id");
 
-  // --- Main loading state ---
+
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100">
@@ -257,7 +241,7 @@ const Habit = () => {
     );
   }
 
-  // --- Main error state ---
+
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-white via-gray-50 to-gray-100">
@@ -276,7 +260,7 @@ const Habit = () => {
         🌱 My Habits Tracker
       </h1>
 
-      {/* --- Empty state (no changes) --- */}
+
       {habits.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-[60vh] text-center">
           <NotebookPen className="w-16 h-16 text-gray-400 mb-4" />
@@ -295,7 +279,7 @@ const Habit = () => {
           </Link>
         </div>
       ) : (
-        // --- IMPROVED: Simplified list rendering ---
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
           {habits.map((habit: habitType) => (
             <HabitCard key={habit._id} habit={habit} userId={userId} />
@@ -303,7 +287,6 @@ const Habit = () => {
         </div>
       )}
 
-      {/* --- FAB (no changes) --- */}
       {userId && (
         <Link
           to="/habit"
