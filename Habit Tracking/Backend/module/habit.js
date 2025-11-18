@@ -16,6 +16,10 @@ const HabitSchema = new Schema({
     completedDates:[{
          type:Date
     }],
+    image:{
+        type:String,
+        default:'uploads/nature.jpg'
+    },
     user:{
         type:Schema.Types.ObjectId,
         ref:'User'

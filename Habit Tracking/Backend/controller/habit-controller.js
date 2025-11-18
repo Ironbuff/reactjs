@@ -1,5 +1,7 @@
 const express = require('express')
 const Habit = require('../module/habit');
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 
 exports.addHabit = async(req,res)=>{
