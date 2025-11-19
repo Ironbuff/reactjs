@@ -8,10 +8,12 @@ exports.addHabit = async(req,res)=>{
    try{
      const{title,description}= req.body;
     const userid = req.user.id;
+    const imagepath = req.file?req.file.path:undefined
     const newHabit = new Habit({
         title,
         description,
         user:userid,
+        ...(imagepath&&{image:imagepath})
     })
     await newHabit.save()
     return res.status(200).json({message:"Habit Sucessfully created",habit:newHabit})

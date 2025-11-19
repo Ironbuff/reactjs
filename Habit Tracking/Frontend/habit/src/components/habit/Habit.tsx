@@ -21,6 +21,7 @@ export interface habitType {
   description?: string;
   user?: string;
   completedDates?: string[];
+  image:string;
 }
 
 
@@ -162,6 +163,12 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
       >
         {isCompletedToday ? "Done" : "Pending"}
       </span>
+
+       <img
+                src={`http://localhost:8081/${habit.image}`}
+                alt={habit?.title}
+                className="w-full h-[25ch] object-cover rounded-t-2xl"
+              />
 
       <h2 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-1 pr-16">
         {habit?.title}
