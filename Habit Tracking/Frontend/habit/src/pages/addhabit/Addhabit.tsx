@@ -34,7 +34,12 @@ const AddnewHabit = () => {
   });
 
   const onSubmit = (data: any) => {
-    CreateHabit.mutateAsync(data);
+    const formData = new FormData();
+  formData.append("title", data.title);
+  formData.append("description", data.description);
+  formData.append("image", data.image[0]); 
+
+  CreateHabit.mutate(formData);
   };
 
   return (
@@ -89,6 +94,31 @@ const AddnewHabit = () => {
                 {errors.description.message}
               </p>
             )}
+          </div>
+
+          {/* Image */}
+          <div>
+            <label
+              htmlFor="image"
+              className="block mb-2 text-sm font-medium text-gray-700"
+            >
+              Upload Image
+            </label>
+
+            <input
+              type="file"
+              id="image"
+              accept="image/*"
+              {...register("image")}
+              className="w-full px-4 py-2.5 border border-gray-300 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+            />
+
+            {errors.image && (
+              <p className="mt-1 text-sm text-red-500">
+                {String(errors.image.message)}
+              </p>
+            )}
+
           </div>
 
           {/* Buttons */}
