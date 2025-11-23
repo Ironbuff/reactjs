@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { AddHabit } from "../../services/Addhabit";
 import { AddhabitSchema } from "../../schema/AddhabitSchema";
@@ -10,6 +10,7 @@ import { Loader2 } from "lucide-react";
 
 const AddnewHabit = () => {
   const navigate = useNavigate();
+  const [previewPage, setPreviewPage] = useState<string | null>(null);
 
   const {
     register,
@@ -35,11 +36,11 @@ const AddnewHabit = () => {
 
   const onSubmit = (data: any) => {
     const formData = new FormData();
-  formData.append("title", data.title);
-  formData.append("description", data.description);
-  formData.append("image", data.image[0]); 
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("image", data.image[0]);
 
-  CreateHabit.mutate(formData);
+    CreateHabit.mutate(formData);
   };
 
   return (
@@ -110,6 +111,12 @@ const AddnewHabit = () => {
               id="image"
               accept="image/*"
               {...register("image")}
+              onChange={(e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                  const file = e.target.files[0];
+                  setPreviewPage(URL.createObjectURL(file));
+                }
+              }}
               className="w-full px-4 py-2.5 border border-gray-300 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             />
 
@@ -119,6 +126,16 @@ const AddnewHabit = () => {
               </p>
             )}
 
+            {/* Preview Image */}
+            {previewPage && (
+              <div className="mt-4">
+                <img
+                  src={previewPage}
+                  alt="Preview"
+                  className="w-full h-40 object-cover rounded-xl border border-gray-300 shadow-sm"
+                />
+              </div>
+            )}
           </div>
 
           {/* Buttons */}

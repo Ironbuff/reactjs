@@ -20,10 +20,14 @@ interface HabitEditProps {
 const HabitEdit: React.FC<HabitEditProps> = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
   const [formValues, setFormValues] = useState({
     title: "",
     description: "",
     completedDates: [] as string[],
+    image: "",
   });
 
   const { data: habits } = useQuery({
@@ -42,7 +46,12 @@ const HabitEdit: React.FC<HabitEditProps> = () => {
           title: habitData.title || "",
           description: habitData.description || "",
           completedDates: habitData.completedDates || [],
+          image: habitData.image || "",
         });
+
+        if (habitData.image) {
+          setPreviewImage(habitData.image);
+        }
       }
     }
   }, [habits, id]);
@@ -55,6 +64,14 @@ const HabitEdit: React.FC<HabitEditProps> = () => {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      setPreviewImage(URL.createObjectURL(file));
+    }
   };
 
   const EditHabitMutation = useMutation({
@@ -71,7 +88,17 @@ const HabitEdit: React.FC<HabitEditProps> = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    EditHabitMutation.mutateAsync({ id, data: formValues });
+
+    const formData = new FormData();
+    formData.append("title", formValues.title);
+    formData.append("description", formValues.description);
+
+    if (imageFile) {
+      formData.append("image", imageFile);
+    }
+
+    // Send FormData + id
+    EditHabitMutation.mutateAsync({ id, data: formData });
   };
 
   return (
@@ -80,6 +107,7 @@ const HabitEdit: React.FC<HabitEditProps> = () => {
         <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
           ✏️ Edit Habit
         </h1>
+
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Title */}
           <div>
@@ -111,6 +139,27 @@ const HabitEdit: React.FC<HabitEditProps> = () => {
             />
           </div>
 
+          {/* Image Upload */}
+          <div>
+            <label className="block font-medium text-gray-700 mb-1">
+              Habit Image
+            </label>
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="border border-gray-300 p-2 w-full rounded-lg"
+            />
+            {(imageFile || formValues.image) && (
+              <img
+                src={(imageFile ? previewImage : `http://localhost:8081/${formValues.image}`) || ""}
+                alt="Preview"
+                className="mt-3 w-32 h-32 object-cover rounded-lg shadow"
+              />
+            )}
+          </div>
+
           {/* Buttons */}
           <div className="flex justify-between items-center">
             <button
@@ -120,6 +169,7 @@ const HabitEdit: React.FC<HabitEditProps> = () => {
             >
               Cancel
             </button>
+
             <button
               type="submit"
               disabled={EditHabitMutation.isPending}
