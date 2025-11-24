@@ -11,6 +11,6 @@ router.get('/',optionalAuth,habitController.getUserHabit)
 router.post('/addhabit',authVerify,upload.single('image'),habitController.addHabit)
 router.delete('/:ids',authVerify,habitController.deleteUserHabit)
 router.post('/toggle/:id',authVerify,habitController.toggleHabitCompletion)
-router.put('/updatehabit/:id',authVerify,habitController.updateHabit)
+router.put('/updatehabit/:id',authVerify,upload.single('image'),habitController.updateHabit)
 
 module.exports = router

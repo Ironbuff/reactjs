@@ -55,10 +55,11 @@ exports.updateHabit = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description } = req.body;
+    const imagepath = req.file?req.file.path:undefined
 
     const updatedHabit = await Habit.findByIdAndUpdate(
       id,
-      { title, description },
+      { title, description, ...(imagepath &&{image:imagepath})},
       { new: true }
     );
 
