@@ -102,7 +102,7 @@ const HabitEdit: React.FC<HabitEditProps> = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50 px-4">
+    <div className="flex justify-center items-center h-[calc(100vh-12ch)] bg-gray-50 px-4">
       <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8">
         <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
           ✏️ Edit Habit

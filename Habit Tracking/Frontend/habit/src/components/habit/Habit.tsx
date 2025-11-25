@@ -21,9 +21,8 @@ export interface habitType {
   description?: string;
   user?: string;
   completedDates?: string[];
-  image:string;
+  image: string;
 }
-
 
 interface HabitCardProps {
   habit: habitType;
@@ -41,12 +40,9 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
   const toggleHabitMutation = useMutation({
     mutationKey: ["toggleHabit", habit._id],
     mutationFn: () => toggleHabit(habit._id as string),
-    
 
     onMutate: async () => {
-
       await queryClient.cancelQueries({ queryKey: ["habit"] });
-
 
       const previousHabits = queryClient.getQueryData<any>(["habit"]);
 
@@ -54,10 +50,12 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
         const oldHabits = oldData?.data?.newhabit || [];
         const newHabits = oldHabits.map((h: habitType) => {
           if (h._id === habit._id) {
-
             return {
               ...h,
-              completedDates: [...(h.completedDates || []), new Date().toISOString()],
+              completedDates: [
+                ...(h.completedDates || []),
+                new Date().toISOString(),
+              ],
             };
           }
           return h;
@@ -65,21 +63,14 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
         return { ...oldData, data: { ...oldData.data, newhabit: newHabits } };
       });
 
-
       return { previousHabits };
     },
-    
 
     onSuccess: (data) => {
       toast.success(data.data.message || "Habit updated!");
     },
 
-
-    onError: (
-      error: AxiosError<{ message: string }>,
-      variables,
-      context
-    ) => {
+    onError: (error: AxiosError<{ message: string }>, variables, context) => {
       toast.error(error?.response?.data?.message || "Could not update habit.");
       if (context?.previousHabits) {
         queryClient.setQueryData(["habit"], context.previousHabits);
@@ -91,15 +82,14 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
     },
   });
 
-
   const deleteMutation = useMutation({
     mutationKey: ["delete", habit._id],
     mutationFn: () => deleteHabit(habit._id as string),
 
     onMutate: async () => {
-
-      if (!window.confirm(`Are you sure you want to delete "${habit.title}"?`)) {
-
+      if (
+        !window.confirm(`Are you sure you want to delete "${habit.title}"?`)
+      ) {
         throw new Error("Delete cancelled by user");
       }
 
@@ -108,7 +98,9 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
 
       queryClient.setQueryData(["habit"], (oldData: any) => {
         const oldHabits = oldData?.data?.newhabit || [];
-        const newHabits = oldHabits.filter((h: habitType) => h._id !== habit._id);
+        const newHabits = oldHabits.filter(
+          (h: habitType) => h._id !== habit._id
+        );
         return { ...oldData, data: { ...oldData.data, newhabit: newHabits } };
       });
 
@@ -123,7 +115,6 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
       if (error.message === "Delete cancelled by user") {
         return;
       }
-      
 
       const errorMessage =
         error?.response?.data?.message || "An unexpected error occurred.";
@@ -140,70 +131,81 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
     },
   });
 
-
-  const baseButtonClass = "flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-xl w-full sm:w-auto transition-all duration-300 shadow-md";
+  const baseButtonClass =
+    "flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-xl w-full sm:w-auto transition-all duration-300 shadow-md";
   const editButtonClass = `${baseButtonClass} text-gray-800 bg-yellow-300 hover:bg-yellow-400`;
   const deleteButtonClass = `${baseButtonClass} text-white bg-red-600 hover:bg-red-700 disabled:opacity-50`;
-  
 
-  const toggleButtonClass = `${baseButtonClass} ${
-    isCompletedToday
+  const toggleButtonClass = `${baseButtonClass} ${isCompletedToday
       ? "bg-gray-400 cursor-not-allowed"
       : "bg-green-600 hover:bg-green-700"
-  } disabled:opacity-50`;
+    } disabled:opacity-50`;
 
   return (
-    <div className="relative bg-white/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 p-6 flex flex-col border border-gray-100 group">
+    <div
+      className="relative bg-white/70 backdrop-blur-lg rounded-2xl shadow-lg hover:shadow-2xl 
+transition-all duration-300 p-4 flex flex-col gap-3 border border-gray-200 min-h-[420px]"
+    >
+      {/* Status Badge */}
       <span
-        className={`absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${
-          isCompletedToday
+        className={`absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${isCompletedToday
             ? "bg-green-100 text-green-700"
             : "bg-yellow-100 text-yellow-700"
-        }`}
+          }`}
       >
         {isCompletedToday ? "Done" : "Pending"}
       </span>
 
-       <img
-                src={`http://localhost:8081/${habit.image}`}
-                alt={habit?.title}
-                className="w-full h-[25ch] object-cover rounded-t-2xl"
-              />
+      {/* Image */}
+      <img
+        src={`http://localhost:8081/${habit.image}`}
+        alt={habit.title}
+        className="w-full h-48 object-cover rounded-xl"
+      />
 
-      <h2 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-1 pr-16">
-        {habit?.title}
+      {/* Title */}
+      <h2 className="text-lg font-bold text-gray-800 line-clamp-1">
+        {habit.title}
       </h2>
 
-      <p className="text-gray-600 text-sm leading-relaxed mt-1 line-clamp-3 min-h-[60px]">
-        {habit?.description}
+      {/* Description */}
+      <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
+        {habit.description}
       </p>
 
-      {habit?.user === userId && (
-        <div className="flex flex-col sm:flex-row gap-2 mt-5">
+      {/* Buttons */}
+      {habit.user === userId && (
+        <div className="mt-auto flex flex-col sm:flex-row gap-3">
+          {/* Mark Done Button */}
           <button
             onClick={() => toggleHabitMutation.mutate()}
-            // Disable if completed OR if a mutation is already in progress
             disabled={isCompletedToday || toggleHabitMutation.isPending}
-            title={isCompletedToday ? "Already completed today" : "Mark as done"}
-            className={toggleButtonClass}
+            className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-white 
+        font-medium shadow transition-all duration-300 
+        ${isCompletedToday ? "bg-gray-400" : "bg-green-600 hover:bg-green-700"
+              }`}
           >
             {toggleHabitMutation.isPending ? (
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : isCompletedToday ? (
               <>
                 <CircleCheck className="w-4 h-4" />
-                <span>Completed</span>
+                Completed
               </>
             ) : (
               <>
                 <CheckCircle className="w-4 h-4" />
-                <span>Mark as Done</span>
+                Mark as Done
               </>
             )}
           </button>
 
           {/* Edit */}
-          <Link to={`/edit/${habit?._id}`} className={editButtonClass}>
+          <Link
+            to={`/edit/${habit._id}`}
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-xl 
+        bg-yellow-300 hover:bg-yellow-400 text-gray-900 shadow font-medium"
+          >
             <Edit3 className="w-4 h-4" />
             Edit
           </Link>
@@ -212,7 +214,8 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
           <button
             onClick={() => deleteMutation.mutate()}
             disabled={deleteMutation.isPending}
-            className={deleteButtonClass}
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-xl 
+        bg-red-600 hover:bg-red-700 text-white shadow font-medium"
           >
             {deleteMutation.isPending ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -227,7 +230,6 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
   );
 };
 
-
 const Habit = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["habit"],
@@ -235,7 +237,6 @@ const Habit = () => {
   });
 
   const userId = localStorage.getItem("id");
-
 
   if (isLoading) {
     return (
@@ -247,7 +248,6 @@ const Habit = () => {
       </div>
     );
   }
-
 
   if (error) {
     return (
@@ -262,11 +262,10 @@ const Habit = () => {
   const habits = data?.data?.newhabit || [];
 
   return (
-    <div className="flex flex-col items-center px-6 py-12 bg-gradient-to-br from-white via-gray-50 to-gray-200 min-h-screen">
-      <h1 className="text-3xl md:text-4xl font-extrabold font-serif text-gray-900 mb-12 tracking-tight drop-shadow-sm text-center">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-gray-200 pt-20 px-6 flex flex-col items-center">
+      <h1 className="text-3xl md:text-4xl font-extrabold font-serif text-gray-900 mb-10 text-center">
         🌱 My Habits Tracker
       </h1>
-
 
       {habits.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-[60vh] text-center">
@@ -278,16 +277,17 @@ const Habit = () => {
             Start your journey by adding your first habit. Consistency begins
             with one small step!
           </p>
+
           <Link
             to="/habit"
-            className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-blue-500 text-white px-5 py-3 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
+            className="flex items-center gap-2 bg-gradient-to-r from-green-500 to-blue-500 
+          text-white px-5 py-3 rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
           >
             <Plus className="w-5 h-5" /> Add Habit
           </Link>
         </div>
       ) : (
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
           {habits.map((habit: habitType) => (
             <HabitCard key={habit._id} habit={habit} userId={userId} />
           ))}
@@ -298,7 +298,9 @@ const Habit = () => {
         <Link
           to="/habit"
           aria-label="Add new habit"
-          className="fixed bottom-8 right-8 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-full p-4 shadow-xl hover:scale-110 hover:shadow-2xl transition-all duration-300"
+          className="fixed bottom-8 right-8 bg-gradient-to-r from-green-500 to-blue-500 
+        text-white rounded-full p-4 shadow-xl hover:scale-110 hover:shadow-2xl 
+        transition-all duration-300"
         >
           <Plus className="w-6 h-6" />
         </Link>
