@@ -144,7 +144,7 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
   return (
     <div
       className="relative bg-white/70 backdrop-blur-lg rounded-2xl shadow-lg hover:shadow-2xl 
-transition-all duration-300 p-4 flex flex-col gap-3 border border-gray-200 min-h-[420px]"
+transition-all duration-300 p-4 flex flex-col gap-3 border border-gray-200 "
     >
       {/* Status Badge */}
       <span
@@ -180,8 +180,8 @@ transition-all duration-300 p-4 flex flex-col gap-3 border border-gray-200 min-h
           <button
             onClick={() => toggleHabitMutation.mutate()}
             disabled={isCompletedToday || toggleHabitMutation.isPending}
-            className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-white 
-        font-medium shadow transition-all duration-300 
+            className={`flex-1 flex items-center justify-center gap-2 px-4 py-0 rounded-xl text-white 
+        font-medium shadow transition-all duration-300 text-sm
         ${isCompletedToday ? "bg-gray-400" : "bg-green-600 hover:bg-green-700"
               }`}
           >
@@ -203,7 +203,7 @@ transition-all duration-300 p-4 flex flex-col gap-3 border border-gray-200 min-h
           {/* Edit */}
           <Link
             to={`/edit/${habit._id}`}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-xl 
+            className="flex-1 flex items-center justify-center gap-2 text-sm px-4 py-2 rounded-xl 
         bg-yellow-300 hover:bg-yellow-400 text-gray-900 shadow font-medium"
           >
             <Edit3 className="w-4 h-4" />
@@ -214,7 +214,7 @@ transition-all duration-300 p-4 flex flex-col gap-3 border border-gray-200 min-h
           <button
             onClick={() => deleteMutation.mutate()}
             disabled={deleteMutation.isPending}
-            className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-xl 
+            className="flex-1 flex items-center justify-center gap-2 px-4 text-sm py-2 rounded-xl 
         bg-red-600 hover:bg-red-700 text-white shadow font-medium"
           >
             {deleteMutation.isPending ? (
@@ -287,7 +287,7 @@ const Habit = () => {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-6xl">
           {habits.map((habit: habitType) => (
             <HabitCard key={habit._id} habit={habit} userId={userId} />
           ))}
