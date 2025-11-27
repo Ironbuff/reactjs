@@ -7,17 +7,7 @@ import { habitType } from "../habit/Habit";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 
-interface HabitEditProps {
-  title?: string;
-  description?: string;
-  completedDates?: string[];
-  createdAt?: string;
-  updatedAt?: string;
-  user?: string;
-  _id?: string;
-}
-
-const HabitEdit: React.FC<HabitEditProps> = () => {
+const HabitEdit: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -49,9 +39,7 @@ const HabitEdit: React.FC<HabitEditProps> = () => {
           image: habitData.image || "",
         });
 
-        if (habitData.image) {
-          setPreviewImage(habitData.image);
-        }
+        if (habitData.image) setPreviewImage(habitData.image);
       }
     }
   }, [habits, id]);
@@ -60,10 +48,7 @@ const HabitEdit: React.FC<HabitEditProps> = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormValues((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormValues((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,84 +73,70 @@ const HabitEdit: React.FC<HabitEditProps> = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append("title", formValues.title);
     formData.append("description", formValues.description);
-
-    if (imageFile) {
-      formData.append("image", imageFile);
-    }
-
-    // Send FormData + id
+    if (imageFile) formData.append("image", imageFile);
     EditHabitMutation.mutateAsync({ id, data: formData });
   };
 
   return (
-    <div className="flex justify-center items-center h-[calc(100vh-12ch)] bg-gray-50 px-4">
-      <div className="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-          ✏️ Edit Habit
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-gray-50 via-white to-gray-100 p-5">
+      <div className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl p-10 border border-gray-200 hover:shadow-[0_8px_35px_rgba(0,0,0,0.07)] transition-all duration-300">
+        
+        <h1 className="text-3xl font-extrabold text-gray-900 mb-8 text-center tracking-wide">
+          ✏️ Edit Your Habit
         </h1>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Title */}
+        <form onSubmit={handleSubmit} className="space-y-7">
+          
           <div>
-            <label className="block font-medium text-gray-700 mb-1">
-              Title
-            </label>
+            <label className="block text-gray-700 font-semibold mb-2">Title</label>
             <input
               type="text"
               name="title"
               value={formValues.title}
               onChange={handleChange}
+              className="border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 py-3 px-4 w-full rounded-xl text-gray-800 transition-all outline-none"
               placeholder="Enter habit title"
-              className="border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-100 p-3 w-full rounded-lg transition"
             />
           </div>
 
-          {/* Description */}
           <div>
-            <label className="block font-medium text-gray-700 mb-1">
-              Description
-            </label>
+            <label className="block text-gray-700 font-semibold mb-2">Description</label>
             <textarea
               name="description"
               value={formValues.description}
               onChange={handleChange}
+              rows={5}
+              className="border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 py-3 px-4 w-full rounded-xl text-gray-800 transition-all outline-none resize-none"
               placeholder="Describe your habit..."
-              rows={4}
-              className="border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-100 p-3 w-full rounded-lg transition"
             />
           </div>
 
-          {/* Image Upload */}
           <div>
-            <label className="block font-medium text-gray-700 mb-1">
-              Habit Image
-            </label>
-
+            <label className="block text-gray-700 font-semibold mb-2">Habit Image</label>
             <input
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              className="border border-gray-300 p-2 w-full rounded-lg"
+              className="border border-gray-300 py-2 px-3 w-full rounded-xl cursor-pointer"
             />
+
             {(imageFile || formValues.image) && (
               <img
                 src={(imageFile ? previewImage : `http://localhost:8081/${formValues.image}`) || ""}
                 alt="Preview"
-                className="mt-3 w-32 h-32 object-cover rounded-lg shadow"
+                className="mt-4 w-44 h-44 object-cover rounded-xl shadow-md mx-auto"
               />
             )}
           </div>
 
-          {/* Buttons */}
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between pt-4">
             <button
               type="button"
               onClick={() => navigate(-1)}
-              className="px-4 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 transition"
+              className="px-5 py-2.5 rounded-xl border border-gray-400 text-gray-700 font-medium hover:bg-gray-100 transition"
             >
               Cancel
             </button>
@@ -173,11 +144,12 @@ const HabitEdit: React.FC<HabitEditProps> = () => {
             <button
               type="submit"
               disabled={EditHabitMutation.isPending}
-              className="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 disabled:opacity-50 transition"
+              className="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 disabled:opacity-50 shadow-md transition-all"
             >
               {EditHabitMutation.isPending ? "Saving..." : "Save Changes"}
             </button>
           </div>
+
         </form>
       </div>
     </div>

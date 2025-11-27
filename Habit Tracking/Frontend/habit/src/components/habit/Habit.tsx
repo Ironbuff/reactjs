@@ -144,7 +144,7 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
   return (
     <div
       className="relative bg-white/70 backdrop-blur-lg rounded-2xl shadow-lg hover:shadow-2xl 
-transition-all duration-300 p-4 flex flex-col gap-3 border border-gray-200 "
+transition-all duration-300 p-2 flex flex-col gap-3 border border-gray-200 "
     >
       {/* Status Badge */}
       <span
@@ -175,7 +175,7 @@ transition-all duration-300 p-4 flex flex-col gap-3 border border-gray-200 "
 
       {/* Buttons */}
       {habit.user === userId && (
-        <div className="mt-auto flex flex-col sm:flex-row gap-3">
+        <div className="mt-auto flex flex-col sm:flex-row gap-3 mb-2">
           {/* Mark Done Button */}
           <button
             onClick={() => toggleHabitMutation.mutate()}
