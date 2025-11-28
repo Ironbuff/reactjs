@@ -28,9 +28,7 @@ const AddnewHabit = () => {
       navigate("/");
     },
     onError: (err: any) => {
-      const errorMessage =
-        err?.response?.data?.message || "Something went wrong!";
-      toast.error(errorMessage);
+      toast.error(err?.response?.data?.message || "Something went wrong!");
     },
   });
 
@@ -39,122 +37,96 @@ const AddnewHabit = () => {
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("image", data.image[0]);
-
     CreateHabit.mutate(formData);
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[80vh] bg-gradient-to-br from-indigo-50 via-white to-indigo-100 p-4">
-      <div className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg w-full max-w-lg border border-gray-100 transition-all hover:shadow-xl">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-2 text-center">
-          Create a New Habit
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-indigo-100 via-white to-indigo-200 p-5">
+      <div className="w-full max-w-lg bg-white/80 backdrop-blur-xl border border-gray-200 p-10 rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.12)] transition-all duration-300">
+
+        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-2 tracking-wide">
+          🌱 Add New Habit
         </h2>
-        <p className="text-gray-500 text-sm mb-6 text-center">
-          Build consistency by tracking your daily routines
+        <p className="text-gray-500 text-center text-sm mb-8">
+          Set your routine & grow every day
         </p>
 
-        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+
           {/* Title */}
-          <div>
-            <label
-              htmlFor="title"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
-              Title
-            </label>
+          <div className="group">
+            <label className="text-gray-700 font-semibold text-sm block mb-2">Habit Title</label>
             <input
               type="text"
-              id="title"
-              placeholder="e.g., Morning Run"
+              placeholder="e.g., Drink Water Daily"
               {...register("title")}
-              className="w-full px-4 py-2.5 border border-gray-300 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 text-gray-800 shadow-sm 
+              focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
+              transition-all group-hover:border-indigo-400"
             />
-            {errors.title && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.title.message}
-              </p>
-            )}
+            {errors.title && <p className="text-red-500 text-xs mt-1">{errors.title.message}</p>}
           </div>
 
           {/* Description */}
-          <div>
-            <label
-              htmlFor="description"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
-              Description
-            </label>
+          <div className="group">
+            <label className="text-gray-700 font-semibold text-sm block mb-2">Description</label>
             <textarea
-              id="description"
-              placeholder="Describe your habit..."
+              placeholder="Write habit details here..."
               {...register("description")}
-              className="w-full px-4 py-2.5 border border-gray-300 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition resize-none h-24"
+              className="w-full px-4 py-3 rounded-xl border border-gray-300 text-gray-800 shadow-sm 
+              focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 
+              transition-all h-28 resize-none group-hover:border-indigo-400"
             />
-            {errors.description && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.description.message}
-              </p>
-            )}
+            {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description.message}</p>}
           </div>
 
-          {/* Image */}
+          {/* Image upload */}
           <div>
-            <label
-              htmlFor="image"
-              className="block mb-2 text-sm font-medium text-gray-700"
-            >
-              Upload Image
-            </label>
-
+            <label className="text-gray-700 font-semibold text-sm block mb-2">Image (optional)</label>
             <input
               type="file"
-              id="image"
               accept="image/*"
               {...register("image")}
               onChange={(e) => {
-                if (e.target.files && e.target.files.length > 0) {
-                  const file = e.target.files[0];
-                  setPreviewPage(URL.createObjectURL(file));
+                if (e.target.files?.length) {
+                  setPreviewPage(URL.createObjectURL(e.target.files[0]));
                 }
               }}
-              className="w-full px-4 py-2.5 border border-gray-300 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-300 text-gray-900 cursor-pointer
+              focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
             />
 
-            {errors.image && (
-              <p className="mt-1 text-sm text-red-500">
-                {String(errors.image.message)}
-              </p>
-            )}
+            {errors.image && <p className="text-red-500 text-xs mt-1">{String(errors.image.message)}</p>}
 
-            {/* Preview Image */}
+            {/* Preview Box */}
             {previewPage && (
               <div className="mt-4">
                 <img
                   src={previewPage}
-                  alt="Preview"
-                  className="w-full h-40 object-cover rounded-xl border border-gray-300 shadow-sm"
+                  className="w-full h-44 object-cover rounded-xl border shadow-md hover:scale-[1.02] transition-transform"
                 />
               </div>
             )}
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-x-3 pt-2">
+          <div className="flex gap-4 pt-3">
             <button
               type="submit"
               disabled={CreateHabit.isPending}
-              className="w-full py-2.5 flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 disabled:opacity-50"
+              className="flex-1 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 
+              text-white font-semibold shadow-md flex items-center justify-center gap-2 
+              disabled:opacity-50 transition-all duration-300"
             >
-              {CreateHabit.isPending && (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              )}
+              {CreateHabit.isPending && <Loader2 className="w-4 h-4 animate-spin" />}
               {CreateHabit.isPending ? "Creating..." : "Create Habit"}
             </button>
 
             <button
               type="button"
               onClick={() => navigate("/")}
-              className="w-full py-2.5 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-400 transition duration-300"
+              className="flex-1 py-3 rounded-xl bg-gray-500 hover:bg-gray-600 text-white font-semibold 
+              shadow-md transition-all duration-300"
             >
               Cancel
             </button>
