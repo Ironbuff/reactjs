@@ -160,7 +160,7 @@ transition-all duration-300 p-2 flex flex-col gap-3 border border-gray-200 "
       <img
         src={`http://localhost:8081/${habit.image}`}
         alt={habit.title}
-        className="w-full h-48 object-cover rounded-xl"
+        className="w-full h-48 object-cover rounded-xl mt-2"
       />
 
       {/* Title */}
@@ -262,7 +262,7 @@ const Habit = () => {
   const habits = data?.data?.newhabit || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-gray-200 pt-20 px-6 flex flex-col items-center">
+    <div className="h-[calc(100vh-8ch)] bg-gradient-to-br from-white via-gray-50 to-gray-200 pt-20 px-6 flex flex-col items-center">
       <h1 className="text-3xl md:text-4xl font-extrabold font-serif text-gray-900 mb-10 text-center">
         🌱 My Habits Tracker
       </h1>
