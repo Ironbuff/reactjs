@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { getHabits } from "../../services/GetHabits";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteHabit, toggleHabit } from "../../services/ChangeHabits";
@@ -136,10 +136,11 @@ const HabitCard: React.FC<HabitCardProps> = ({ habit, userId }) => {
   const editButtonClass = `${baseButtonClass} text-gray-800 bg-yellow-300 hover:bg-yellow-400`;
   const deleteButtonClass = `${baseButtonClass} text-white bg-red-600 hover:bg-red-700 disabled:opacity-50`;
 
-  const toggleButtonClass = `${baseButtonClass} ${isCompletedToday
+  const toggleButtonClass = `${baseButtonClass} ${
+    isCompletedToday
       ? "bg-gray-400 cursor-not-allowed"
       : "bg-green-600 hover:bg-green-700"
-    } disabled:opacity-50`;
+  } disabled:opacity-50`;
 
   return (
     <div
@@ -148,10 +149,11 @@ transition-all duration-300 p-2 flex flex-col gap-3 border border-gray-200 "
     >
       {/* Status Badge */}
       <span
-        className={`absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${isCompletedToday
+        className={`absolute top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${
+          isCompletedToday
             ? "bg-green-100 text-green-700"
             : "bg-yellow-100 text-yellow-700"
-          }`}
+        }`}
       >
         {isCompletedToday ? "Done" : "Pending"}
       </span>
@@ -182,8 +184,9 @@ transition-all duration-300 p-2 flex flex-col gap-3 border border-gray-200 "
             disabled={isCompletedToday || toggleHabitMutation.isPending}
             className={`flex-1 flex items-center justify-center gap-2 px-4 py-0 rounded-xl text-white 
         font-medium shadow transition-all duration-300 text-sm
-        ${isCompletedToday ? "bg-gray-400" : "bg-green-600 hover:bg-green-700"
-              }`}
+        ${
+          isCompletedToday ? "bg-gray-400" : "bg-green-600 hover:bg-green-700"
+        }`}
           >
             {toggleHabitMutation.isPending ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -237,6 +240,7 @@ const Habit = () => {
   });
 
   const userId = localStorage.getItem("id");
+  const [searchTerm, setSearchTerm] = useState("");
 
   if (isLoading) {
     return (
@@ -262,10 +266,21 @@ const Habit = () => {
   const habits = data?.data?.newhabit || [];
 
   return (
-    <div className="h-[calc(100vh-8ch)] bg-gradient-to-br from-white via-gray-50 to-gray-200 pt-20 px-6 flex flex-col items-center">
+    <div className="h-full  bg-gradient-to-br from-white via-gray-50 to-gray-200 pt-10 px-6 flex flex-col items-center">
       <h1 className="text-3xl md:text-4xl font-extrabold font-serif text-gray-900 mb-10 text-center">
         🌱 My Habits Tracker
       </h1>
+
+      <div className="w-full max-w-3xl mb-8">
+        <input
+          type="text"
+          placeholder="Search habits..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm 
+               focus:ring-2 focus:ring-blue-400 outline-none transition-all"
+        />
+      </div>
 
       {habits.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-[60vh] text-center">
