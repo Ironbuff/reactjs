@@ -14,6 +14,7 @@ import {
   NotebookPen,
   CircleCheck,
 } from "lucide-react";
+import { useDebounce } from "use-debounce";
 
 export interface habitType {
   _id?: string;
@@ -233,14 +234,17 @@ transition-all duration-300 p-2 flex flex-col gap-3 border border-gray-200 "
   );
 };
 
-const Habit = () => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["habit"],
-    queryFn: getHabits,
-  });
 
+
+const Habit = () => {
   const userId = localStorage.getItem("id");
   const [searchTerm, setSearchTerm] = useState("");
+ // it set timer and if the value is entered before time defined then the api willn't hit
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["habit", searchTerm],
+    queryFn: () => getHabits({ searchTerm: searchTerm}),
+  });
 
   if (isLoading) {
     return (
