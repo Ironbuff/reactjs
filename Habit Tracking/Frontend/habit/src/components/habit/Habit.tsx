@@ -239,11 +239,12 @@ transition-all duration-300 p-2 flex flex-col gap-3 border border-gray-200 "
 const Habit = () => {
   const userId = localStorage.getItem("id");
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearch] = useDebounce(searchTerm, 500)
  // it set timer and if the value is entered before time defined then the api willn't hit
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["habit", searchTerm],
-    queryFn: () => getHabits({ searchTerm: searchTerm}),
+    queryKey: ["habit", debouncedSearch],
+    queryFn: () => getHabits({ searchTerm: debouncedSearch}),
   });
 
   if (isLoading) {
