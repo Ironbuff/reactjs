@@ -13,6 +13,8 @@ import {
   Plus,
   NotebookPen,
   CircleCheck,
+  Cross,
+  CircleX,
 } from "lucide-react";
 import { useDebounce } from "use-debounce";
 
@@ -193,12 +195,12 @@ transition-all duration-300 p-2 flex flex-col gap-3 border border-gray-200 "
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : isCompletedToday ? (
               <>
-                <CircleCheck className="w-4 h-4" />
+                <CircleCheck className="w-4 h-10" />
                 Completed
               </>
             ) : (
               <>
-                <CheckCircle className="w-4 h-4" />
+                <CheckCircle className="w-4 h-10" />
                 Mark as Done
               </>
             )}
@@ -276,7 +278,7 @@ const Habit = () => {
         🌱 My Habits Tracker
       </h1>
 
-      <div className="w-full max-w-3xl mb-8">
+      <div className=" relative w-full max-w-3xl mb-8 ">
         <input
           type="text"
           placeholder="Search habits..."
@@ -285,6 +287,13 @@ const Habit = () => {
           className="w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm 
                focus:ring-2 focus:ring-blue-400 outline-none transition-all"
         />
+         {searchTerm && (
+          
+         <button className="absolute right-2 top-3" onClick={()=>setSearchTerm("")}>
+         <CircleX className="text-red-500 hover:scale-110" />
+        </button>
+         )}
+
       </div>
 
       {habits.length === 0 ? (
