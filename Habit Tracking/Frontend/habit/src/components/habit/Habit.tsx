@@ -236,17 +236,15 @@ transition-all duration-300 p-2 flex flex-col gap-3 border border-gray-200 "
   );
 };
 
-
-
 const Habit = () => {
   const userId = localStorage.getItem("id");
   const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearch] = useDebounce(searchTerm, 500)
- // it set timer and if the value is entered before time defined then the api willn't hit
+  const [debouncedSearch] = useDebounce(searchTerm, 500);
+  // it set timer and if the value is entered before time defined then the api willn't hit
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["habit", debouncedSearch],
-    queryFn: () => getHabits({ searchTerm: debouncedSearch}),
+    queryFn: () => getHabits({ searchTerm: debouncedSearch }),
   });
 
   if (isLoading) {
@@ -284,16 +282,25 @@ const Habit = () => {
           placeholder="Search habits..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full px-4 py-3 rounded-xl border border-gray-300 shadow-sm 
-               focus:ring-2 focus:ring-blue-400 outline-none transition-all"
+          className="
+      w-full pl-12 pr-4 py-3 rounded-2xl 
+      bg-gray-200
+      border border-gray-100
+      shadow-lg
+      text-white placeholder-gray-400
+      focus:ring-4 focus:ring-blue-500/30 
+      focus:border-blue-500
+      outline-none transition-all duration-300
+    "
         />
-         {searchTerm && (
-          
-         <button className="absolute right-2 top-3" onClick={()=>setSearchTerm("")}>
-         <CircleX className="text-red-500 hover:scale-110" />
-        </button>
-         )}
-
+        {searchTerm && (
+          <button
+            className="absolute right-2 top-3"
+            onClick={() => setSearchTerm("")}
+          >
+            <CircleX className="text-red-500 hover:scale-110" />
+          </button>
+        )}
       </div>
 
       {habits.length === 0 ? (
