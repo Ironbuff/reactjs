@@ -13,7 +13,7 @@ const Shop = () => {
     const fetch = async () => {
       try {
         const url = debouncedSearch
-          ? `http://localhost:8081/api/user/clothes/getcloth??title=${encodeURIComponent(
+          ? `http://localhost:8081/api/user/clothes/getcloth?title=${encodeURIComponent(
               debouncedSearch
             )}`
           : `http://localhost:8081/api/user/clothes/getcloth`;
