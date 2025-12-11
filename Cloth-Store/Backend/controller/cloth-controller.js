@@ -127,10 +127,10 @@ const getclothes = async (req, res) => {
     let filter = {};
 
     if (title) {
-      filter.title = new RegExp(title, i);
+      filter.title = new RegExp(title, "i");
     }
 
-    const cloths = await Clothes.find(title).sort({ createdAt: -1 });
+    const cloths = await Clothes.find(filter).sort({ createdAt: -1 });
     const discountcloth = cloths.map(applydiscount);
     return res.status(200).json(discountcloth);
   } catch (err) {
