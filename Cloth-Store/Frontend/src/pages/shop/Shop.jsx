@@ -43,7 +43,7 @@ const Shop = () => {
         />
         {searchTerm.length > 1 && (
           <button
-            className="absolute right-2 top-2"
+            className="absolute right-2 top-2 hover:scale-105 transition-all ease-in-out duration-300"
             onClick={() => setSearchTerm("")}
           >
             <RxCrossCircled size={20} className=" text-red-400" />
