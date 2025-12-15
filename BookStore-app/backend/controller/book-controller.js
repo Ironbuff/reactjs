@@ -131,26 +131,41 @@ const getbookbyid = async(req,res)=>{
 //get book by language
 const getfilteredbooks = async (req, res) => {
   try {
-    const { language } = req.query;
+    const { language, author } = req.query;
     let filter = {};
 
+    // Language filter
     if (language) {
       const langs = language
         .split(',')
         .map(l => l.trim())
-        .map(l => l.charAt(0).toUpperCase() + l.slice(1).toLowerCase()); // Capitalize
-      console.log("Filtered Languages:", langs);
+        .map(l => l.charAt(0).toUpperCase() + l.slice(1).toLowerCase());
+
       filter.language = { $in: langs };
+    }
+
+    // Author filter
+    if (author) {
+      const authors = author
+        .split(',')
+        .map(a => a.trim());
+
+      // Case-insensitive match
+      filter.author = {
+        $in: authors.map(a => new RegExp(`^${a}$`, 'i'))
+      };
     }
 
     const books = await Books.find(filter);
     const booksWithDiscount = books.map(applyDiscount);
+
     res.status(200).json(booksWithDiscount);
   } catch (err) {
     console.error("Error in getfilteredbooks:", err);
     res.status(500).json({ message: "Server error" });
   }
 };
+
 
 
 exports.addbook =addbook
