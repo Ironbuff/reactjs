@@ -2,25 +2,37 @@ import React, { useEffect, useState } from 'react';
 import Loader from '../../components/loader/Loader';
 import Bookcard from '../../components/bookcard/Bookcard';
 import axios from 'axios';
+import {useDebounce} from 'use-debounce'
 
 const AllBooks = () => {
   const [data, setData] = useState([]);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const [searchTitle,setSearchTitle]= useState('')
+  const [debouncedSearch]=useDebounce(searchTitle,500)
 
-  const fetchFilteredBooks = async (languages = []) => {
-    try {
-      let url = 'http://localhost:3000/api/books/getfilteredbooks';
+ const fetchFilteredBooks = async (languages = [], author = '') => {
+  try {
+    let url = 'http://localhost:3000/api/books/getfilteredbooks';
+    const params = [];
 
-      if (languages.length > 0) {
-        url += `?language=${languages.join(',')}`;
-      }
-
-      const response = await axios.get(url);
-      setData(response.data);
-    } catch (error) {
-      console.error("Error fetching filtered books:", error);
+    if (languages.length > 0) {
+      params.push(`language=${languages.join(',')}`);
     }
-  };
+
+    if (author) {
+      params.push(`author=${author}`);
+    }
+
+    if (params.length > 0) {
+      url += `?${params.join('&')}`;
+    }
+
+    const response = await axios.get(url);
+    setData(response.data);
+  } catch (error) {
+    console.error("Error fetching filtered books:", error);
+  }
+};
 
   useEffect(() => {
     fetchFilteredBooks();
@@ -42,6 +54,11 @@ const AllBooks = () => {
   return (
     <div className='bg-neutral-800 px-20 min-h-screen'>
       <h1 className='text-3xl text-neutral-200 font-semibold py-5'>All Books</h1>
+      <input type='text' value={searchTitle} onChange={(e)=>{
+        const value =e.target.value;
+        setSearchTitle(value)
+      }}
+      className='w-full border-none focus:ring-0 shadow-sm bg-gray-300 rounded-md'/>
 
       <div className='flex gap-4 pb-5'>
         {["english", "spanish"].map((lang) => (
