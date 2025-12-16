@@ -7,8 +7,8 @@ import {useDebounce} from 'use-debounce'
 const AllBooks = () => {
   const [data, setData] = useState([]);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
-  const [searchTitle,setSearchTitle]= useState('')
-  const [debouncedSearch]=useDebounce(searchTitle,500)
+  const [searchAuthor,setSearchAuthor]= useState('')
+  const [debouncedSearch]=useDebounce(searchAuthor,500)
 
  const fetchFilteredBooks = async (languages = [], author = '') => {
   try {
@@ -35,8 +35,8 @@ const AllBooks = () => {
 };
 
   useEffect(() => {
-    fetchFilteredBooks();
-  }, []);
+    fetchFilteredBooks(searchAuthor);
+  }, [searchAuthor]);
 
   const handleCheckboxChange = (language) => {
     let updated = [...selectedLanguages];
@@ -54,9 +54,9 @@ const AllBooks = () => {
   return (
     <div className='bg-neutral-800 px-20 min-h-screen'>
       <h1 className='text-3xl text-neutral-200 font-semibold py-5'>All Books</h1>
-      <input type='text' value={searchTitle} onChange={(e)=>{
+      <input type='text' value={searchAuthor} onChange={(e)=>{
         const value =e.target.value;
-        setSearchTitle(value)
+        setSearchAuthor(value)
       }}
       className='w-full border-none focus:ring-0 shadow-sm bg-gray-300 rounded-md'/>
 
