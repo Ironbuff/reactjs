@@ -2,42 +2,50 @@ import React, { useEffect, useState } from 'react';
 import Loader from '../../components/loader/Loader';
 import Bookcard from '../../components/bookcard/Bookcard';
 import axios from 'axios';
-import {useDebounce} from 'use-debounce'
+import { useDebounce } from 'use-debounce';
 
 const AllBooks = () => {
   const [data, setData] = useState([]);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
-  const [searchAuthor,setSearchAuthor]= useState('')
-  const [debouncedSearch]=useDebounce(searchAuthor,500)
+  const [searchAuthor, setSearchAuthor] = useState('');
+  
+  // 1. We wait 500ms for the user to stop typing
+  const [debouncedSearch] = useDebounce(searchAuthor, 500);
 
- const fetchFilteredBooks = async (languages = [], author = '') => {
-  try {
-    let url = 'http://localhost:3000/api/books/getfilteredbooks';
-    const params = [];
+  // 2. This function now uses the *current* state values directly, 
+  //    or we pass them in from the useEffect.
+  const fetchFilteredBooks = async (langs, auth) => {
+    try {
+      let url = 'http://localhost:3000/api/books/getfilteredbooks';
+      const params = [];
 
-    if (languages.length > 0) {
-      params.push(`language=${languages.join(',')}`);
+      // Logic to build query params
+      if (langs.length > 0) {
+        params.push(`language=${langs.join(',')}`);
+      }
+
+      if (auth) {
+        params.push(`author=${auth}`);
+      }
+
+      if (params.length > 0) {
+        url += `?${params.join('&')}`;
+      }
+
+      const response = await axios.get(url);
+      setData(response.data);
+    } catch (error) {
+      console.error("Error fetching filtered books:", error);
     }
+  };
 
-    if (author) {
-      params.push(`author=${author}`);
-    }
-
-    if (params.length > 0) {
-      url += `?${params.join('&')}`;
-    }
-
-    const response = await axios.get(url);
-    setData(response.data);
-  } catch (error) {
-    console.error("Error fetching filtered books:", error);
-  }
-};
-
+  // 3. Centralized UseEffect: This runs whenever the Language OR the Debounced Search changes.
   useEffect(() => {
-    fetchFilteredBooks(searchAuthor);
-  }, [searchAuthor]);
+    // We pass the *current* values of both states to the fetch function
+    fetchFilteredBooks(selectedLanguages, debouncedSearch);
+  }, [selectedLanguages, debouncedSearch]); 
 
+  // 4. Checkbox handler ONLY updates state. It does NOT fetch.
   const handleCheckboxChange = (language) => {
     let updated = [...selectedLanguages];
 
@@ -46,23 +54,26 @@ const AllBooks = () => {
     } else {
       updated.push(language);
     }
-
+    
     setSelectedLanguages(updated);
-    fetchFilteredBooks(updated);
+    // Removed the fetch call here. The useEffect above detects the state change and handles it.
   };
 
   return (
     <div className='bg-neutral-800 px-20 min-h-screen'>
       <h1 className='text-3xl text-neutral-200 font-semibold py-5'>All Books</h1>
-      <input type='text' value={searchAuthor} onChange={(e)=>{
-        const value =e.target.value;
-        setSearchAuthor(value)
-      }}
-      className='w-full border-none focus:ring-0 shadow-sm bg-gray-300 rounded-md'/>
+      
+      <input 
+        type='text' 
+        placeholder="Search by author..."
+        value={searchAuthor} 
+        onChange={(e) => setSearchAuthor(e.target.value)}
+        className='w-full border-none focus:ring-0 shadow-sm bg-gray-300 rounded-md p-2'
+      />
 
-      <div className='flex gap-4 pb-5'>
+      <div className='flex gap-4 py-5'>
         {["english", "spanish"].map((lang) => (
-          <label className='text-neutral-300' key={lang}>
+          <label className='text-neutral-300 flex items-center' key={lang}>
             <input
               type='checkbox'
               value={lang}
