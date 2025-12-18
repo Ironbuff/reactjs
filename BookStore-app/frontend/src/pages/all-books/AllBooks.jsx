@@ -63,13 +63,16 @@ const AllBooks = () => {
     <div className='bg-neutral-800 px-20 min-h-screen'>
       <h1 className='text-3xl text-neutral-200 font-semibold py-5'>All Books</h1>
       
+      <div>
       <input 
         type='text' 
         placeholder="Search by author..."
         value={searchAuthor} 
         onChange={(e) => setSearchAuthor(e.target.value)}
-        className='w-full border-none focus:ring-0 shadow-sm bg-gray-300 rounded-md p-2'
+        className='w-full border-none focus:ring-0 shadow-sm bg-gray-700 rounded-md p-2'
       />
+
+      </div>
 
       <div className='flex gap-4 py-5'>
         {["english", "spanish"].map((lang) => (
