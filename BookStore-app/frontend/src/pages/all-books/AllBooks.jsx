@@ -3,6 +3,7 @@ import Loader from '../../components/loader/Loader';
 import Bookcard from '../../components/bookcard/Bookcard';
 import axios from 'axios';
 import { useDebounce } from 'use-debounce';
+import { X } from 'lucide-react';
 
 const AllBooks = () => {
   const [data, setData] = useState([]);
@@ -63,7 +64,7 @@ const AllBooks = () => {
     <div className='bg-neutral-800 px-20 min-h-screen'>
       <h1 className='text-3xl text-neutral-200 font-semibold py-5'>All Books</h1>
       
-      <div>
+      <div className='relative w-full'>
       <input 
         type='text' 
         placeholder="Search by author..."
@@ -71,7 +72,13 @@ const AllBooks = () => {
         onChange={(e) => setSearchAuthor(e.target.value)}
         className='w-full border-none focus:ring-0 shadow-sm bg-gray-700 rounded-md p-2'
       />
-
+      {searchAuthor && (
+          <button className='absolute right-2  top-2'onClick={()=>{
+            setSearchAuthor('')
+          }}>
+         <X className='size-4 text-red-500' />
+         </button>
+      )}     
       </div>
 
       <div className='flex gap-4 py-5'>
