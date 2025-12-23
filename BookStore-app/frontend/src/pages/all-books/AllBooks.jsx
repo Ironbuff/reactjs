@@ -73,7 +73,7 @@ const AllBooks = () => {
         className='w-full border-none focus:ring-0 shadow-sm bg-gray-700 rounded-md p-2'
       />
       {searchAuthor && (
-          <button className='absolute right-2  top-2'onClick={()=>{
+          <button className='absolute right-2  hover:scale-125 trnsition-all ease-in-out  top-3'onClick={()=>{
             setSearchAuthor('')
           }}>
          <X className='size-4 text-red-500' />
