@@ -40,13 +40,12 @@ const AllBooks = () => {
     }
   };
 
-  // 3. Centralized UseEffect: This runs whenever the Language OR the Debounced Search changes.
   useEffect(() => {
-    // We pass the *current* values of both states to the fetch function
+
     fetchFilteredBooks(selectedLanguages, debouncedSearch);
   }, [selectedLanguages, debouncedSearch]); 
 
-  // 4. Checkbox handler ONLY updates state. It does NOT fetch.
+
   const handleCheckboxChange = (language) => {
     let updated = [...selectedLanguages];
 
@@ -70,7 +69,7 @@ const AllBooks = () => {
         placeholder="Search by author..."
         value={searchAuthor} 
         onChange={(e) => setSearchAuthor(e.target.value)}
-        className='w-full border-none focus:ring-0 shadow-sm bg-gray-700 rounded-md p-2'
+        className='w-full border-none focus:ring-0 ouline-none shadow-sm bg-gray-700 rounded-md p-2'
       />
       {searchAuthor && (
           <button className='absolute right-2  hover:scale-125 trnsition-all ease-in-out  top-3'onClick={()=>{
