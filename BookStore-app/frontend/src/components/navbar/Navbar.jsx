@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import image from "../../assests/newbook.png";
 import { useSelector } from 'react-redux';
 import { FaBarsStaggered, FaXmark } from "react-icons/fa6";
@@ -9,6 +9,7 @@ const Navbar = () => {
   const role = useSelector((state) => state.auth.role);
   const location = useLocation();
   const [mobilenav, setMobilenav] = useState(false);
+  const route = useNavigate()
 
   const baseNav = [
     { id: 1, name: "Home", links: "/" },
@@ -29,10 +30,11 @@ const Navbar = () => {
 
   return (
     <nav className='flex justify-between items-center h-[8ch] w-full px-6 sm:px-20 bg-gray-950 shadow-lg relative z-50 border-b border-gray-800'>
-      <h1 className='text-2xl text-white font-bold flex items-center gap-3'>
+      <button onClick={()=>route('/')}
+      className='text-2xl text-white font-bold flex items-center gap-3 cursor-pointer'>
         <img src={image} className='h-12 w-auto object-contain' alt="Logo" />
         BookStore
-      </h1>
+      </button>
 
       {/* Desktop Nav */}
       <div className='hidden sm:flex items-center gap-x-6 text-base font-medium'>
