@@ -20,7 +20,7 @@ const Hero = () => {
             onClick={() => {
               navigate("/book");
             }}
-            className="inline-block text-lg sm:text-xl font-semibold border border-neutral-200 px-6 py-3 rounded-xl bg-neutral-800 hover:bg-blue-500 hover:text-white transition-all duration-300"
+            className="inline-block cursor-pointer text-lg sm:text-xl font-semibold border border-neutral-200 px-6 py-3 rounded-xl bg-neutral-800 hover:bg-blue-500 hover:text-white transition-all duration-300"
           >
             Discover Books
           </button>
