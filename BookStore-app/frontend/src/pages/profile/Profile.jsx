@@ -38,7 +38,7 @@ const Profile = () => {
           <div className='w-2/6 py-10 px-15'>
             <Sidebar data={profile}/>
           </div>
-          <div className='w-4/6 pr-20'> {/* Added padding */}
+          <div className='w-4/6 pr-20 py-10'> {/* Added padding */}
             <Outlet/>
           </div>
         </>
