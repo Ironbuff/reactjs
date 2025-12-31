@@ -71,13 +71,22 @@ const AllBooks = () => {
         onChange={(e) => setSearchAuthor(e.target.value)}
         className='w-full border-none focus:ring-0 ouline-none shadow-sm bg-gray-700 rounded-md p-2'
       />
-      {searchAuthor && (
-          <button className='absolute right-2  hover:scale-125 trnsition-all ease-in-out  top-3'onClick={()=>{
-            setSearchAuthor('')
-          }}>
-         <X className='size-4 text-red-500' />
-         </button>
-      )}     
+    {searchAuthor && (
+  <button
+    aria-label="Clear search"
+    onClick={() => setSearchAuthor('')}
+    className="
+      absolute right-2 top-1/2 -translate-y-1/2
+      p-1.5 rounded-full
+      hover:bg-neutral-600
+      transition-all duration-200 ease-in-out
+      hover:scale-110
+      focus:outline-none
+    "
+  >
+    <X className="size-4 text-red-500" />
+  </button>
+)}
       </div>
 
       <div className='flex gap-4 py-5'>
