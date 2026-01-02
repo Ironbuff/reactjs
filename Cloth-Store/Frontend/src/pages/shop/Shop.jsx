@@ -30,10 +30,10 @@ const Shop = () => {
 
   return (
     <div className="px-28 flex flex-col gap-x-4 items-center w-full  bg-gray-200 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800 mt-5">
         Our Latest Product
       </h1>
-      <div className="w-full relative ">
+      <div className="w-[82%] relative ">
         <input
           type="text"
           value={searchTerm}
