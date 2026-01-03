@@ -37,7 +37,7 @@ const Shop = () => {
         <input
           type="text"
           value={searchTerm}
-          className="w-full p-2 bg-gray-100 shadow-md mb-5 rounded-sm focus:ring-0 focus:outline-none"
+          className="w-full p-2 bg-transparent shadow-md mb-5 rounded-sm focus:ring-0 focus:outline-none"
           placeholder="Enter Cloth Title"
           onChange={(e) => setSearchTerm(e.target.value)}
         />
