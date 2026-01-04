@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const handlelogin = async (e) => {
+  const handlelogin = async (e:any) => {
     e.preventDefault()
     try {
       const data = {
