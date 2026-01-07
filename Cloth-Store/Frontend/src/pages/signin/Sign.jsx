@@ -26,7 +26,7 @@ const Sign = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-gray-100 to-purple-100 px-4">
+    <div className="h-[calc(100vh-9ch)] flex items-center justify-center  bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white/80 backdrop-blur-xl shadow-2xl rounded-2xl p-8">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">
           Create Account
