@@ -46,7 +46,7 @@ const Login = () => {
 
 
   return (
-    <div className="w-full h-[calc(100vh-10ch)] bg-gradient-to-r from-gray-100 to-gray-200 flex items-center justify-center">
+    <div className="w-full h-[calc(100vh-9ch)] bg-gradient-to-r from-gray-100 to-gray-200 flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-center mb-6 text-gray-700">Login</h1>
 
@@ -93,7 +93,7 @@ const Login = () => {
         {/* Footer */}
         <div className="mt-6 text-center text-sm text-gray-600">
           Not registered yet?{' '}
-          <Link to="/" className="text-blue-600 hover:underline font-medium">
+          <Link to="/sign" className="text-blue-600 hover:underline font-medium">
             Sign Up
           </Link>
         </div>

@@ -101,7 +101,7 @@ const Sign = () => {
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{' '}
           <Link
-            to="/"
+            to="/login"
             className="text-blue-600 font-medium hover:underline"
           >
             Log in
