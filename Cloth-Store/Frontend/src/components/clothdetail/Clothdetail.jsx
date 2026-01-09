@@ -88,7 +88,7 @@ const ClothDetail = () => {
   
 
     return (
-      <div className="p-10 flex flex-col md:flex-row gap-10 items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-200">
+      <div className="p-10 flex flex-col h-[calc(100vh-12ch)] md:flex-row gap-10 items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-200">
         {/* Image Section */}
         <div className="relative rounded-3xl overflow-hidden shadow-xl bg-white p-6">
           <img
