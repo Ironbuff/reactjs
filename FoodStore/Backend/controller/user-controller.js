@@ -40,6 +40,4 @@ exports.sign = async(req,res)=>{
     catch(err){
         return res.status(500).json({message:"Server Error",error:err})
     }
-
-
 }
