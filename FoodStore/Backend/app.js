@@ -16,11 +16,11 @@ const start = async () => {
     await connDB();
     const PORT = process.env.PORT || 8081;
 
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`✅ Server running on port ${PORT}`);
+    app.listen(PORT, () => {
+      console.log(` Server running on port ${PORT}`);
     });
   } catch (error) {
-    console.error('❌ Failed to start server:', error.message);
+    console.error(' Failed to start server:', error.message);
   }
 };
 
