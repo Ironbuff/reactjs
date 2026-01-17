@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const connDB = require('./conn/conn');
 const userRoute = require('./route/user-route');
+const foodRoute = require('./route/food-route');
 require('dotenv').config();
 
 app.get('/', (req, res) => {
@@ -10,6 +11,7 @@ app.get('/', (req, res) => {
 
 app.use(express.json());
 app.use('/auth', userRoute);
+app.use('/food',foodRoute);
 
 const start = async () => {
   try {

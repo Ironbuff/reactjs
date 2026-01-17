@@ -19,7 +19,7 @@ const userSchema= new Schema({
         required:true,
     },
     food:[{
-        type:mongoose.Types.ObjectId,
+        type:Schema.Types.ObjectId,
         ref:'Food'
     }],
     role:{

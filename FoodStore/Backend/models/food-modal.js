@@ -1,8 +1,13 @@
 const mongoose = require('mongoose');
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const foodSchema = new Schema({
-    food:{
+    title:{
+        type:String,
+        required:true,
+        minlength:2,
+    },
+    description:{
         type:String,
         required:true,
         minlength:2
@@ -17,6 +22,10 @@ const foodSchema = new Schema({
     discount:{
         type:Number,
         required:false,
+    },
+    user:{
+        type:Schema.Types.ObjectId,
+        ref:'User'
     }
 })
 
