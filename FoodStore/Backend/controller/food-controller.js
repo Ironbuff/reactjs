@@ -66,31 +66,72 @@ exports.addFoodCollection = async (req, res) => {
 
 exports.deleteFoodCollection = async (req, res) => {
   try {
-    // 1. Use params for RESTful ID (DELETE /food/:id)
     const { id } = req.params;
 
-    // 2. Validate ID existence
     if (!id) {
       return res.status(400).json({ message: "Food ID is required" });
     }
 
-    // 3. Ensure User is Authenticated
     if (!req.user || !req.user.id) {
       return res.status(401).json({ message: "Unauthorized: Please login." });
     }
 
-    // 4. Perform Delete with Ownership Check
-    // We search by _id AND user id to ensure users can only delete their own items.
-    const deletedFood = await Food.findOneAndDelete({ _id: id, user: req.user.id });
+    const deletedFood = await Food.findOneAndDelete({
+      _id: id,
+      user: req.user.id,
+    });
 
-    // 5. Handle "Not Found" (Item doesn't exist OR belongs to another user)
     if (!deletedFood) {
-      return res.status(404).json({ message: "Food not found or you are not authorized to delete it." });
+      return res.status(404).json({
+        message: "Food not found or you are not authorized to delete it.",
+      });
     }
 
-    return res.status(200).json({ message: "Food Item deleted Successfully.", deletedId: id });
+    return res
+      .status(200)
+      .json({ message: "Food Item deleted Successfully.", deletedId: id });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: "Internal Server Error", error: err.message });
+    return res
+      .status(500)
+      .json({ message: "Internal Server Error", error: err.message });
+  }
+};
+
+exports.editFoodCollection = async (req, res) => {
+  try {
+    const { title, description, price, discount } = req.body;
+    const userId = req.user.id;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized! Please Login" });
+    }
+
+    const imagepath = req.file ? req.file.path : undefined;
+
+    const updateFood = await Food.findByIdAndUpdate(
+      id,
+      {
+        title,
+        description,
+        price,
+        discount,
+        ...(imagepath && { image: imagepath }),
+      },
+      { new: true },
+    );
+
+    if (!updateFood) {
+      return res.status(404).json({ message: "Food Not Found" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "Food Updated Sucessfully", updatedFood: updateFood });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ message: "Internal Server Error", error: err.message });
   }
 };
