@@ -102,6 +102,7 @@ exports.editFoodCollection = async (req, res) => {
   try {
     const { title, description, price, discount } = req.body;
     const userId = req.user.id;
+    const { id } = req.params;
 
     if (!userId) {
       return res.status(401).json({ message: "Unauthorized! Please Login" });

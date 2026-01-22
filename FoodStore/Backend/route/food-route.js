@@ -12,7 +12,9 @@ router.post(
   upload.single("image"),
   FoodController.addFoodCollection,
 );
+
 router.get("/", FoodController.getFoodCollection);
+
 (router.put(
   "/update/:id",
   optionalAuth,
