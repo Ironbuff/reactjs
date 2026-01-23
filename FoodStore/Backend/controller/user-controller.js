@@ -1,6 +1,7 @@
 const User = require("../models/user-modal");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const passwordSchema = require("../validation/password-schema");
 
 require("dotenv").config();
 
@@ -18,6 +19,18 @@ exports.sign = async (req, res) => {
 
     if (isUserNameSame) {
       return res.status(400).json({ message: "UserName Already Used" });
+    }
+
+    const checkPassword = passwordSchema.safeParse({ password });
+
+    if (!checkPassword.success) {
+      const errors = checkPassword.error.issues.map((err) => err.message) ||
+        checkPassword.error.errors.map((err) => err.message) || [
+          "Password Validation Failed",
+        ];
+      return res
+        .status(400)
+        .json({ message: "Password validation Error", error: errors });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -72,16 +85,13 @@ exports.login = async (req, res) => {
     const accessTokenExpiresAt = Date.now() + accessTokenExpiresIn;
     const refreshTokenExpiresAt = Date.now() + refreshTokenExpiresIn;
 
-    return res
-      .status(200)
-      .json({
-        message: "User Logged Sucessfully",
-        accessToken: token,
-        refreshToken,
-        accessTokenExpiresAt,
-        refreshTokenExpiresAt,
-      });
-
+    return res.status(200).json({
+      message: "User Logged Sucessfully",
+      accessToken: token,
+      refreshToken,
+      accessTokenExpiresAt,
+      refreshTokenExpiresAt,
+    });
   } catch (err) {
     console.log(err);
     return res
