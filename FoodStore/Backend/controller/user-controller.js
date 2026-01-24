@@ -84,6 +84,7 @@ exports.login = async (req, res) => {
 
     const accessTokenExpiresAt = Date.now() + accessTokenExpiresIn;
     const refreshTokenExpiresAt = Date.now() + refreshTokenExpiresIn;
+    const role = user.role;
 
     return res.status(200).json({
       message: "User Logged Sucessfully",
@@ -91,6 +92,7 @@ exports.login = async (req, res) => {
       refreshToken,
       accessTokenExpiresAt,
       refreshTokenExpiresAt,
+      role,
     });
   } catch (err) {
     console.log(err);
