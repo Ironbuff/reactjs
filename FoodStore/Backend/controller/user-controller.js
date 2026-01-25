@@ -101,3 +101,43 @@ exports.login = async (req, res) => {
       .json({ message: "Something Went Wrong", error: err });
   }
 };
+
+exports.setRole = async (req, res) => {
+  try {
+    const { role } = req.body;
+    const userId = req.user.id;
+
+    if (!userId) {
+      return res.status(401).json({ message: "User isn't authoried" });
+    }
+
+    const userValue = await User.findById(userId);
+
+    const roleIsAdmin = userValue.role === "admin";
+
+    if (!roleIsAdmin) {
+      return res
+        .status(403)
+        .json({ message: "User doesn't have permission to change role" });
+    }
+
+    const updateRole = await userValue.findByIdAndUpdate(
+      userId,
+      {
+        role,
+      },
+      { new: true, runValidators: true },
+    );
+
+    if (!updateRole) {
+      return res.status(404).json({ message: "User Not Found" });
+    }
+
+    return res.status(200).json({ message: "User Role Updated Sucessfully" });
+  } catch (err) {
+    console.log(err);
+    return res
+      .staus(500)
+      .json({ message: "Internal Server Error", error: err });
+  }
+};
