@@ -104,7 +104,7 @@ exports.login = async (req, res) => {
 
 exports.setRole = async (req, res) => {
   try {
-    const { role } = req.body;
+    const { role, userIdValue } = req.body;
     const userId = req.user.id;
 
     if (!userId) {
@@ -121,8 +121,8 @@ exports.setRole = async (req, res) => {
         .json({ message: "User doesn't have permission to change role" });
     }
 
-    const updateRole = await userValue.findByIdAndUpdate(
-      userId,
+    const updateRole = await User.findByIdAndUpdate(
+      userIdValue,
       {
         role,
       },
