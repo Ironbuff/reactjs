@@ -105,17 +105,14 @@ exports.login = async (req, res) => {
 exports.setRole = async (req, res) => {
   try {
     const { role, userIdValue } = req.body;
-    const userId = req.user.id;
 
-    if (!userId) {
-      return res.status(401).json({ message: "User isn't authoried" });
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: "User isn't authorized" });
     }
 
-    const userValue = await User.findById(userId);
+    const userValue = await User.findById(req.user.id);
 
-    const roleIsAdmin = userValue.role === "admin";
-
-    if (!roleIsAdmin) {
+    if (userValue.role !== "admin") {
       return res
         .status(403)
         .json({ message: "User doesn't have permission to change role" });
@@ -123,9 +120,7 @@ exports.setRole = async (req, res) => {
 
     const updateRole = await User.findByIdAndUpdate(
       userIdValue,
-      {
-        role,
-      },
+      { role },
       { new: true, runValidators: true },
     );
 
@@ -133,11 +128,36 @@ exports.setRole = async (req, res) => {
       return res.status(404).json({ message: "User Not Found" });
     }
 
-    return res.status(200).json({ message: "User Role Updated Sucessfully" });
+    return res.status(200).json({ message: "User Role Updated Successfully" });
   } catch (err) {
-    console.log(err);
-    return res
-      .staus(500)
-      .json({ message: "Internal Server Error", error: err });
+    console.error(err);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      error: err.message,
+    });
+  }
+};
+
+exports.getUserList = async (req, res) => {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const requestedUser = await User.findById(req.user.id);
+
+    if (requestedUser.role !== "admin") {
+      return res.status(403).json({ message: "User doesn't have permission" });
+    }
+
+    const users = await User.find({});
+
+    return res.status(200).json({ users });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      error: err.message,
+    });
   }
 };
