@@ -7,6 +7,6 @@ router.post("/sign", userController.sign);
 router.post("/login", userController.login);
 
 router.post("/role", optionalAuth, userController.setRole);
-router.get("/getUsers", optionalAuth, userController.getUserList);
+router.get("/", optionalAuth, userController.getUserList);
 
 module.exports = router;
