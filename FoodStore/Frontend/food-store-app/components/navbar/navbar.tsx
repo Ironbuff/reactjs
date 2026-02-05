@@ -17,8 +17,8 @@ export const Navbar = () => {
   return (
     <div className="flex items-center justify-between h-[9ch] bg-gray-100 px-7 shadow-md">
       <div className="flex gap-x-2">
-        {/* <Image src="/food.png" width={30} height={30} alt="FoodImage" /> */}
-        <h1 className="text-2xl font-serif font-bold text-gray-800 leading-relaxed">FoodLand</h1>
+        <Image src="/foodland.png" width={150} height={30} alt="FoodImage" className="rounded-md shadow-md" />
+        {/* <h1 className="text-2xl font-serif font-bold text-gray-800 leading-relaxed">FoodLand</h1> */}
       </div>
 
       <div className="flex gap-x-2 items-center justify-end">
