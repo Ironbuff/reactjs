@@ -26,7 +26,7 @@ const loginSchema = z.object({
 
 export type ILoginType = z.infer<typeof loginSchema>
 
-const Login = () => {
+const Sign = () => {
   const form = useForm<ILoginType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -42,7 +42,7 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-[350px] border p-6 rounded-xl shadow-md">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Login</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center">Sign Up With Us</h2>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -88,4 +88,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Sign;
