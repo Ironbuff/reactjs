@@ -7,7 +7,7 @@ export default function Home() {
         Order Food <br/>We Are Here to Serve You.
       </h1>
 
-      <div className="relative w-[500px] h-[500px]">
+      <div className="relative w-125 h-125">
         <Image
           src="/cup Cake.jpg"
           alt="Kitchen"
