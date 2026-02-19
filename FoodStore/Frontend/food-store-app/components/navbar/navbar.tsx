@@ -9,7 +9,8 @@ export const Navbar = () => {
     { id: 1, label: "Login", route: "/login" },
     { id: 2, label: "Sign In", route: "/sign" },
     { id: 3, label: "Order Food", route: "/food" },
-    { id: 4, label: "Permissions", route: "/permission" }
+    { id: 4, label: "Permissions", route: "/permission" },
+    {id:5, label:"Add Food", route:"/add"}
   ];
 
   const router = useRouter();
