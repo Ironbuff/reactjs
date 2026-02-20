@@ -6,21 +6,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "../ui/textarea";
+import { Input } from "../ui/input";
 
 const foodSchema = z.object({
   title: z.string().min(1, "Title is Required"),
   description: z.string().min(1, "Description is Required"),
-  price: z.coerce.number().min(1, "Price must be greater than 0"),
+  price: z.number().min(1, "Price must be greater than 0"),
   imagepath: z.string().optional(),
 });
 
 type FoodType = z.infer<typeof foodSchema>;
 
 const AddScreen = () => {
-  const form = useForm<FoodType>({
+  const form = useForm({
     resolver: zodResolver(foodSchema),
     defaultValues: {
       title: "",
