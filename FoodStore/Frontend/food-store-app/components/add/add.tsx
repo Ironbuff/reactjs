@@ -5,7 +5,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "../ui/textarea";
 import { Input } from "../ui/input";
@@ -13,8 +20,12 @@ import { Input } from "../ui/input";
 const foodSchema = z.object({
   title: z.string().min(1, "Title is Required"),
   description: z.string().min(1, "Description is Required"),
+
+  // convert string → number automatically
   price: z.number().min(1, "Price must be greater than 0"),
-  imagepath: z.string().optional(),
+
+  // file validation
+  imagepath: z.instanceof(File, { message: "Image is required" }),
 });
 
 type FoodType = z.infer<typeof foodSchema>;
@@ -26,7 +37,6 @@ const AddScreen = () => {
       title: "",
       description: "",
       price: 0,
-      imagepath: "",
     },
   });
 
@@ -40,7 +50,6 @@ const AddScreen = () => {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          
           {/* Title */}
           <FormField
             control={form.control}
@@ -92,9 +101,13 @@ const AddScreen = () => {
             name="imagepath"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Image URL</FormLabel>
+                <FormLabel>Food Image</FormLabel>
                 <FormControl>
-                  <Input placeholder="Image path or URL" {...field} />
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => field.onChange(e.target.files?.[0])}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
