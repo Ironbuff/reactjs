@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -31,6 +31,7 @@ const foodSchema = z.object({
 type FoodType = z.infer<typeof foodSchema>;
 
 const AddScreen = () => {
+  const [preview,setPreview] = useState('')
   const form = useForm({
     resolver: zodResolver(foodSchema),
     defaultValues: {
@@ -39,6 +40,18 @@ const AddScreen = () => {
       price: 0,
     },
   });
+
+   const imageFile = form.watch("imagepath");
+
+
+  useEffect(() => {
+    if (imageFile) {
+      const objectUrl = URL.createObjectURL(imageFile);
+      setPreview(objectUrl);
+
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+  }, [imageFile]);
 
   const onSubmit = (data: FoodType) => {
     console.log("Food Data:", data);
@@ -113,6 +126,20 @@ const AddScreen = () => {
               </FormItem>
             )}
           />
+
+
+          {/* Image Preview */}
+          {preview && (
+            <div className="mt-4">
+              <p className="mb-2 text-sm font-medium">Image Preview:</p>
+              <img
+                src={preview}
+                alt="Preview"
+                className="w-full h-60 object-cover rounded-lg border"
+              />
+            </div>
+          )}
+
 
           <Button type="submit" className="w-full">
             Add Food
