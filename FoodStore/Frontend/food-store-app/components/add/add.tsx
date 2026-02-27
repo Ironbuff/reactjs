@@ -58,7 +58,7 @@ const AddScreen = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10">
+    <div className="max-w-xl mx-auto mt-10 border p-4 rounded-md shadow-md border-gray-200 max-h-[80vh]">
       <h2 className="text-2xl font-semibold mb-6">Add Food</h2>
 
       <Form {...form}>
@@ -135,7 +135,7 @@ const AddScreen = () => {
               <img
                 src={preview}
                 alt="Preview"
-                className="w-full h-60 object-cover rounded-lg border"
+                className="w-full h-28 object-fill rounded-lg border"
               />
             </div>
           )}
