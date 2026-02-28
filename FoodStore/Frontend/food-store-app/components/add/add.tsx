@@ -101,7 +101,7 @@ const AddScreen = () => {
               <FormItem>
                 <FormLabel>Price</FormLabel>
                 <FormControl>
-                  <Input type="number" placeholder="Price" {...field} />
+                  <Input type="number" placeholder="Price" {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
