@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react";
 import {
   Combobox,
@@ -5,41 +7,47 @@ import {
   ComboboxEmpty,
   ComboboxInput,
   ComboboxItem,
-  ComboboxList,
 } from "../ui/combobox";
 import { userList } from "@/constants/FoodStoreConstant";
 import { Controller, useForm } from "react-hook-form";
-import {z} from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const permissionSchema = z.object({
-role:z.string().optional(),
-})
+  role: z.string().optional(),
+});
 
-type permissionStoreType =  z.infer<typeof permissionSchema>
+type PermissionStoreType = z.infer<typeof permissionSchema>;
 
-const permissionform = useForm({
-  resolver:zodResolver(permissionSchema),
-  defaultValues:{
-    role:''
-  }
-})
+const PermissionScreen = () => {
 
+  const permissionform = useForm<PermissionStoreType>({
+    resolver: zodResolver(permissionSchema),
+    defaultValues: {
+      role: "",
+    },
+  });
 
-  const onSubmit = (data:permissionStoreType) => {
+  const onSubmit = (data: PermissionStoreType) => {
     console.log("Submitted Data:", data);
   };
 
-const PermissionScreen = () => {
   return (
-    <div className="flex flex-col gap-y-4 px-7 py-4">
-      <h1 className="text-xl font-semibold ">Select Permission For Different Users:</h1>
-      <form onSubmit={permissionform.handleSubmit(onSubmit)}>
+    <div className="flex flex-col gap-y-4 px-7 py-4 h-full  w-full items-center justify-center">
+      <h1 className="text-xl font-semibold">
+        Select Permission For Different Users:
+      </h1>
+
+      <form onSubmit={permissionform.handleSubmit(onSubmit)} className="border border-transparent shadow-md px-2 py-2 rounded-md">
         <Controller
           control={permissionform.control}
           name="role"
           render={({ field }) => (
-            <Combobox items={userList} value={field.value} onValueChange={field.onChange}>
+            <Combobox
+              items={userList}
+              value={field.value}
+              onValueChange={field.onChange}
+            >
               <ComboboxInput
                 placeholder="Select a user"
                 className="w-[400px]"
