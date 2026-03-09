@@ -7,19 +7,19 @@ enum UserRole {
 
 export const userList = [
   {
-    id: "Owner",
+   label: "Owner",
     value: UserRole.Owner,
   },
   {
-    id: "Server",
+   label: "Server",
     value: UserRole.Server,
   },
   {
-    id: "Chef",
+    label: "Chef",
     value: UserRole.Chef,
   },
   {
-    id: "Customer",
+    label: "Customer",
     value: UserRole.Customer,
   },
 ];
