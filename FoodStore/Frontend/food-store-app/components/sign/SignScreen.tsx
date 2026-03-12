@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useSignUser } from "./action/sign.config.action";
 
 const loginSchema = z.object({
 
@@ -26,6 +27,7 @@ const loginSchema = z.object({
 
 export type ILoginType = z.infer<typeof loginSchema>
 
+
 const Sign = () => {
   const form = useForm<ILoginType>({
     resolver: zodResolver(loginSchema),
@@ -35,8 +37,11 @@ const Sign = () => {
     },
   });
 
+  
+const {mutate,isPending} = useSignUser()
+
   const onSubmit = (values:ILoginType) => {
-    console.log(values);
+    mutate(values)
   };
 
   return (

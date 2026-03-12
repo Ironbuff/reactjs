@@ -1,5 +1,6 @@
 import { Navbar } from '@/components/navbar/navbar'
 import Sign from '@/components/sign/SignScreen'
+
 import React from 'react'
 
 const page = () => {
