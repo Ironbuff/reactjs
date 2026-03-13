@@ -22,7 +22,8 @@ const loginSchema = z.object({
   email: z.email().min(1, "Email is Required"),
 
   password: z
-    .string().optional()
+    .string().optional(),
+  username:z.string().min(1,"UserName is Required"),
 });
 
 export type ILoginType = z.infer<typeof loginSchema>
@@ -34,6 +35,7 @@ const Sign = () => {
     defaultValues: {
       email: "",
       password: "",
+      username:""
     },
   });
 
@@ -52,6 +54,21 @@ const {mutate,isPending} = useSignUser()
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
 
+           
+            {/* User Name */}
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>User Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter UserName" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             {/* Email */}
             <FormField
               control={form.control}
