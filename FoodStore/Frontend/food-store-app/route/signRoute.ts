@@ -1,3 +1,4 @@
 export const SIGN_USER_URL = {
-    signUser:'auth/sign'
+    signUser:'auth/sign',
+    loginUser:'auth/login',
 }

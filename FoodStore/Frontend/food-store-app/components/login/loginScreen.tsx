@@ -15,9 +15,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useloginUser } from "./action/login.action.config";
 
 const loginSchema = z.object({
-  userName: z.string().min(1, "UserName is Required"),
 
   email: z.string().email("Invalid email").min(1, "Email is Required"),
 
@@ -36,14 +36,15 @@ const Login = () => {
   const form = useForm<ILoginType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      userName: "",
       email: "",
       password: "",
     },
   });
 
+  const {mutate }= useloginUser()
+
   const onSubmit = (values:ILoginType) => {
-    console.log(values);
+    mutate(values);
   };
 
   return (
@@ -53,21 +54,6 @@ const Login = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-
-            {/* Username */}
-            <FormField
-              control={form.control}
-              name="userName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>User Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter username" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
             {/* Email */}
             <FormField
