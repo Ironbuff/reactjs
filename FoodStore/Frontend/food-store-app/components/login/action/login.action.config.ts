@@ -3,6 +3,10 @@ import { ILoginType } from "../loginScreen";
 import { loginUser } from "../service/login.services.config";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import { useDispatch } from "react-redux";
+import { setRole } from "@/redux/authSlice";
+
+const dispatch = useDispatch()
 
 export const useloginUser = ()=>{
     return useMutation({
@@ -19,6 +23,8 @@ export const useloginUser = ()=>{
         refreshTokenExpiresAt: data?.data?.refreshTokenExpiresAt,
         role:data?.data?.role
       };
+      dispatch(setRole(data?.data?.role))
+
 
       localStorage.setItem("auth", JSON.stringify(authData));
 
