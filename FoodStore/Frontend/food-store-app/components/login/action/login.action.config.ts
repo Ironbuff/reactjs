@@ -6,9 +6,10 @@ import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import { setRole } from "@/redux/authSlice";
 
-const dispatch = useDispatch()
 
 export const useloginUser = ()=>{
+  
+const dispatch = useDispatch()
     return useMutation({
         mutationKey:['login-user'],
         mutationFn:(data:ILoginType)=> loginUser(data),
@@ -27,8 +28,9 @@ export const useloginUser = ()=>{
 
 
       localStorage.setItem("auth", JSON.stringify(authData));
+      console.log("Stored value:", localStorage.getItem("auth"));
 
-      console.log("Response:", data);
+      console.log("Response:", data?.data?.accessToken);
            },
        
            onError: (error: AxiosError<{ message: string }>) => {
