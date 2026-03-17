@@ -28,9 +28,6 @@ const dispatch = useDispatch()
 
 
       localStorage.setItem("auth", JSON.stringify(authData));
-      console.log("Stored value:", localStorage.getItem("auth"));
-
-      console.log("Response:", data?.data?.accessToken);
            },
        
            onError: (error: AxiosError<{ message: string }>) => {

@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export const Navbar = () => {
   const topMenu = [
@@ -15,6 +17,8 @@ export const Navbar = () => {
 
   const router = useRouter();
 
+  const role = useSelector((state: RootState) => state.auth.role);
+
   return (
     <div className="flex items-center justify-between h-[9ch] bg-gray-100 px-7 shadow-md">
       <div className="flex gap-x-2">
@@ -23,15 +27,24 @@ export const Navbar = () => {
       </div>
 
       <div className="flex gap-x-2 items-center justify-end">
-        {topMenu.map((item) => (
-          <Button
-            key={item.id}
-            variant="outline"
-            onClick={() => router.push(item.route)}
-          >
-            {item.label}
-          </Button>
-        ))}
+       {topMenu.map((item) => {
+  if (
+    (item.label === "Permissions" || item.label === "Add Food") &&
+    role !== "admin"
+  ) {
+    return null;
+  }
+
+  return (
+    <Button
+      key={item.id}
+      variant="outline"
+      onClick={() => router.push(item.route)}
+    >
+      {item.label}
+    </Button>
+  );
+})}
       </div>
     </div>
   );
