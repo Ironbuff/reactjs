@@ -12,7 +12,7 @@ export const Navbar = () => {
     { id: 2, label: "Sign In", route: "/sign" },
     { id: 3, label: "Order Food", route: "/food" },
     { id: 4, label: "Permissions", route: "/permission" },
-    {id:5, label:"Add Food", route:"/add"}
+    { id: 5, label: "Add Food", route: "/add" },
   ];
 
   const router = useRouter();
@@ -22,29 +22,35 @@ export const Navbar = () => {
   return (
     <div className="flex items-center justify-between h-[9ch] bg-gray-100 px-7 shadow-md">
       <div className="flex gap-x-2">
-        <Image src="/foodland.png" width={150} height={30} alt="FoodImage" className="rounded-md shadow-md" />
+        <Image
+          src="/foodland.png"
+          width={150}
+          height={30}
+          alt="FoodImage"
+          className="rounded-md shadow-md"
+        />
         {/* <h1 className="text-2xl font-serif font-bold text-gray-800 leading-relaxed">FoodLand</h1> */}
       </div>
 
       <div className="flex gap-x-2 items-center justify-end">
-       {topMenu.map((item) => {
-  if (
-    (item.label === "Permissions" || item.label === "Add Food") &&
-    role !== "admin"
-  ) {
-    return null;
-  }
+        {topMenu.map((item) => {
+          if (
+            (item.label === "Permissions" || item.label === "Add Food") &&
+            role !== "admin"
+          ) {
+            return null;
+          }
 
-  return (
-    <Button
-      key={item.id}
-      variant="outline"
-      onClick={() => router.push(item.route)}
-    >
-      {item.label}
-    </Button>
-  );
-})}
+          return (
+            <Button
+              key={item.id}
+              variant="outline"
+              onClick={() => router.push(item.route)}
+            >
+              {item.label}
+            </Button>
+          );
+        })}
       </div>
     </div>
   );
