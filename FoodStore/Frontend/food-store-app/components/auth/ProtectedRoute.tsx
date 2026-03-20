@@ -17,6 +17,8 @@ export default function ProtectedRoute({
   const role = useSelector((state: RootState) => state.auth.role);
   const router = useRouter();
 
+  console.log(allowedRoles)
+
   useEffect(() => {
     if (!role) {
       router.push("/login");

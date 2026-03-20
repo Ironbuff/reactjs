@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "../ui/textarea";
 import { Input } from "../ui/input";
+import { useAddFood } from "./action/add.action.config";
 
 const foodSchema = z.object({
   title: z.string().min(1, "Title is Required"),
@@ -28,7 +29,7 @@ const foodSchema = z.object({
   imagepath: z.instanceof(File, { message: "Image is required" }),
 });
 
-type FoodType = z.infer<typeof foodSchema>;
+export type FoodType = z.infer<typeof foodSchema>;
 
 const AddScreen = () => {
   const [preview,setPreview] = useState('')
@@ -42,6 +43,7 @@ const AddScreen = () => {
   });
 
    const imageFile = form.watch("imagepath");
+   const {mutate,isPending}= useAddFood()
 
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const AddScreen = () => {
   }, [imageFile]);
 
   const onSubmit = (data: FoodType) => {
-    console.log("Food Data:", data);
+    mutate(data)
   };
 
   return (

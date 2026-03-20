@@ -5,7 +5,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <ProtectedRoute allowedRoles={["user"]}>
+    <ProtectedRoute allowedRoles={["admin"]}>
     <Navbar/>
     <AddScreen/>
    </ProtectedRoute>
