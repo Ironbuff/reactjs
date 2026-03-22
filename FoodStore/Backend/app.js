@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 
 app.use("/auth", userRoute);
 app.use("/food", foodRoute);
-
+app.use("/public", express.static("public"));
 const start = async () => {
   try {
     await connDB();

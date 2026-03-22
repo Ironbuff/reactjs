@@ -40,7 +40,7 @@ exports.addFoodCollection = async (req, res) => {
       return res.status(400).json({ message: "Invalid price" });
     }
 
-    const imagepath = req.file ? req.file.path : undefined;
+    const imagepath = req.file ? req.file.path : "public/dummy.jpg";
 
     const newFood = new Food({
       title,
