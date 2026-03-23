@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import { useGetAllFoods } from "./action/home.config.action";
+import { BASE_URL } from "@/axios/axiosInstance";
 
 export default function Home() {
   const { data: FoodsData, isLoading: isfoodDataLoading } = useGetAllFoods();
 
   const foods = FoodsData?.data?.foods || [];
-
 
   if (isfoodDataLoading) {
     return (
@@ -16,6 +16,8 @@ export default function Home() {
       </div>
     );
   }
+
+  console.log(process.env)
 
   return (
     <div className="px-7 py-10">
@@ -26,10 +28,10 @@ export default function Home() {
 
       {/* Food Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {foods.map((food) => {
-          const imageUrl =
-            food.image ||
-            "http://127.0.0.1:8081/public/dummy.jpg"; // fallback
+        {foods.map((food: any) => {
+          const imageUrl = food?.image
+            ? `${BASE_URL}/${food.image}` 
+            : `${BASE_URL}/public/dummy.jpg`;
 
           return (
             <div
@@ -38,10 +40,9 @@ export default function Home() {
             >
               {/* Image */}
               <div className="relative w-full h-48">
-                <Image
-                  src={"http://127.0.0.1:8081/public/dummy.jpg"}
+                <img
+                  src={imageUrl}
                   alt={food.title}
-                  fill
                   className="object-cover"
                 />
               </div>
@@ -49,9 +50,7 @@ export default function Home() {
               {/* Content */}
               <div className="p-4">
                 <h2 className="text-lg font-bold">{food.title}</h2>
-                <p className="text-sm text-gray-600">
-                  {food.description}
-                </p>
+                <p className="text-sm text-gray-600">{food.description}</p>
 
                 <div className="flex justify-between items-center mt-3">
                   <span className="font-semibold text-green-600">
