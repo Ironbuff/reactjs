@@ -24,43 +24,60 @@ exports.getFoodCollection = async (req, res) => {
 
 exports.addFoodCollection = async (req, res) => {
   try {
-    const { title, description } = req.body;
-    const userId = req.user.id;
-    const { price, discount } = req.body;
+    const { title, description, price, discount } = req.body;
+    const userId = req.user?.id;
 
-    if (!title || !description) {
-      return res
-        .status(400)
-        .json({ message: "Title & Description is Required" });
+    const errors = {};
+
+    if (!title || title.trim().length < 2) {
+      errors.title = "Title must be at least 2 characters";
     }
+
+    if (!description || description.trim().length < 2) {
+      errors.description = "Description must be at least 2 characters";
+    }
+
     const priceNumber = Number(price);
-    const discountNumber = discount ? Number(discount) : 0;
-
-    if (isNaN(priceNumber) || priceNumber <= 0) {
-      return res.status(400).json({ message: "Invalid price" });
+    if (!price || isNaN(priceNumber) || priceNumber <= 0) {
+      errors.price = "Price must be a valid number greater than 0";
     }
 
-    const imagepath = req.file ? req.file.path : "public/dummy.jpg";
+    const discountNumber = discount ? Number(discount) : 0;
+    if (discount && isNaN(discountNumber)) {
+      errors.discount = "Discount must be a number";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors,
+      });
+    }
+
+    const imagepath = req.file?.path || "public/dummy.jpg";
 
     const newFood = new Food({
       title,
       description,
-      price,
+      price: priceNumber,
       discount: discountNumber,
-      ...(imagepath && { image: imagepath }),
+      image: imagepath,
       user: userId,
     });
 
     await newFood.save();
 
-    return res
-      .status(200)
-      .json({ message: "Added Food to menu Sucessfully", Foods: newFood });
+    return res.status(200).json({
+      success: true,
+      message: "Added Food successfully",
+      data: newFood,
+    });
   } catch (err) {
-    console.log(err);
-    return res
-      .status(500)
-      .json({ message: "Internal Server Error", error: err });
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
 };
 

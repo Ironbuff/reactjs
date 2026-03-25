@@ -8,22 +8,20 @@ const foodRoute = require("./route/food-route");
 
 const app = express();
 
-// 1. CORS MUST BE THE VERY FIRST MIDDLEWARE
 const corsOptions = {
   origin: `${process.env.FRONTEND_URL}`,
 };
 
 app.use(cors(corsOptions));
-// 2. Body parser comes after CORS
 app.use(express.json());
 
-// 3. Routes come last
 app.get("/", (req, res) => {
   res.send("API is alive");
 });
 
 app.use("/auth", userRoute);
 app.use("/food", foodRoute);
+app.use("/uploads", express.static("uploads"));
 app.use("/public", express.static("public"));
 const start = async () => {
   try {
