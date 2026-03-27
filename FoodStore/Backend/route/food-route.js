@@ -15,6 +15,8 @@ router.post(
 
 router.get("/", FoodController.getFoodCollection);
 
+router.get("/:id", FoodController.getFoodCollectionById);
+
 (router.put(
   "/update/:id",
   optionalAuth,

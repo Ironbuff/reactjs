@@ -22,6 +22,32 @@ exports.getFoodCollection = async (req, res) => {
   }
 };
 
+exports.getFoodCollectionById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const food = await Food.findById(id);
+
+    if (!food) {
+      return res.status(404).json({
+        success: false,
+        message: "Food not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      food,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+    });
+  }
+};
+
 exports.addFoodCollection = async (req, res) => {
   try {
     const { title, description, price, discount } = req.body;
