@@ -17,7 +17,6 @@ export default function Home() {
     );
   }
 
-  console.log(process.env)
 
   return (
     <div className="px-7 py-10">
