@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import Link from "next/link";
 
 export const Navbar = () => {
   const topMenu = [
@@ -22,6 +23,7 @@ export const Navbar = () => {
   return (
     <div className="flex items-center justify-between h-[9ch] bg-gray-100 px-7 shadow-md">
       <div className="flex gap-x-2">
+        <Link href={'/'}>
         <Image
           src="/foodland.png"
           width={150}
@@ -29,6 +31,7 @@ export const Navbar = () => {
           alt="FoodImage"
           className="rounded-md shadow-md"
         />
+        </Link>
         {/* <h1 className="text-2xl font-serif font-bold text-gray-800 leading-relaxed">FoodLand</h1> */}
       </div>
 

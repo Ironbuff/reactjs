@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useGetAllFoods } from "./action/home.config.action";
 import { BASE_URL } from "@/axios/axiosInstance";
+import Link from "next/link";
 
 export default function Home() {
   const { data: FoodsData, isLoading: isfoodDataLoading } = useGetAllFoods();
@@ -33,37 +34,38 @@ export default function Home() {
             : `${BASE_URL}/public/dummy.jpg`;
 
           return (
-            <div
-              key={food._id}
+            <Link
+              href={`/${food?._id}`}
+              key={food?._id}
               className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition"
             >
               {/* Image */}
               <div className="relative w-full h-48">
                 <img
                   src={imageUrl}
-                  alt={food.title}
+                  alt={food?.title}
                   className="object-cover"
                 />
               </div>
 
               {/* Content */}
               <div className="p-4">
-                <h2 className="text-lg font-bold">{food.title}</h2>
-                <p className="text-sm text-gray-600">{food.description}</p>
+                <h2 className="text-lg font-bold">{food?.title}</h2>
+                <p className="text-sm text-gray-600">{food?.description}</p>
 
                 <div className="flex justify-between items-center mt-3">
                   <span className="font-semibold text-green-600">
-                    Rs. {food.price}
+                    Rs. {food?.price}
                   </span>
 
                   {food.discount > 0 && (
                     <span className="text-sm text-red-500">
-                      {food.discount}% OFF
+                      {food?.discount ?? 0}% OFF
                     </span>
                   )}
                 </div>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>
