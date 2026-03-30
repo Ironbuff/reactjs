@@ -3,7 +3,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -16,8 +16,8 @@ export default function ProtectedRoute({
 }: ProtectedRouteProps) {
   const role = useSelector((state: RootState) => state.auth.role);
   const router = useRouter();
-
-  console.log(allowedRoles)
+  
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
     if (!role) {
@@ -25,10 +25,16 @@ export default function ProtectedRoute({
       return;
     }
 
-    if (allowedRoles && !allowedRoles.includes(role)) {
+    if (allowedRoles && !allowedRoles.includes("") && !allowedRoles.includes(role)) {
       router.push("/");
+      return;
     }
+    setIsAuthorized(true);
+    
   }, [role, router, allowedRoles]);
+  if (!isAuthorized) {
+    return null; 
+  }
 
   return <>{children}</>;
 }

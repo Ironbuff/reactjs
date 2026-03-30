@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
-import { getFoodById } from "../action/foodById.service.config"
+import { getFoodById } from "../service/foodById.service.config"
 
-export const useGetFoodById = (id?:string)=>{
+export const useGetFoodById = (id:string | string[])=>{
     return useQuery(
         {
             queryKey:['foodDetail',id],
