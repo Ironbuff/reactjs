@@ -6,10 +6,10 @@ import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import { setRole } from "@/redux/authSlice";
 
-
+const dispatch = useDispatch()
 export const useloginUser = ()=>{
   
-const dispatch = useDispatch()
+
     return useMutation({
         mutationKey:['login-user'],
         mutationFn:(data:ILoginType)=> loginUser(data),
