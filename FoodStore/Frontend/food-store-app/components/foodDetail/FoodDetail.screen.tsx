@@ -4,12 +4,17 @@ import { useParams } from 'next/navigation'
 import React from 'react'
 import { useGetFoodById } from './actions/foodById.action.config'
 import { BASE_URL } from '@/axios/axiosInstance'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/redux/store'
+import { useRouter } from 'next/router'
+
 
 const FoodDetailScreen = () => {
   const params = useParams()
   const foodId = params?.food_id ?? ''
 
   const { data: foodData, isLoading } = useGetFoodById(foodId)
+  const role = useSelector((state: RootState) => state.auth.role)
 
   const foodDetails = foodData?.data?.food
 
@@ -19,7 +24,9 @@ const FoodDetailScreen = () => {
 
   const discountAmount =
     foodDetails?.price -
-    (foodDetails?.price * (foodDetails?.discount || 0)) / 100
+    (foodDetails?.price * (foodDetails?.discount || 0)) / 100;
+
+  const router = useRouter()
 
   if (isLoading) {
     return (
@@ -79,6 +86,14 @@ const FoodDetailScreen = () => {
           <button className="mt-6 w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800 transition hover:scale-105">
             Order Now
           </button>
+          {role === "admin" && (
+            <button
+              onClick={() => router.push(`/edit/${foodId}`)}
+              className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition hover:scale-105"
+            >
+              Edit
+            </button>
+          )}
         </div>
       </div>
     </div>
