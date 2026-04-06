@@ -1,12 +1,11 @@
 'use client'
 
 import { useParams } from 'next/navigation'
-import React from 'react'
 import { useGetFoodById } from './actions/foodById.action.config'
 import { BASE_URL } from '@/axios/axiosInstance'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 
 const FoodDetailScreen = () => {
@@ -88,7 +87,7 @@ const FoodDetailScreen = () => {
           </button>
           {role === "admin" && (
             <button
-              onClick={() => router.push(`/edit/${foodId}`)}
+              onClick={() => router.push(`/add/${foodId}`)}
               className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition hover:scale-105"
             >
               Edit

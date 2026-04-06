@@ -17,46 +17,80 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "../ui/textarea";
 import { Input } from "../ui/input";
 import { useAddFood } from "./action/add.action.config";
+import { AddScreenProps } from "./interface/FoodInterface.config";
+import { useParams } from "next/navigation";
+import { useGetFoodById } from "../foodDetail/actions/foodById.action.config";
+import { useEditFood } from "./action/edit.action.config";
+import { BASE_URL } from "@/axios/axiosInstance";
 
 const foodSchema = z.object({
   title: z.string().min(1, "Title is Required"),
   description: z.string().min(1, "Description is Required"),
-
-  // convert string → number automatically
   price: z.number().min(1, "Price must be greater than 0"),
-
-  // file validation
   imagepath: z.instanceof(File, { message: "Image is required" }),
+  discount: z.number().optional(),
 });
 
 export type FoodType = z.infer<typeof foodSchema>;
+export type Mode = 'Edit' | 'Add';
 
-const AddScreen = () => {
+const AddScreen = ({ mode}: AddScreenProps) => {
   const [preview,setPreview] = useState('')
+  const params = useParams()
   const form = useForm({
     resolver: zodResolver(foodSchema),
     defaultValues: {
       title: "",
       description: "",
       price: 0,
+      discount:0,
     },
   });
 
+  const id = params?.add_id ?? ''
+
    const imageFile = form.watch("imagepath");
+   
    const {mutate,isPending}= useAddFood()
+   const {mutate:editFoodMutate, isPending:editFoodPending}= useEditFood()
+
+   const {data:foodDataById,isLoading:isFoodDataLoading}= useGetFoodById(id)
+
+  const foodDetails = foodDataById?.data?.food
 
 
-  useEffect(() => {
+
+  useEffect(()=>{
+    if(mode==='Edit'){
+      form.setValue('title',foodDetails?.title);
+      form.setValue('description',foodDetails?.description);
+      form.setValue('imagepath', foodDetails?.image);
+      form.setValue('discount', foodDetails?.discount)
+    }
+
+  },[id, foodDataById])
+
+    useEffect(() => {
+      if(mode==='Add'){
     if (imageFile) {
       const objectUrl = URL.createObjectURL(imageFile);
       setPreview(objectUrl);
 
       return () => URL.revokeObjectURL(objectUrl);
     }
+  }
+  else return;
   }, [imageFile]);
 
+
   const onSubmit = (data: FoodType) => {
+  
+    if (mode==='Edit'){
+      editFoodMutate?.(data)
+    }
+    else{
     mutate(data)
+    }
   };
 
   return (
@@ -110,6 +144,22 @@ const AddScreen = () => {
             )}
           />
 
+          {/* Discount */}
+          <FormField
+          control={form.control}
+          name="discount"
+          render={({field})=>(
+            <FormItem>
+              <FormLabel>
+                Discount
+              </FormLabel>
+              <FormControl>
+              <Input type="number" placeholder="Enter Discount Amount" {...field} onChange={(e)=>field.onChange(Number(e.target.value))}/>
+              </FormControl>
+            </FormItem>
+          )}
+          />
+
           {/* Image Path */}
           <FormField
             control={form.control}
@@ -131,11 +181,11 @@ const AddScreen = () => {
 
 
           {/* Image Preview */}
-          {preview && (
+          {preview || !!form?.watch('imagepath') && (
             <div className="mt-4">
               <p className="mb-2 text-sm font-medium">Image Preview:</p>
               <img
-                src={preview}
+                src={preview|| `${BASE_URL}/${foodDetails?.image}`}
                 alt="Preview"
                 className="w-full h-28 object-fill rounded-lg border"
               />

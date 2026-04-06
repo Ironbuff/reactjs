@@ -6,6 +6,7 @@ export const useGetFoodById = (id:string | string[])=>{
         {
             queryKey:['foodDetail',id],
             queryFn:()=>getFoodById(id),
+            enabled:!!id,
         }
     )
 }

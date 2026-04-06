@@ -5,6 +5,7 @@ export const SIGN_USER_URL = {
 
 export const FOOD_STORE_ACTION ={
     addFood:'food/add',
+    editFood:'food/update',
 }
 
 export const FOOD_STORE_GET ={
