@@ -11,3 +11,8 @@ export const FOOD_STORE_ACTION ={
 export const FOOD_STORE_GET ={
     getAllFoods:"food"
 }
+
+
+export const ACCESS_TOKEN_GET = {
+    refresh:'auth/refresh'
+}

@@ -2,7 +2,7 @@ import { apiClient } from "@/axios/axiosInstance";
 import { FoodType } from "../add";
 import { FOOD_STORE_ACTION } from "@/route/signRoute";
 
-export const editFood = async (data: FoodType) => {
+export const editFood = async (data: FoodType, id:string|string[]) => {
   const formData = new FormData();
 
   formData.append("title", data.title);
@@ -15,8 +15,8 @@ export const editFood = async (data: FoodType) => {
     formData.append("image", data.imagepath); 
   }
 
-  const response = await apiClient.post(
-    FOOD_STORE_ACTION.editFood,
+  const response = await apiClient.put(
+    `${FOOD_STORE_ACTION.editFood}/${id}`,
     formData,
     {
       headers: {

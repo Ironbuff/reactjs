@@ -52,7 +52,7 @@ const AddScreen = ({ mode }: AddScreenProps) => {
   const imageFile = form.watch("imagepath");
 
   const { mutate, isPending } = useAddFood();
-  const { mutate: editFoodMutate, isPending: editFoodPending } = useEditFood();
+  const { mutate: editFoodMutate, isPending: editFoodPending } = useEditFood(id);
   const { data: foodDataById } = useGetFoodById(id);
 
   const foodDetails = foodDataById?.data?.food;

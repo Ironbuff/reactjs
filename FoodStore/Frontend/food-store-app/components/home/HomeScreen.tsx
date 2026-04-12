@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useGetAllFoods } from "./action/home.config.action";
 import { BASE_URL } from "@/axios/axiosInstance";
 import Link from "next/link";
@@ -70,7 +69,7 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {foods.map((food: FoodDetailType) => {
             const imageUrl = food?.image
-              ? `${BASE_URL}/${food.image}`
+              ? `${BASE_URL}/${food?.image}`
               : `${BASE_URL}/public/dummy.jpg`;
 
             return (
@@ -81,10 +80,9 @@ export default function Home() {
               >
                 {/* Image Container */}
                 <div className="relative w-full h-56 overflow-hidden">
-                  <Image
+                  <img
                     src={imageUrl}
                     alt={food?.title || "Food item"}
-                    fill
                     className="object-cover group-hover:scale-110 transition-transform duration-300"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                   />

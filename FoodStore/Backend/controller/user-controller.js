@@ -71,19 +71,18 @@ exports.login = async (req, res) => {
       email: user.email,
     };
 
-    //access token and refresh token
-    const accessTokenExpiresIn = 60 * 60 * 1000; // 1 hour in millisecond
-    const refreshTokenExpiresIn = 7 * 24 * 60 * 60 * 1000; // 7 days in millisecond
-
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "30s",
     });
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
       expiresIn: "7d",
     });
 
-    const accessTokenExpiresAt = Date.now() + accessTokenExpiresIn;
-    const refreshTokenExpiresAt = Date.now() + refreshTokenExpiresIn;
+    const decodedAccess = jwt.decode(token);
+    const decodedRefresh = jwt.decode(refreshToken);
+
+    const accessTokenExpiresAt = decodedAccess.exp * 1000; // convert to ms
+    const refreshTokenExpiresAt = decodedRefresh.exp * 1000;
     const role = user.role;
 
     return res.status(200).json({
