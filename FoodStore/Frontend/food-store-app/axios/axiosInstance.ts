@@ -15,6 +15,11 @@ export const apiClient = axios.create({
   timeout: 10000,
 });
 
+export const authClient = axios.create({
+  baseURL: BASE_URL,
+  headers: { "Content-Type": "application/json" },
+});
+
 // Optional but highly recommended: Add interceptors to automatically attach tokens later
 apiClient.interceptors.request.use(async (config) => {
   const authData = localStorage.getItem("auth");
