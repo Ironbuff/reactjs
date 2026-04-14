@@ -15,9 +15,8 @@ exports.refreshtoken = async (req, res) => {
     if (!refreshToken) {
       return res.status(401).json({ message: "Refresh token not found" });
     }
-
     jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, decoded) => {
-      if (errr) {
+      if (err) {
         return res.status(401).json({ message: "Invalid Refresh Token" });
       }
       const foundUser = User.findById(decoded.id);
@@ -35,7 +34,7 @@ exports.refreshtoken = async (req, res) => {
       });
     });
   } catch (err) {
-    console.error(error); // Log the error for debugging
+    console.error(err); // Log the error for debugging
     res.status(500).json({ message: "Server error" });
   }
 };
