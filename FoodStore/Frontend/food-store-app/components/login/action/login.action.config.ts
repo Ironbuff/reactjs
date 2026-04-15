@@ -5,38 +5,36 @@ import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import { setRole } from "@/redux/authSlice";
+import { useRouter } from "next/navigation";
 
-export const useloginUser = ()=>{
+export const useloginUser = () => {
+  const dispatch = useDispatch();
+  const route = useRouter();
 
-  
-const dispatch = useDispatch()
+  return useMutation({
+    mutationKey: ["login-user"],
+    mutationFn: (data: ILoginType) => loginUser(data),
+    onSuccess: (data) => {
+      toast.success(data?.data?.message || "User created ");
 
-    return useMutation({
-        mutationKey:['login-user'],
-        mutationFn:(data:ILoginType)=> loginUser(data),
-        onSuccess: (data) => {
-             toast.success(data?.data?.message || "User created ");
-             console.log("Response:", data);
-          
       const authData = {
         accessToken: data?.data?.accessToken,
         refreshToken: data?.data?.refreshToken,
         accessTokenExpiresAt: data?.data?.accessTokenExpiresAt,
         refreshTokenExpiresAt: data?.data?.refreshTokenExpiresAt,
-        role:data?.data?.role
+        role: data?.data?.role,
       };
-      dispatch(setRole(data?.data?.role))
-
+      dispatch(setRole(data?.data?.role));
 
       localStorage.setItem("auth", JSON.stringify(authData));
-           },
-       
-           onError: (error: AxiosError<{ message: string }>) => {
-       
-             const errorMessage = error.response?.data?.message || "Failed to sign user";
-             
-             toast.error(errorMessage);
-             
-           },
-    })
-}
+      route.push("/");
+    },
+
+    onError: (error: AxiosError<{ message: string }>) => {
+      const errorMessage =
+        error.response?.data?.message || "Failed to sign user";
+
+      toast.error(errorMessage);
+    },
+  });
+};

@@ -49,11 +49,11 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div className="w-[350px] border p-6 rounded-xl shadow-md">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Login To Order Food</h2>
+      <div className="w-[700px] border p-6 rounded-xl shadow-md ">
+        <h2 className="text-2xl font-semibold mb-4 text-center font-mono">Login To Order Food</h2>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-6 min-h-[300px] justify-center">
 
             {/* Email */}
             <FormField
@@ -61,9 +61,9 @@ const Login = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="text-base">Email :</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter email" {...field} />
+                    <Input placeholder="Enter email" {...field}  className="h-12"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -76,16 +76,16 @@ const Login = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-base">Password:</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="Enter password" {...field} />
+                    <Input type="password" placeholder="Enter password" {...field}  className="h-12" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full h-12 text-lg leading-relaxed">
               Login
             </Button>
 
