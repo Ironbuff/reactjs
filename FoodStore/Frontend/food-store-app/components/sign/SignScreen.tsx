@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useSignUser } from "./action/sign.config.action";
+import { useSignUser } from "./action/sign.config.action"
 
 const loginSchema = z.object({
 
@@ -29,7 +29,10 @@ const loginSchema = z.object({
 export type ILoginType = z.infer<typeof loginSchema>
 
 
+
 const Sign = () => {
+
+
   const form = useForm<ILoginType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -48,8 +51,8 @@ const {mutate,isPending} = useSignUser()
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div className="w-[350px] border p-6 rounded-xl shadow-md">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Sign Up With Us</h2>
+      <div className="w-[550px] border p-6 rounded-xl shadow-md">
+        <h2 className="text-2xl font-serif font-semibold mb-4 text-center">Sign Up With Us</h2>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -61,9 +64,9 @@ const {mutate,isPending} = useSignUser()
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>User Name</FormLabel>
+                  <FormLabel className="text-base">User Name :</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter UserName" {...field} />
+                    <Input placeholder="Enter UserName" {...field} className="h-12" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -75,9 +78,9 @@ const {mutate,isPending} = useSignUser()
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel className="text-base">Email :</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter email" {...field} />
+                    <Input placeholder="Enter email" {...field} className="h-12" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -90,16 +93,16 @@ const {mutate,isPending} = useSignUser()
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-base">Password :</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="Enter password" {...field} />
+                    <Input type="password" placeholder="Enter password" {...field}  className="h-12"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full h-12 text-base">
               Sign With Us
             </Button>
 
