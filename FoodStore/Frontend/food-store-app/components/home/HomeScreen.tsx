@@ -60,8 +60,8 @@ export default function Home() {
           </h1>
 
           <p className="text-lg text-gray-500 max-w-xl mx-auto">
-            Discover mouthwatering dishes crafted with love and delivered hot
-            to your doorstep.
+            Discover mouthwatering dishes crafted with love and delivered hot to
+            your doorstep.
           </p>
         </div>
 
@@ -122,12 +122,11 @@ export default function Home() {
                       <span className="text-xl font-bold text-green-600">
                         Rs. {food?.price}
                       </span>
-
-                      {food?.discount && food?.discount > 0 && food?.price && (
+                      {(food?.discount ?? 0) > 0 && food?.price && (
                         <div className="text-xs text-gray-400 line-through">
                           Rs.{" "}
                           {Math.round(
-                            food.price / (1 - food.discount / 100)
+                            food.price / (1 - (food.discount ?? 0) / 100),
                           )}
                         </div>
                       )}
