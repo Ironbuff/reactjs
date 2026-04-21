@@ -130,7 +130,7 @@ export default function Home() {
                           )}
                         </div>
                       )}
-                    </div>
+                    </div>  
 
                     <div className="flex items-center text-gray-400 text-xs">
                       <Clock className="w-4 h-4 mr-1" />

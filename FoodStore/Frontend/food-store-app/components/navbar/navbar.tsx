@@ -16,13 +16,15 @@ export const Navbar = () => {
     { id: 3, label: "Order Food", route: "/food" },
     { id: 4, label: "Permissions", route: "/permission" },
     { id: 5, label: "Add Food", route: "/add" },
+    { id: 6, label: "Logout" },
   ];
 
   const router = useRouter();
   const dispatch = useDispatch();
 
   const role = useSelector((state: RootState) => state.auth.role);
-  
+  const isLoggedIn = !!role;
+
   useEffect(() => {
     const auth = localStorage.getItem("auth");
     if (auth) {
@@ -47,6 +49,7 @@ export const Navbar = () => {
 
       <div className="flex gap-x-2 items-center justify-end">
         {topMenu.map((item) => {
+          // Hide admin-only routes
           if (
             (item.label === "Permissions" || item.label === "Add Food") &&
             role !== "admin"
@@ -54,11 +57,38 @@ export const Navbar = () => {
             return null;
           }
 
+          // Hide Login & Sign In if logged in
+          if (
+            isLoggedIn &&
+            (item.label === "Login" || item.label === "Sign In")
+          ) {
+            return null;
+          }
+
+          // Show Logout only if logged in
+          if (item.label === "Logout") {
+            if (!isLoggedIn) return null;
+
+            return (
+              <Button
+                key={item.id}
+                variant="outline"
+                onClick={() => {
+                  localStorage.clear();
+                  dispatch(setRole(''));
+                  router.push("/login");
+                }}
+              >
+                {item.label}
+              </Button>
+            );
+          }
+
           return (
             <Button
               key={item.id}
               variant="outline"
-              onClick={() => router.push(item.route)}
+              onClick={() => router.push(item?.route ?? "/")}
             >
               {item.label}
             </Button>
