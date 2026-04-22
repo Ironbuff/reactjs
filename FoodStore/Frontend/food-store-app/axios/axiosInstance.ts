@@ -29,11 +29,12 @@ apiClient.interceptors.request.use(async (config) => {
     let accessToken = parsed.accessToken;
     let accessTokenExpiresAt = parsed.accessTokenExpiresAt;
     const refreshToken = parsed.refreshToken;
+    const bufferTime = 60 * 1000;
 
     if (
       accessToken &&
       accessTokenExpiresAt &&
-      Date.now() >= parseInt(accessTokenExpiresAt) &&
+      Date.now() >= parseInt(accessTokenExpiresAt) - bufferTime &&
       refreshToken
     ) {
       try {

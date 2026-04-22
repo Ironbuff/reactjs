@@ -56,8 +56,6 @@ export const Navbar = () => {
           ) {
             return null;
           }
-
-          // Hide Login & Sign In if logged in
           if (
             isLoggedIn &&
             (item.label === "Login" || item.label === "Sign In")
