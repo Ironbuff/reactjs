@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useloginUser } from "./action/login.action.config";
+import { useRouter } from "next/navigation";
 
 const loginSchema = z.object({
 
@@ -40,6 +41,8 @@ const Login = () => {
       password: "",
     },
   });
+
+  const route = useRouter()
 
   const {mutate }= useloginUser()
 
@@ -88,6 +91,9 @@ const Login = () => {
             <Button type="submit" className="w-full h-12 text-lg leading-relaxed">
               Login
             </Button>
+            <span className="text-base font-normal"> Don't have account ? <span className="text-blue-400 underline hover:scale-105 transition-all ease-in-out duration-300" onClick={()=>{
+              route.push('/sign')
+            }}>Sign With Us</span></span>
 
           </form>
         </Form>
