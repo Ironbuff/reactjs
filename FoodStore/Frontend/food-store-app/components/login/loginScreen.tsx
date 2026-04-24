@@ -19,7 +19,6 @@ import { useloginUser } from "./action/login.action.config";
 import { useRouter } from "next/navigation";
 
 const loginSchema = z.object({
-
   email: z.string().email("Invalid email").min(1, "Email is Required"),
 
   password: z
@@ -31,7 +30,7 @@ const loginSchema = z.object({
     .regex(/[^A-Za-z0-9]/, "Must contain at least one special character"),
 });
 
-export type ILoginType = z.infer<typeof loginSchema>
+export type ILoginType = z.infer<typeof loginSchema>;
 
 const Login = () => {
   const form = useForm<ILoginType>({
@@ -42,22 +41,26 @@ const Login = () => {
     },
   });
 
-  const route = useRouter()
+  const route = useRouter();
 
-  const {mutate }= useloginUser()
+  const { mutate } = useloginUser();
 
-  const onSubmit = (values:ILoginType) => {
+  const onSubmit = (values: ILoginType) => {
     mutate(values);
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-[700px] border p-6 rounded-xl shadow-md ">
-        <h2 className="text-2xl font-semibold mb-4 text-center font-mono">Login To Order Food</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center font-mono">
+          Login To Order Food
+        </h2>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-y-6 min-h-[300px] justify-center">
-
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-y-6 min-h-[300px] justify-center"
+          >
             {/* Email */}
             <FormField
               control={form.control}
@@ -66,7 +69,11 @@ const Login = () => {
                 <FormItem>
                   <FormLabel className="text-base">Email :</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter email" {...field}  className="h-12"/>
+                    <Input
+                      placeholder="Enter email"
+                      {...field}
+                      className="h-12"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -81,20 +88,35 @@ const Login = () => {
                 <FormItem>
                   <FormLabel className="text-base">Password:</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="Enter password" {...field}  className="h-12" />
+                    <Input
+                      type="password"
+                      placeholder="Enter password"
+                      {...field}
+                      className="h-12"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button type="submit" className="w-full h-12 text-lg leading-relaxed">
+            <Button
+              type="submit"
+              className="w-full h-12 text-lg leading-relaxed"
+            >
               Login
             </Button>
-            <span className="text-base font-normal"> Don't have account ? <span className="text-blue-400 underline hover:scale-105 transition-all ease-in-out duration-300" onClick={()=>{
-              route.push('/sign')
-            }}>Sign With Us</span></span>
-
+            <p className="text-base font-normal">
+              Don’t have an account?{" "}
+              <span
+                className="text-blue-500 underline cursor-pointer hover:scale-105 transition-all duration-200 inline-block"
+                onClick={() => {
+                  route.push("/sign");
+                }}
+              >
+                Sign up
+              </span>
+            </p>
           </form>
         </Form>
       </div>
