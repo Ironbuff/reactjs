@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useloginUser } from "./action/login.action.config";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is Required"),
@@ -42,6 +43,7 @@ const Login = () => {
   });
 
   const route = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   const { mutate } = useloginUser();
 
@@ -88,12 +90,22 @@ const Login = () => {
                 <FormItem>
                   <FormLabel className="text-base">Password:</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Enter password"
-                      {...field}
-                      className="h-12"
-                    />
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? "text" : "password"} // 👈 toggle
+                        placeholder="Enter password"
+                        {...field}
+                        className="h-12 pr-12"
+                      />
+
+                      {/* Toggle Button */}
+                      <span
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-sm text-gray-500 hover:text-black"
+                      >
+                        {showPassword ? <Eye size={20}/>  :  <EyeOff size={20} />}
+                      </span>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
