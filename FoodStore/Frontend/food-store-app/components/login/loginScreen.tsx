@@ -92,8 +92,7 @@ const Login = () => {
                   <FormControl>
                     <div className="relative">
                       <Input
-                        type={showPassword ? "text" : "password"} // 👈 toggle
-                        placeholder="Enter password"
+                        type={showPassword ? "text" : "password"} 
                         {...field}
                         className="h-12 pr-12"
                       />

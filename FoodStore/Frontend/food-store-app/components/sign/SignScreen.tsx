@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useSignUser } from "./action/sign.config.action"
+import { Eye, EyeOff } from "lucide-react";
 
 const loginSchema = z.object({
 
@@ -41,7 +42,7 @@ const Sign = () => {
       username:""
     },
   });
-
+  const [showPassword,setShowPassword] = useState(false)
   
 const {mutate,isPending} = useSignUser()
 
@@ -93,9 +94,23 @@ const {mutate,isPending} = useSignUser()
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base">Password :</FormLabel>
+                  <FormLabel className="text-base">Password:</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="Enter password" {...field}  className="h-12"/>
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? "text" : "password"} 
+                        {...field}
+                        className="h-12 pr-12"
+                      />
+
+                      {/* Toggle Button */}
+                      <span
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-sm text-gray-500 hover:text-black"
+                      >
+                        {showPassword ? <Eye size={20}/>  :  <EyeOff size={20} />}
+                      </span>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
