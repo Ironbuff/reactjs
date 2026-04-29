@@ -101,6 +101,7 @@ const {mutate,isPending} = useSignUser()
                         type={showPassword ? "text" : "password"} 
                         {...field}
                         className="h-12 pr-12"
+                        placeholder="Enter Password"
                       />
 
                       {/* Toggle Button */}
