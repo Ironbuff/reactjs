@@ -36,63 +36,75 @@ const PermissionScreen = () => {
   };
 
   return (
-    <div className="flex flex-col gap-y-4 px-7 py-4 h-[calc(100vh-9ch)] w-full items-center justify-center">
-      <h1 className="text-2xl font-semibold">
-        Select Permission For Different Users:
-      </h1>
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 px-4">
+      <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6 space-y-6">
+        
+        {/* Header */}
+        <div className="text-center space-y-1">
+          <h1 className="text-2xl font-semibold text-gray-800">
+            User Permissions
+          </h1>
+          <p className="text-sm text-gray-500">
+            Select a role for the user
+          </p>
+        </div>
 
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="border border-transparent shadow-md px-2 py-2 rounded-md"
-        >
-          <FormField
-            control={form.control}
-            name="role"
-            render={({ field }) => {
-              const selectedUser = userList.find(
-                (user) => user.value === field.value,
-              );
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => {
+                const selectedUser = userList.find(
+                  (user) => user.value === field.value
+                );
 
-              return (
-                <FormItem>
-                  <FormControl>
-                    <Combobox
-                      items={userList}
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      <ComboboxInput
-                        placeholder="Select a user"
-                        className="w-[800px]"
-                        value={selectedUser?.label || ""}
-                        readOnly
-                      />
+                return (
+                  <FormItem>
+                    <FormControl>
+                      <Combobox
+                        items={userList}
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <ComboboxInput
+                          placeholder="Select a user"
+                          value={selectedUser?.label || ""}
+                          readOnly
+                          className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black transition"
+                        />
 
-                      <ComboboxContent>
-                        <ComboboxEmpty>No items found.</ComboboxEmpty>
+                        <ComboboxContent className="rounded-lg shadow-md">
+                          <ComboboxEmpty>No users found.</ComboboxEmpty>
 
-                        {userList.map((item) => (
-                          <ComboboxItem key={item.value} value={item.value}>
-                            {item.label}
-                          </ComboboxItem>
-                        ))}
-                      </ComboboxContent>
-                    </Combobox>
-                  </FormControl>
-                </FormItem>
-              );
-            }}
-          />
+                          {userList.map((item) => (
+                            <ComboboxItem
+                              key={item.value}
+                              value={item.value}
+                              className="hover:bg-gray-100 cursor-pointer"
+                            >
+                              {item.label}
+                            </ComboboxItem>
+                          ))}
+                        </ComboboxContent>
+                      </Combobox>
+                    </FormControl>
+                  </FormItem>
+                );
+              }}
+            />
 
-          <button
-            type="submit"
-            className="mt-4 bg-black text-white px-4 py-2 rounded w-full"
-          >
-            Submit
-          </button>
-        </form>
-      </Form>
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-black text-white py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition active:scale-[0.98]"
+            >
+              Save Permission
+            </button>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 };
