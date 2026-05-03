@@ -16,6 +16,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { useUserList } from "./actions/permission.action";
+import { IUserListType } from "./interface/permission.interface";
 
 const permissionSchema = z.object({
   role: z.string().optional(),
@@ -30,6 +32,10 @@ const PermissionScreen = () => {
       role: "",
     },
   });
+
+  const {data:userListData , isLoading:isUserListLoading}= useUserList();
+ 
+  const userListArray = userListData?.data?.users ?? [] as IUserListType;
 
   const onSubmit = (data: PermissionStoreType) => {
     console.log("Submitted Data:", data);
