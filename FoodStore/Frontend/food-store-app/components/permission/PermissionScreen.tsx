@@ -21,6 +21,7 @@ import { IUserListType } from "./interface/permission.interface";
 
 const permissionSchema = z.object({
   role: z.string().optional(),
+  user: z.string().optional()
 });
 
 type PermissionStoreType = z.infer<typeof permissionSchema>;
@@ -30,12 +31,13 @@ const PermissionScreen = () => {
     resolver: zodResolver(permissionSchema),
     defaultValues: {
       role: "",
+      user: "",   
     },
   });
 
   const {data:userListData , isLoading:isUserListLoading}= useUserList();
  
-  const userListArray = userListData?.data?.users ?? [] as IUserListType;
+  const userListArray = userListData?.data?.users ?? [] as IUserListType[];
 
   const onSubmit = (data: PermissionStoreType) => {
     console.log("Submitted Data:", data);
@@ -57,12 +59,50 @@ const PermissionScreen = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+
+            <FormField
+            control={form.control}
+            name="user"
+            render = {({field})=>{
+              const selectedUser = userListArray?.find((user:IUserListType)=>user?._id===field.value)
+              return(
+                <FormItem>
+                  <FormControl>
+                    <Combobox
+                      items={userListArray}
+                      value={field.value}
+                      onValueChange={field.onChange}                   
+                      >
+                        <ComboboxInput
+                        placeholder="Select User "
+                        value={selectedUser?._id}
+                        readOnly
+                        className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black transition"
+                        />
+                        <ComboboxContent className="rounded-lg shadow-md">
+                          {userListArray.map((item:IUserListType)=>(
+                               <ComboboxItem
+                              key={item?._id }
+                              value={item?._id}
+                              className="hover:bg-gray-100 cursor-pointer"
+                            >
+                              {item?.username}
+                            </ComboboxItem>
+                          ))}
+                        </ComboboxContent>
+                    </Combobox>
+
+                  </FormControl>
+                </FormItem>
+              )
+            }}
+            />
             
             <FormField
               control={form.control}
               name="role"
               render={({ field }) => {
-                const selectedUser = userList.find(
+                const selectedRole = userList.find(
                   (user) => user.value === field.value
                 );
 
@@ -75,8 +115,8 @@ const PermissionScreen = () => {
                         onValueChange={field.onChange}
                       >
                         <ComboboxInput
-                          placeholder="Select a user"
-                          value={selectedUser?.label || ""}
+                          placeholder="Select Role"
+                          value={selectedRole?.label || ""}
                           readOnly
                           className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black transition"
                         />
