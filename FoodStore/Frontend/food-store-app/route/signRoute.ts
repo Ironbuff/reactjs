@@ -18,4 +18,5 @@ export const ACCESS_TOKEN_GET = {
 
 export const PERMISSION_API = {
   getUser: "auth",
+  setRole: "auth/role",
 };
