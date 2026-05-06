@@ -78,7 +78,7 @@ const PermissionScreen = () => {
                       >
                         <ComboboxInput
                         placeholder="Select User "
-                        value={selectedUser?._id}
+                        value={selectedUser?.username}
                         readOnly
                         className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black transition"
                         />
