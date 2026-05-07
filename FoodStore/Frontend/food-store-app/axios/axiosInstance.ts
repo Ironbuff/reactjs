@@ -27,7 +27,7 @@ apiClient.interceptors.request.use(async (config) => {
   if (authData) {
     const parsed = JSON.parse(authData);
     let accessToken = parsed.accessToken;
-    let accessTokenExpiresAt = parsed.accessTokenExpiresAt;
+    const accessTokenExpiresAt = parsed.accessTokenExpiresAt;
     const refreshToken = parsed.refreshToken;
     const bufferTime = 60 * 1000;
 
