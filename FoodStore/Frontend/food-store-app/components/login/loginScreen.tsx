@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useloginUser } from "./action/login.action.config";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, UtensilsCrossed } from "lucide-react";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email").min(1, "Email is Required"),
@@ -52,16 +52,28 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="w-[700px] border p-6 rounded-xl shadow-md ">
-        <h2 className="text-2xl font-semibold mb-4 text-center font-mono">
-          Login To Order Food
-        </h2>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-white to-red-50 px-4">
+      <div className="w-full max-w-xl bg-white/90 backdrop-blur-sm border border-orange-100 shadow-2xl rounded-3xl p-8">
+        
+        {/* Header */}
+        <div className="flex flex-col items-center mb-8">
+          <div className="bg-neutral-700 p-4 rounded-full mb-4">
+            <UtensilsCrossed className="text-neutral-300" size={32} />
+          </div>
+
+          <h2 className="text-3xl font-bold text-gray-800">
+            Welcome Back
+          </h2>
+
+          <p className="text-gray-500 mt-2 text-center">
+            Login to continue ordering your favorite foods
+          </p>
+        </div>
 
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-y-6 min-h-[300px] justify-center"
+            className="flex flex-col gap-y-6"
           >
             {/* Email */}
             <FormField
@@ -69,14 +81,18 @@ const Login = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base">Email :</FormLabel>
+                  <FormLabel className="text-sm font-semibold text-gray-700">
+                    Email Address
+                  </FormLabel>
+
                   <FormControl>
                     <Input
-                      placeholder="Enter email"
+                      placeholder="Enter your email"
                       {...field}
-                      className="h-12"
+                      className="h-12 rounded-xl border-gray-200 focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:border-orange-400 transition-all"
                     />
                   </FormControl>
+
                   <FormMessage />
                 </FormItem>
               )}
@@ -88,45 +104,62 @@ const Login = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-base">Password:</FormLabel>
+                  <div className="flex justify-between items-center">
+                    <FormLabel className="text-sm font-semibold text-gray-700">
+                      Password
+                    </FormLabel>
+
+                    <span className="text-sm text-neutral-800 cursor-pointer hover:underline">
+                      Forgot Password?
+                    </span>
+                  </div>
+
                   <FormControl>
                     <div className="relative">
                       <Input
-                        type={showPassword ? "text" : "password"} 
+                        type={showPassword ? "text" : "password"}
                         {...field}
-                        className="h-12 pr-12"
-                        placeholder="Enter Password"
+                        className="h-12 rounded-xl border-gray-200 pr-12 focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:border-orange-400 transition-all"
+                        placeholder="Enter your password"
                       />
 
-                      {/* Toggle Button */}
-                      <span
+                      <button
+                        type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-sm text-gray-500 hover:text-black"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-orange-500 transition-colors"
                       >
-                        {showPassword ? <Eye size={20}/>  :  <EyeOff size={20} />}
-                      </span>
+                        {showPassword ? (
+                          <Eye size={20} />
+                        ) : (
+                          <EyeOff size={20} />
+                        )}
+                      </button>
                     </div>
                   </FormControl>
+
                   <FormMessage />
                 </FormItem>
               )}
             />
 
+            {/* Button */}
             <Button
               type="submit"
-              className="w-full h-12 text-lg leading-relaxed"
+              className="w-full h-12 rounded-xl bg-neutral-700 hover:bg-orange-800 text-base font-semibold shadow-lg transition-all duration-200 hover:scale-[1.01]"
             >
               Login
             </Button>
-            <p className="text-base font-normal">
+
+            {/* Footer */}
+            <p className="text-center text-gray-600">
               Don’t have an account?{" "}
               <span
-                className="text-blue-500 underline cursor-pointer hover:scale-105 transition-all duration-200 inline-block"
+                className="text-neutral-800 font-semibold cursor-pointer hover:underline"
                 onClick={() => {
                   route.push("/sign");
                 }}
               >
-                Sign up
+                Create Account
               </span>
             </p>
           </form>
