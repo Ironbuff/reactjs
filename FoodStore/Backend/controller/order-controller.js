@@ -5,14 +5,14 @@ const Order = require("../models/user-modal");
 
 exports.OrderPlaced = async (req, res) => {
   try {
-    const { orderId } = req.headers;
+    const { userId } = req.headers;
     const { order } = req.body;
 
     const CreatedOrder = [];
 
     for (orderData of order) {
       const newOrder = new Order({
-        user: orderId,
+        user: userId,
         food: orderData._id,
       });
 
