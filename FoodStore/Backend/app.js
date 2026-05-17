@@ -6,6 +6,7 @@ const connDB = require("./conn/conn");
 const userRoute = require("./route/user-route");
 const foodRoute = require("./route/food-route");
 const authRoute = require("./route/auth-route");
+const orderRoute = require("./route/order-route");
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 app.use("/auth", userRoute);
 app.use("/food", foodRoute);
 app.use("/auth", authRoute);
+app.use("/putOrder", orderRoute);
 app.use("/uploads", express.static("uploads"));
 app.use("/public", express.static("public"));
 const start = async () => {
