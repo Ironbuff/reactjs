@@ -10,6 +10,7 @@ export const FOOD_STORE_ACTION = {
 
 export const FOOD_STORE_GET = {
   getAllFoods: "food",
+  orderFood: "putOrder/orderplaced",
 };
 
 export const ACCESS_TOKEN_GET = {

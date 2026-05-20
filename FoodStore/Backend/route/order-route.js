@@ -3,6 +3,6 @@ const express = require("express");
 const router = express.Router();
 const { optionalAuth } = require("../middleware/optionalauth");
 
-router.post("/orderplaced/:order", optionalAuth, orderController.OrderPlaced);
+router.post("/orderplaced", optionalAuth, orderController.OrderPlaced);
 
 module.exports = router;
