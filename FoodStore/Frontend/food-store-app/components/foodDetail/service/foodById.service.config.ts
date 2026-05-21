@@ -7,6 +7,8 @@ export const getFoodById = async (id: string | string[]) => {
 };
 
 export const placeFoodOrder = async (order: string) => {
-  const response = await apiClient.post(FOOD_STORE_GET.orderFood, order);
+  const response = await apiClient.post(FOOD_STORE_GET.orderFood, {
+    order: order,
+  });
   return response;
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useGetFoodById } from "./actions/foodById.action.config";
+import { useFoodOrderPlaced, useGetFoodById } from "./actions/foodById.action.config";
 import { BASE_URL } from "@/axios/axiosInstance";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -15,6 +15,8 @@ const FoodDetailScreen = () => {
   const role = useSelector((state: RootState) => state.auth.role);
 
   const foodDetails = foodData?.data?.food;
+
+  const {mutate}= useFoodOrderPlaced()
 
   const imageUrl = foodDetails?.image
     ? `${BASE_URL}/${foodDetails?.image}`
@@ -94,7 +96,9 @@ const FoodDetailScreen = () => {
 
             {/* Action Buttons */}
             <div className="space-y-4">
-              <button className="w-full bg-black text-white py-3.5 rounded-2xl font-semibold text-base hover:bg-gray-800 transition duration-200 hover:scale-[1.02]">
+              <button className="w-full bg-black text-white py-3.5 rounded-2xl font-semibold text-base hover:bg-gray-800 transition duration-200 hover:scale-[1.02]" onClick={()=>{
+                mutate(foodDetails?._id)
+              }}>
                 Order Now
               </button>
 
