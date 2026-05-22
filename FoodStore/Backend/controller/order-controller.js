@@ -1,7 +1,7 @@
 const express = require("express");
 const User = require("../models/user-modal");
 const Food = require("../models/food-modal");
-const Order = require("../models/user-modal");
+const Order = require("../models/order-modal");
 
 exports.OrderPlaced = async (req, res) => {
   try {
@@ -18,7 +18,7 @@ exports.OrderPlaced = async (req, res) => {
 
       const orderDataFromDB = await newOrder.save();
 
-      await User.findByIdAndUpdate(id, {
+      await User.findByIdAndUpdate(userId, {
         $push: { order: orderDataFromDB._id },
       });
       CreatedOrder.push(orderDataFromDB);
