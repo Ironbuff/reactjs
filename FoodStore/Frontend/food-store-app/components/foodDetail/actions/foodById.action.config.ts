@@ -3,6 +3,7 @@ import {
   getFoodById,
   placeFoodOrder,
 } from "../service/foodById.service.config";
+import { toast } from "react-toastify";
 
 export const useGetFoodById = (id: string | string[]) => {
   return useQuery({
@@ -16,5 +17,9 @@ export const useFoodOrderPlaced = () => {
   return useMutation({
     mutationKey: ["PlaceOrder"],
     mutationFn: (order: string) => placeFoodOrder(order),
+    onSuccess: (data) => {
+      const sucessMessage = data?.data?.message || "Order Placed";
+      toast.success(sucessMessage);
+    },
   });
 };
