@@ -5,6 +5,7 @@ import { useFoodOrderPlaced, useGetFoodById } from "./actions/foodById.action.co
 import { BASE_URL } from "@/axios/axiosInstance";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { Button } from "../ui/button";
 
 const FoodDetailScreen = () => {
   const params = useParams();
@@ -16,7 +17,7 @@ const FoodDetailScreen = () => {
 
   const foodDetails = foodData?.data?.food;
 
-  const {mutate}= useFoodOrderPlaced()
+  const {mutate,isPending}= useFoodOrderPlaced()
 
   const imageUrl = foodDetails?.image
     ? `${BASE_URL}/${foodDetails?.image}`
@@ -96,19 +97,23 @@ const FoodDetailScreen = () => {
 
             {/* Action Buttons */}
             <div className="space-y-4">
-              <button className="w-full bg-black text-white py-3.5 rounded-2xl font-semibold text-base hover:bg-gray-800 transition duration-200 hover:scale-[1.02]" onClick={()=>{
+              <Button className="w-full bg-black text-white py-3.5 rounded-2xl font-semibold text-base hover:bg-gray-800 transition duration-200 hover:scale-[1.02]" onClick={()=>{
                 mutate(foodDetails?._id)
-              }}>
+              
+              }}
+              disabled={isPending}
+              >
                 Order Now
-              </button>
+              </Button>
 
               {role === "admin" && (
-                <button
+                <Button
                   onClick={() => router.push(`/add/${foodId}`)}
                   className="w-full bg-blue-600 text-white py-3.5 rounded-2xl font-semibold text-base hover:bg-blue-700 transition duration-200 hover:scale-[1.02]"
+                  disabled={isPending}
                 >
                   Edit Food
-                </button>
+                </Button>
               )}
             </div>
           </div>
