@@ -11,6 +11,15 @@ exports.OrderPlaced = async (req, res) => {
     const CreatedOrder = [];
 
     for (orderData of order) {
+      const existingOrder = await Order.findOne({
+        user: userId,
+        food: orderData._id,
+      });
+
+      if (existingOrder) {
+        continue; // Skip duplicate order
+      }
+
       const newOrder = new Order({
         user: userId,
         food: orderData._id,
@@ -21,6 +30,7 @@ exports.OrderPlaced = async (req, res) => {
       await User.findByIdAndUpdate(userId, {
         $push: { order: orderDataFromDB._id },
       });
+
       CreatedOrder.push(orderDataFromDB);
     }
 
