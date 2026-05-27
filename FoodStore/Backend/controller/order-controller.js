@@ -17,7 +17,7 @@ exports.OrderPlaced = async (req, res) => {
       });
 
       if (existingOrder) {
-        continue; // Skip duplicate order
+        return res.status(400).json({ message: "Order Already Placed" });
       }
 
       const newOrder = new Order({

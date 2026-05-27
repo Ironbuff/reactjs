@@ -4,6 +4,11 @@ import {
   placeFoodOrder,
 } from "../service/foodById.service.config";
 import { toast } from "react-toastify";
+import { AxiosError } from "axios";
+
+type ErrorResponse = {
+  message: string;
+};
 
 export const useGetFoodById = (id: string | string[]) => {
   return useQuery({
@@ -20,6 +25,13 @@ export const useFoodOrderPlaced = () => {
     onSuccess: (data) => {
       const sucessMessage = data?.data?.message || "Order Placed";
       toast.success(sucessMessage);
+    },
+    onError: (err: AxiosError<ErrorResponse>) => {
+      const message =
+        err?.response?.data?.message || ("Error in Order" as string);
+      if (message) {
+        toast.error(message);
+      }
     },
   });
 };
