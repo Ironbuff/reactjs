@@ -41,3 +41,24 @@ exports.OrderPlaced = async (req, res) => {
     return res.status(500).json({ message: "Server Error", Error: err });
   }
 };
+
+exports.getOrderPlacedList = async (req, res) => {
+  try {
+    const { userId } = req.headers;
+    const user = User.findById(userId);
+    const role = user.role;
+    const IsUserAdmin = role === "admin";
+    if (!IsUserAdmin) {
+      return res
+        .status(200)
+        .json({ message: "User isnt allowed get Order List." });
+    }
+    const orderList = await Order.find();
+
+    return res
+      .status(200)
+      .json({ message: "Order List Fetched Sucessfully", order: orderList });
+  } catch (err) {
+    return res.staus(500).json({ message: "Server Error", error: err });
+  }
+};
