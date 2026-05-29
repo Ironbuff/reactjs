@@ -45,20 +45,35 @@ exports.OrderPlaced = async (req, res) => {
 exports.getOrderPlacedList = async (req, res) => {
   try {
     const { userId } = req.headers;
-    const user = User.findById(userId);
-    const role = user.role;
-    const IsUserAdmin = role === "admin";
-    if (!IsUserAdmin) {
-      return res
-        .status(200)
-        .json({ message: "User isnt allowed get Order List." });
-    }
-    const orderList = await Order.find();
 
-    return res
-      .status(200)
-      .json({ message: "Order List Fetched Sucessfully", order: orderList });
+    // Find user
+    const user = await User.findById(userId);
+
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    // Check admin role
+    if (user.role !== "admin") {
+      return res.status(403).json({
+        message: "User is not allowed to get order list",
+      });
+    }
+
+    // Get orders with populated data
+    const orderList = await Order.find().populate("user").populate("food");
+
+    return res.status(200).json({
+      message: "Order List Fetched Successfully",
+      order: orderList,
+    });
   } catch (err) {
-    return res.staus(500).json({ message: "Server Error", error: err });
+    return res.status(500).json({
+      message: "Server Error",
+      error: err.message,
+    });
   }
 };
