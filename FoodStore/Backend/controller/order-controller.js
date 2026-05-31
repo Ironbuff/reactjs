@@ -44,11 +44,12 @@ exports.OrderPlaced = async (req, res) => {
 
 exports.getOrderPlacedList = async (req, res) => {
   try {
-    const { userId } = req.headers;
+    const userId = req.user?.id;
 
     // Find user
     const user = await User.findById(userId);
 
+    console.log("user found", userId);
     // Check if user exists
     if (!user) {
       return res.status(404).json({
