@@ -44,32 +44,23 @@ exports.OrderPlaced = async (req, res) => {
 
 exports.getOrderPlacedList = async (req, res) => {
   try {
+    // 1. Get the authenticated user's ID from the request object
     const userId = req.user?.id;
 
-    // Find user
-    const user = await User.findById(userId);
-
-    console.log("user found", userId);
-    // Check if user exists
-    if (!user) {
-      return res.status(404).json({
-        message: "User not found",
+    if (!userId) {
+      return res.status(401).json({
+        message: "Unauthorized. Please log in.",
       });
     }
 
-    // Check admin role
-    if (user.role !== "admin") {
-      return res.status(403).json({
-        message: "User is not allowed to get order list",
-      });
-    }
+    const orderList = await Order.find({ user: userId })
+      .populate("user")
+      .populate("food");
 
-    // Get orders with populated data
-    const orderList = await Order.find().populate("user").populate("food");
-
+    // 3. Return the user's specific order history
     return res.status(200).json({
-      message: "Order List Fetched Successfully",
-      order: orderList,
+      message: "Your orders fetched successfully",
+      orders: orderList, // changed from 'order' to 'orders' for clarity
     });
   } catch (err) {
     return res.status(500).json({

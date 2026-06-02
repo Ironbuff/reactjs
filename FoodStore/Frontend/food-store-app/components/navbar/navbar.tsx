@@ -13,7 +13,7 @@ export const Navbar = () => {
   const topMenu = [
     { id: 1, label: "Login", route: "/login" },
     { id: 2, label: "Sign In", route: "/sign" },
-    { id: 3, label: "Order Food", route: "/food" },
+    { id: 3, label: "My Orders", route: "/order" },
     { id: 4, label: "Permissions", route: "/permission" },
     { id: 5, label: "Add Food", route: "/add" },
     { id: 6, label: "Logout" },

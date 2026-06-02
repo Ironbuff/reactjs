@@ -21,3 +21,7 @@ export const PERMISSION_API = {
   getUser: "auth",
   setRole: "auth/role",
 };
+
+export const ORDER_FOOD_URL = {
+  getAllOrder: "putOrder/getOrder",
+};
