@@ -5,9 +5,11 @@ const Order = require("../models/order-modal");
 
 exports.OrderPlaced = async (req, res) => {
   try {
-    const { userId } = req.headers;
+    const userId = req.user?.id;
     const { order } = req.body;
 
+    console.log({ userId });
+    console.log({ order });
     const CreatedOrder = [];
 
     for (orderData of order) {
@@ -38,6 +40,7 @@ exports.OrderPlaced = async (req, res) => {
       .status(200)
       .json({ message: "Order Placed Sucessfully", order: CreatedOrder });
   } catch (err) {
+    console.log(err);
     return res.status(500).json({ message: "Server Error", Error: err });
   }
 };
@@ -53,14 +56,15 @@ exports.getOrderPlacedList = async (req, res) => {
       });
     }
 
-    const orderList = await Order.find({ user: userId })
-      .populate("user")
-      .populate("food");
+    console.log({ userId });
 
-    // 3. Return the user's specific order history
+    const orderList = await Order.find({}).populate("user").populate("food");
+
+    console.log({ orderList });
+
     return res.status(200).json({
       message: "Your orders fetched successfully",
-      orders: orderList, // changed from 'order' to 'orders' for clarity
+      orders: orderList,
     });
   } catch (err) {
     return res.status(500).json({

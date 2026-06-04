@@ -30,10 +30,12 @@ const userSchema = new Schema(
       type: String,
       default: "user",
     },
-    order: {
-      type: mongoose.Types.ObjectId,
-      ref: "Order",
-    },
+    order: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Order",
+      },
+    ],
   },
   { timestamps: true },
 );
