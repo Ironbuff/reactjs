@@ -8,8 +8,6 @@ exports.OrderPlaced = async (req, res) => {
     const userId = req.user?.id;
     const { order } = req.body;
 
-    console.log({ userId });
-    console.log({ order });
     const CreatedOrder = [];
 
     for (orderData of order) {
@@ -47,7 +45,6 @@ exports.OrderPlaced = async (req, res) => {
 
 exports.getOrderPlacedList = async (req, res) => {
   try {
-    // 1. Get the authenticated user's ID from the request object
     const userId = req.user?.id;
 
     if (!userId) {
@@ -56,11 +53,10 @@ exports.getOrderPlacedList = async (req, res) => {
       });
     }
 
-    console.log({ userId });
-
-    const orderList = await Order.find({}).populate("user").populate("food");
-
-    console.log({ orderList });
+    //  Pass { user: userId } into find() to isolate only this user's records
+    const orderList = await Order.find({ user: userId })
+      .populate("user")
+      .populate("food");
 
     return res.status(200).json({
       message: "Your orders fetched successfully",
