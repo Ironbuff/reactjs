@@ -8,6 +8,8 @@ exports.OrderPlaced = async (req, res) => {
     const userId = req.user?.id;
     const { order } = req.body;
 
+    console.log(order);
+
     const CreatedOrder = [];
 
     for (orderData of order) {
@@ -24,6 +26,8 @@ exports.OrderPlaced = async (req, res) => {
         user: userId,
         food: orderData._id,
       });
+
+      console.log(newOrder);
 
       const orderDataFromDB = await newOrder.save();
 
@@ -52,6 +56,10 @@ exports.getOrderPlacedList = async (req, res) => {
         message: "Unauthorized. Please log in.",
       });
     }
+
+    const order = await Order.find();
+
+    console.log(userId, order);
 
     //  Pass { user: userId } into find() to isolate only this user's records
     const orderList = await Order.find({ user: userId })
