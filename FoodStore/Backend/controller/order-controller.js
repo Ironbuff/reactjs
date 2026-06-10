@@ -8,26 +8,35 @@ exports.OrderPlaced = async (req, res) => {
     const userId = req.user?.id;
     const { order } = req.body;
 
-    console.log(order);
+    if (!userId) {
+      return res.status(401).json({
+        message: "Unauthorized",
+      });
+    }
 
     const CreatedOrder = [];
+    const orders = Array.isArray(order) ? order : [order];
 
-    for (orderData of order) {
+    for (const foodId of orders) {
       const existingOrder = await Order.findOne({
         user: userId,
-        food: orderData._id,
+        food: foodId,
       });
 
       if (existingOrder) {
-        return res.status(400).json({ message: "Order Already Placed" });
+        continue;
+      }
+
+      const foodExists = await Food.findById(foodId);
+
+      if (!foodExists) {
+        continue;
       }
 
       const newOrder = new Order({
         user: userId,
-        food: orderData._id,
+        food: foodId,
       });
-
-      console.log(newOrder);
 
       const orderDataFromDB = await newOrder.save();
 
@@ -38,12 +47,15 @@ exports.OrderPlaced = async (req, res) => {
       CreatedOrder.push(orderDataFromDB);
     }
 
-    return res
-      .status(200)
-      .json({ message: "Order Placed Sucessfully", order: CreatedOrder });
+    return res.status(200).json({
+      message: "Order Placed Successfully",
+      orders: CreatedOrder,
+    });
   } catch (err) {
-    console.log(err);
-    return res.status(500).json({ message: "Server Error", Error: err });
+    return res.status(500).json({
+      message: "Server Error",
+      error: err.message,
+    });
   }
 };
 
@@ -58,8 +70,6 @@ exports.getOrderPlacedList = async (req, res) => {
     }
 
     const order = await Order.find();
-
-    console.log(userId, order);
 
     //  Pass { user: userId } into find() to isolate only this user's records
     const orderList = await Order.find({ user: userId })
