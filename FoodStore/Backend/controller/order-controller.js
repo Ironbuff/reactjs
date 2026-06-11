@@ -71,7 +71,6 @@ exports.getOrderPlacedList = async (req, res) => {
 
     const order = await Order.find();
 
-    //  Pass { user: userId } into find() to isolate only this user's records
     const orderList = await Order.find({ user: userId })
       .populate("user")
       .populate("food");
