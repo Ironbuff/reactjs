@@ -2,9 +2,12 @@
 
 import React from "react";
 import { useGetAllOrder } from "./actions/order-placed-action";
+import { BASE_URL } from "@/axios/axiosInstance";
 
 const OrderPlacedScreen = () => {
   const { data: orderData, isLoading } = useGetAllOrder();
+
+
 
   if (isLoading) {
     return (
@@ -16,7 +19,7 @@ const OrderPlacedScreen = () => {
     );
   }
 
-  const orders = orderData?.orders || [];
+  const orders = orderData?.data?.orders || [];
 
   return (
     <div className="min-h-screen bg-[#F5F1EB] py-10 px-6">
@@ -48,8 +51,9 @@ const OrderPlacedScreen = () => {
                 <div className="relative">
                   <img
                     src={
-                      order?.food?.image ||
-                      "https://images.unsplash.com/photo-1504674900247-0877df9cc836"
+                           order?.image
+                                   ? `${BASE_URL}/${order?.image}`
+                                   : `${BASE_URL}/public/dummy.jpg`
                     }
                     alt={order?.food?.title}
                     className="w-full h-56 object-cover"
@@ -88,10 +92,10 @@ const OrderPlacedScreen = () => {
 
                   <div className="mt-6 border-t pt-4">
                     <p className="text-sm text-gray-500">
-                      Order ID
+                      Order Status
                     </p>
                     <p className="font-medium text-[#0F172A] break-all">
-                      {order._id}
+                      {order.status}
                     </p>
                   </div>
                 </div>
