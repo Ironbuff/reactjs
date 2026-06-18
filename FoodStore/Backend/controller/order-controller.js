@@ -63,21 +63,17 @@ exports.getOrderPlacedList = async (req, res) => {
   try {
     const userId = req.user?.id;
 
-    if (!userId) {
-      return res.status(401).json({
-        message: "Unauthorized. Please log in.",
-      });
-    }
-
-    const order = await Order.find();
-
-    const orderList = await Order.find({ user: userId })
+    const orderList = await Order.find({
+      user: userId,
+    })
       .populate("user")
       .populate("food");
 
+    const validOrders = orderList.filter((order) => order.food);
+
     return res.status(200).json({
       message: "Your orders fetched successfully",
-      orders: orderList,
+      orders: validOrders,
     });
   } catch (err) {
     return res.status(500).json({
