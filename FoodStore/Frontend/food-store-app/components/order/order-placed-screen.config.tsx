@@ -36,7 +36,10 @@ const OrderPlacedScreen = () => {
           </div>
         ) : (
           <div className="grid lg:grid-cols-2 gap-8">
-            {orders.map((order) => (
+            {orders.map((order) => {
+              
+              console.log(order?.food?.image)
+              return(
               <div
                 key={order._id}
                 className="
@@ -55,8 +58,8 @@ const OrderPlacedScreen = () => {
                 <div className="relative">
                   <img
                     src={
-                      order?.image
-                        ? `${BASE_URL}/${order.image}`
+                      order?.food?.image
+                        ? `${BASE_URL}/${order?.food?.image}`
                         : `${BASE_URL}/public/dummy.jpg`
                     }
                     alt={order?.food?.title}
@@ -153,7 +156,7 @@ const OrderPlacedScreen = () => {
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         )}
       </div>
