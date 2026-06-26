@@ -82,3 +82,31 @@ exports.getOrderPlacedList = async (req, res) => {
     });
   }
 };
+
+exports.getOrderPlacedAdminList = async (req, res) => {
+  try {
+    const orderList = await Order.find({})
+      .populate("user", "username email role")
+      .populate("food");
+    const userId = req?.user?.id;
+
+    const selectedUser = await User.findById(userId);
+    if (!selectedUser) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    const isRoleAdmin = selectedUser.role === "admin";
+
+    if (!isRoleAdmin) {
+      return res.status(401).json({ message: "User isn't authorized" });
+    }
+
+    return res.status(200).json({ order: orderList });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Internal Server Error", error: err });
+  }
+};
