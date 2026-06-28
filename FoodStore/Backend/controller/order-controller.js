@@ -110,3 +110,63 @@ exports.getOrderPlacedAdminList = async (req, res) => {
       .json({ message: "Internal Server Error", error: err });
   }
 };
+
+exports.changeOrderStatus = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    const { orderId } = req.params;
+    const { status } = req.body;
+
+    if (!userId) {
+      return res.status(401).json({
+        message: "Unauthorized",
+      });
+    }
+
+    const selectedUser = await User.findById(userId);
+
+    if (!selectedUser) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    if (selectedUser.role !== "admin") {
+      return res.status(403).json({
+        message: "User isn't authorized",
+      });
+    }
+
+    const allowedStatus = ["Order Placed", "Waiting", "Served"];
+
+    if (!allowedStatus.includes(status)) {
+      return res.status(400).json({
+        message: "Invalid order status",
+      });
+    }
+
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true },
+    )
+      .populate("user", "username email role")
+      .populate("food");
+
+    if (!updatedOrder) {
+      return res.status(404).json({
+        message: "Order not found",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Order status updated successfully",
+      order: updatedOrder,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Internal Server Error",
+      error: err.message,
+    });
+  }
+};
