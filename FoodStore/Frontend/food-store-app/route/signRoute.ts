@@ -25,3 +25,8 @@ export const PERMISSION_API = {
 export const ORDER_FOOD_URL = {
   getAllOrder: "putOrder/getOrder",
 };
+
+export const FOOD_STORE_GET_ADMIN = {
+  getOrderList: "/getOrder/admin",
+  updateOrder: "",
+};
