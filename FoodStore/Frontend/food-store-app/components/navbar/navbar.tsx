@@ -17,6 +17,7 @@ export const Navbar = () => {
     { id: 4, label: "Permissions", route: "/permission" },
     { id: 5, label: "Add Food", route: "/add" },
     { id: 6, label: "Logout" },
+    {id:7, label:"OrderList", route:"/adminOrder"}
   ];
 
   const router = useRouter();
