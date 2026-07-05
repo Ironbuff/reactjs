@@ -85,7 +85,10 @@ exports.getOrderPlacedList = async (req, res) => {
 
 exports.getOrderPlacedAdminList = async (req, res) => {
   try {
-    const orderList = await Order.find({})
+    const orderList = await Order.find({
+      user: { $exists: true, $ne: null },
+      food: { $exists: true, $ne: null },
+    })
       .populate("user", "username email role")
       .populate("food");
     const userId = req?.user?.id;

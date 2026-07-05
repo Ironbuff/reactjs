@@ -1,4 +1,8 @@
+'use client'
+
 import React from 'react'
+
+
 import { useGetOrderListAdmin } from '../actions/adminOrder.action.config'
 
 const AdminOrderList = () => {
