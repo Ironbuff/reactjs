@@ -28,5 +28,5 @@ export const ORDER_FOOD_URL = {
 
 export const FOOD_STORE_GET_ADMIN = {
   getOrderList: "putOrder/getOrder/admin",
-  updateOrder: "",
+  updateOrder: "putOrder/status/:orderId",
 };

@@ -15,4 +15,6 @@ router.get(
   optionalAuth,
   orderController.getOrderPlacedAdminList,
 );
+
+router.put("/status/:orderId", optionalAuth, orderController.changeOrderStatus);
 module.exports = router;
