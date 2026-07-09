@@ -1,14 +1,19 @@
 "use client";
 
 import React from "react";
-import { useGetOrderListAdmin } from "../actions/adminOrder.action.config";
+import { useGetOrderListAdmin, useOrderStatusChange } from "../actions/adminOrder.action.config";
 import { BASE_URL } from "@/axios/axiosInstance";
+import { Button } from "@/components/ui/button";
+import { toast } from "react-toastify";
 
 const AdminOrderList = () => {
   const {
     data: adminOrder,
     isLoading: isAdminOrderListLoading,
+    refetch
   } = useGetOrderListAdmin();
+
+  const {mutate:changeStatus, isPending}= useOrderStatusChange()
 
   const orders = adminOrder?.data?.order || [];
 
@@ -25,9 +30,30 @@ const AdminOrderList = () => {
   const getProgressStep = (status) => {
     if (status === "Order Placed") return 1;
     if (status === "Preparing") return 2;
-    if (status === "Delivered") return 3;
+    if (status === "Served") return 3;
     return 1;
   };
+
+
+  const handleStatusChange = (orderId:string, status:string)=>{
+    changeStatus({
+      orderId,
+      status
+    },
+    {
+        onSuccess: (data) => {
+          console.log(data)
+          if(data?.data?.message){
+            toast.success(data?.data?.message || 'Order changed sucessfully')
+          }
+      refetch()
+        },
+        onError: (error: any) => {
+          console.log(error?.response?.data?.message || "Something went wrong");
+        },
+      });
+  }
+
 
   if (isAdminOrderListLoading) {
     return (
@@ -68,6 +94,11 @@ const AdminOrderList = () => {
               const food = order?.food;
               const user = order?.user;
               const progressStep = getProgressStep(order?.status);
+
+              const isOrderPlaced = progressStep===1;
+              const isPreparing = progressStep===2;
+              const isDelivered = progressStep ===3
+
 
               return (
                 <div
@@ -203,13 +234,15 @@ const AdminOrderList = () => {
 
                     {/* Optional admin action buttons */}
                     <div className="mt-6 grid grid-cols-2 gap-3">
-                      <button className="rounded-full bg-orange-500 text-white py-3 font-semibold hover:bg-orange-600 transition">
+                      <Button disabled={isDelivered || isPreparing} className="rounded-full bg-orange-500 text-white py-3 font-semibold hover:bg-orange-600 transition" onClick={()=>{
+                          handleStatusChange(order._id, "Preparing")
+                      }}>
                         Preparing
-                      </button>
+                      </Button>
 
-                      <button className="rounded-full bg-green-500 text-white py-3 font-semibold hover:bg-green-600 transition">
+                      <Button disabled={isOrderPlaced || isDelivered}  onClick={() => handleStatusChange(order._id, "Served")} className="rounded-full bg-green-500 text-white py-3 font-semibold hover:bg-green-600 transition">
                         Delivered
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>
