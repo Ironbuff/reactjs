@@ -140,7 +140,7 @@ exports.changeOrderStatus = async (req, res) => {
       });
     }
 
-    const allowedStatus = ["Order Placed", "Waiting", "Served"];
+    const allowedStatus = ["Order Placed", "Preparing", "Served"];
 
     if (!allowedStatus.includes(status)) {
       return res.status(400).json({
