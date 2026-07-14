@@ -17,7 +17,7 @@ export const Navbar = () => {
     { id: 4, label: "Permissions", route: "/permission" },
     { id: 5, label: "Add Food", route: "/add" },
     { id: 6, label: "Logout" },
-    {id:7, label:"OrderList", route:"/adminOrder"}
+    { id: 7, label: "OrderList", route: "/adminOrder" },
   ];
 
   const router = useRouter();
@@ -50,13 +50,22 @@ export const Navbar = () => {
 
       <div className="flex gap-x-2 items-center justify-end">
         {topMenu.map((item) => {
-          // Hide admin-only routes
+          // Hide admin-only routes from non-admin users
           if (
-            (item.label === "Permissions" || item.label === "Add Food") &&
+            (item.label === "Permissions" ||
+              item.label === "Add Food" ||
+              item.label === "OrderList") &&
             role !== "admin"
           ) {
             return null;
           }
+
+          // Hide My Orders from admin users
+          if (item.label === "My Orders" && role === "admin") {
+            return null;
+          }
+
+          // Hide Login and Sign In when logged in
           if (
             isLoggedIn &&
             (item.label === "Login" || item.label === "Sign In")
@@ -64,7 +73,6 @@ export const Navbar = () => {
             return null;
           }
 
-          // Show Logout only if logged in
           if (item.label === "Logout") {
             if (!isLoggedIn) return null;
 
@@ -74,7 +82,7 @@ export const Navbar = () => {
                 variant="outline"
                 onClick={() => {
                   localStorage.clear();
-                  dispatch(setRole(''));
+                  dispatch(setRole(""));
                   router.push("/login");
                 }}
               >
@@ -87,7 +95,7 @@ export const Navbar = () => {
             <Button
               key={item.id}
               variant="outline"
-              onClick={() => router.push(item?.route ?? "/")}
+              onClick={() => router.push(item.route ?? "/")}
             >
               {item.label}
             </Button>
