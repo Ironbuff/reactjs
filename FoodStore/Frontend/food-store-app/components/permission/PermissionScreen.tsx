@@ -48,7 +48,7 @@ const PermissionScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-slate-200 px-4 py-10 flex items-center justify-center">
+    <div className=" h-[calc(100vh-9ch)] bg-gradient-to-br from-slate-100 via-white to-slate-200 px-4 py-10 flex items-center justify-center">
       <div className="w-full max-w-lg">
         <div className="bg-white/90 backdrop-blur-xl border border-slate-200 shadow-2xl shadow-slate-200/70 rounded-3xl overflow-hidden">
           {/* Top Accent */}
@@ -111,7 +111,7 @@ const PermissionScreen = () => {
                             <ComboboxContent className="mt-2 rounded-xl border border-slate-200 bg-white shadow-xl overflow-hidden">
                               <ComboboxEmpty>No users found.</ComboboxEmpty>
 
-                              {userListArray.map((item: IUserListType) => (
+                              {userListArray?.filter((item:IUserListType)=>item?.role!=='admin')?.map((item: IUserListType) => (
                                 <ComboboxItem
                                   key={item?._id}
                                   value={item?._id}
